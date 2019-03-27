@@ -19,4 +19,21 @@ public class Recruiter {
         }
         return false;
     }
+
+    public boolean isTheOnlyRecruiterWithAvailableSkills(Candidate candidate, List<Recruiter> recruiters){
+
+        for (Recruiter recruiter: recruiters){
+            if (recruiter.canTest(candidate)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isTheMostApropriate(Candidate candidate, List<Recruiter> recruiters){
+        return true;
+    }
+
+
+
 }
