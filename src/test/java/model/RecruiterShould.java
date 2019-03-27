@@ -36,36 +36,6 @@ public class RecruiterShould {
     }
 
     @Test
-    public void be_able_to_test_java_candidate_if_he_has_java_skill(){
-        //Given
-        recruiterSkills.add("Java");
-        Recruiter recruiter = new Recruiter(recruiterSkills);
-        candidateSkills.add("Java");
-        Candidate candidate = new Candidate(candidateSkills);
-
-        //When
-        boolean recruiterCanTestCandidate = recruiter.canTest(candidate);
-
-        //Then
-        Assert.assertTrue(recruiterCanTestCandidate);
-    }
-
-    @Test
-    public void not_be_able_to_test_dotnet_candidate_if_he_has_java_skill(){
-        //Given
-        recruiterSkills.add("Java");
-        Recruiter recruiter = new Recruiter(recruiterSkills);
-        candidateSkills.add(".Net");
-        Candidate candidate = new Candidate(candidateSkills);
-
-        //When
-        boolean recruiterCanTestCandidate = recruiter.canTest(candidate);
-
-        //Then
-        Assert.assertFalse(recruiterCanTestCandidate);
-    }
-
-    @Test
     public void not_be_able_to_test_candidate_if_recruiter_has_any_skill_in_common(){
         //Given
         recruiterSkills.add("React");
