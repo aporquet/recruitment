@@ -35,19 +35,20 @@ public class Recruiter {
         List<String> skills = new ArrayList<String>();
         Recruiter recruiterMostAppropriate = new Recruiter(skills);
         for (Recruiter recruiter: recruiters) {
-            int countMatchSkills = 0;
-            for (String skill : candidate.getSkills()) {
-                if (recruiter.skills.contains(skill)) {
-                    countMatchSkills ++;
+            if (recruiter.canTest(candidate)) {
+                int countMatchSkills = 0;
+                for (String skill : candidate.getSkills()) {
+                    if (recruiter.skills.contains(skill)) {
+                        countMatchSkills++;
+                    }
                 }
-            }
-            if (countMatchSkills > topCountMatchSkills){
-                topCountMatchSkills = countMatchSkills;
-                recruiterMostAppropriate = recruiter;
+                if (countMatchSkills > topCountMatchSkills) {
+                    topCountMatchSkills = countMatchSkills;
+                    recruiterMostAppropriate = recruiter;
+                }
             }
         }
         return recruiterMostAppropriate;
     }
-
 
 }
