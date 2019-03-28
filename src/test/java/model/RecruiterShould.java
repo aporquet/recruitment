@@ -96,17 +96,17 @@ public class RecruiterShould {
         Recruiter recruiter3 = new Recruiter(recruiterSkills);
 
         List<Recruiter> recruiters = new ArrayList<Recruiter>();
+        recruiters.add(recruiter1);
         recruiters.add(recruiter2);
         recruiters.add(recruiter3);
 
         //When
-        boolean recruiterIsTheMostAppropriateToTestCandidate = recruiter1.isTheOnlyRecruiterWithAvailableSkills(candidate, recruiters);
+        Recruiter recruiterTest = recruiter1.getTheRecruiterWithMostSkillsMatching(candidate, recruiters);
 
         //Then
-        Assert.assertFalse(recruiterIsTheMostAppropriateToTestCandidate);
+        Assert.assertNotEquals(recruiterTest, recruiter1);
 
     }
-
 
 
 }
