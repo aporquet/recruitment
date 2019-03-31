@@ -1,4 +1,4 @@
-package model;
+package model.skills;
 
 import org.junit.Assert;
 import org.junit.Before;

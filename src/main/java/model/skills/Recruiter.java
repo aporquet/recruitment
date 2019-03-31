@@ -1,4 +1,4 @@
-package model;
+package model.skills;
 
 class Recruiter {
 
