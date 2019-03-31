@@ -9,31 +9,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecruiterShould {
+    private Recruiter recruiter;
+    private Candidate candidate;
     private Skills recruiterSkills;
     private Skills candidateSkills;
+    private List<String> recruiterKeySkills;
+    private List<String> candidateKeySkills;
 
     @Before
     public void init() {
-        
+        recruiterKeySkills = new ArrayList<String>();
+        this.recruiterSkills = new Skills(recruiterKeySkills);
+        recruiter = new Recruiter(recruiterSkills);
+
+        candidateKeySkills = new ArrayList<String>();
+        this.candidateSkills = new Skills(candidateKeySkills);
+        candidate = new Candidate(candidateSkills);
     }
 
     @Test
     public void has_same_key_skills_in_common_with_candidate_to_test_him() {
         //Given
-        List<String> recruiterKeySkills = new ArrayList<String>();
         recruiterKeySkills.add("React");
         recruiterKeySkills.add("Java");
         recruiterKeySkills.add("Devops");
         recruiterKeySkills.add("HTML5");
-        this.recruiterSkills = new Skills(recruiterKeySkills);
-        Recruiter recruiter = new Recruiter(recruiterSkills);
 
-        List<String> candidateKeySkills = new ArrayList<String>();
         candidateKeySkills.add("HTML5");
         candidateKeySkills.add("Java");
         candidateKeySkills.add("Devops");
-        this.candidateSkills = new Skills(candidateKeySkills);
-        Candidate candidate = new Candidate(candidateSkills);
 
         //When
         boolean recruiterCanTestCandidate = recruiter.canTest(candidate);
@@ -45,18 +49,12 @@ public class RecruiterShould {
     @Test
     public void not_be_able_to_test_candidate_if_recruiter_has_not_all_key_skills_in_common() {
         //Given
-        List<String> recruiterKeySkills = new ArrayList<String>();
         recruiterKeySkills.add("React");
         recruiterKeySkills.add("Java");
         recruiterKeySkills.add("HTML5");
-        this.recruiterSkills = new Skills(recruiterKeySkills);
-        Recruiter recruiter = new Recruiter(recruiterSkills);
 
-        List<String> candidateKeySkills = new ArrayList<String>();
         candidateKeySkills.add("Java");
         candidateKeySkills.add("Devops");
-        this.candidateSkills = new Skills(candidateKeySkills);
-        Candidate candidate = new Candidate(candidateSkills);
 
         //When
         boolean recruiterCanTestCandidate = recruiter.canTest(candidate);
