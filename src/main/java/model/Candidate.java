@@ -4,13 +4,14 @@ import java.util.List;
 
 public class Candidate {
 
-    private List<String> skillsCandidate;
+    private Skills candidateSkills;
 
-    public Candidate(List<String> skillsCandidate) {
-        this.skillsCandidate = skillsCandidate;
+    public Candidate(Skills skillsCandidate) {
+        this.candidateSkills = skillsCandidate;
     }
 
-    public List<String> getSkills() {
-        return skillsCandidate;
+    public List<String> getKeySkills() {
+        return candidateSkills.getKeySkills();
+
     }
 }

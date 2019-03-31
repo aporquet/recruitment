@@ -1,26 +1,20 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Recruiter {
 
-    private List<String> skills;
+    private Skills skills;
 
-    public Recruiter(List<String> skills) {
+    public Recruiter(Skills skills) {
         this.skills = skills;
     }
 
     public boolean canTest(Candidate candidate) {
-
-        for (String skill: candidate.getSkills()) {
-            if (this.skills.contains(skill)){
-                return true;
-            }
-        }
-        return false;
+        return skills.getKeySkills().containsAll(candidate.getKeySkills());
     }
 
+    /*
     public boolean isTheOnlyRecruiterWithAvailableSkills(Candidate candidate, List<Recruiter> recruiters){
         for (Recruiter recruiter: recruiters){
             if (recruiter.canTest(candidate)){
@@ -49,6 +43,6 @@ public class Recruiter {
             }
         }
         return recruiterMostAppropriate;
-    }
+    }*/
 
 }

@@ -1,5 +1,6 @@
 package model;
 
+import com.sun.java.swing.ui.OkCancelDialog;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,24 +9,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecruiterShould {
-    private List<String> recruiterSkills;
-    private List<String> candidateSkills;
+    private Skills recruiterSkills;
+    private Skills candidateSkills;
 
     @Before
     public void init() {
-        this.recruiterSkills = new ArrayList<String>();
-        this.candidateSkills = new ArrayList<String>();
+        
     }
 
     @Test
-    public void has_at_least_one_skill_in_common_with_candidate_to_test_him() {
+    public void has_same_key_skills_in_common_with_candidate_to_test_him() {
         //Given
-        recruiterSkills.add("React");
-        recruiterSkills.add("HTML5");
+        List<String> recruiterKeySkills = new ArrayList<String>();
+        recruiterKeySkills.add("React");
+        recruiterKeySkills.add("Java");
+        recruiterKeySkills.add("Devops");
+        recruiterKeySkills.add("HTML5");
+        this.recruiterSkills = new Skills(recruiterKeySkills);
         Recruiter recruiter = new Recruiter(recruiterSkills);
-        candidateSkills.add("HTML5");
-        candidateSkills.add("Java");
-        candidateSkills.add("Devops");
+
+        List<String> candidateKeySkills = new ArrayList<String>();
+        candidateKeySkills.add("HTML5");
+        candidateKeySkills.add("Java");
+        candidateKeySkills.add("Devops");
+        this.candidateSkills = new Skills(candidateKeySkills);
         Candidate candidate = new Candidate(candidateSkills);
 
         //When
@@ -36,13 +43,19 @@ public class RecruiterShould {
     }
 
     @Test
-    public void not_be_able_to_test_candidate_if_recruiter_has_any_skill_in_common() {
+    public void not_be_able_to_test_candidate_if_recruiter_has_not_all_key_skills_in_common() {
         //Given
-        recruiterSkills.add("React");
-        recruiterSkills.add("HTML5");
+        List<String> recruiterKeySkills = new ArrayList<String>();
+        recruiterKeySkills.add("React");
+        recruiterKeySkills.add("Java");
+        recruiterKeySkills.add("HTML5");
+        this.recruiterSkills = new Skills(recruiterKeySkills);
         Recruiter recruiter = new Recruiter(recruiterSkills);
-        candidateSkills.add("Java");
-        candidateSkills.add("Devops");
+
+        List<String> candidateKeySkills = new ArrayList<String>();
+        candidateKeySkills.add("Java");
+        candidateKeySkills.add("Devops");
+        this.candidateSkills = new Skills(candidateKeySkills);
         Candidate candidate = new Candidate(candidateSkills);
 
         //When
@@ -52,6 +65,7 @@ public class RecruiterShould {
         Assert.assertFalse(recruiterCanTestCandidate);
     }
 
+    /*
     @Test
     public void not_be_able_to_test_candidate_if_another_recruiter_also_can_test_candidate() {
         //Given
@@ -106,7 +120,11 @@ public class RecruiterShould {
         //Then
         Assert.assertNotEquals(recruiterTest, recruiter1);
 
-    }
+    }*/
 
+/*    @Test
+    public void has_a_general_level_superior_than_the_candidate() {
+
+    }*/
 
 }
