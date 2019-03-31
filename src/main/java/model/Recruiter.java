@@ -5,13 +5,20 @@ import java.util.List;
 public class Recruiter {
 
     private Skills skills;
+    private int experienceYears;
 
-    public Recruiter(Skills skills) {
+    public Recruiter(Skills skills, int experienceYears) {
         this.skills = skills;
+        this.experienceYears = experienceYears;
     }
 
     public boolean canTest(Candidate candidate) {
-        return skills.getKeySkills().containsAll(candidate.getKeySkills());
+        return skills.getKeySkills().containsAll(candidate.getKeySkills()) && this.experienceYears > candidate.getExperienceYears();
+
+    }
+
+    public int getExperienceYears() {
+        return experienceYears;
     }
 
     /*
@@ -23,6 +30,7 @@ public class Recruiter {
         }
         return true;
     }
+
 
     public static Recruiter getTheRecruiterWithMostSkillsMatching(Candidate candidate, List<Recruiter> recruiters){
         int topCountMatchSkills = 0;
@@ -43,6 +51,7 @@ public class Recruiter {
             }
         }
         return recruiterMostAppropriate;
-    }*/
+    }
+    */
 
 }

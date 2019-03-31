@@ -20,11 +20,11 @@ public class RecruiterShould {
     public void init() {
         recruiterKeySkills = new ArrayList<String>();
         this.recruiterSkills = new Skills(recruiterKeySkills);
-        recruiter = new Recruiter(recruiterSkills);
+        recruiter = new Recruiter(recruiterSkills, 10);
 
         candidateKeySkills = new ArrayList<String>();
         this.candidateSkills = new Skills(candidateKeySkills);
-        candidate = new Candidate(candidateSkills);
+        candidate = new Candidate(candidateSkills, 3);
     }
 
     @Test
@@ -63,7 +63,27 @@ public class RecruiterShould {
         Assert.assertFalse(recruiterCanTestCandidate);
     }
 
-    /*
+    @Test
+    public void be_more_experienced_than_the_candidate(){
+        //When
+        boolean recruiterCanTestCandidate = recruiter.canTest(candidate);
+
+        //Then
+        Assert.assertTrue(recruiterCanTestCandidate);
+    }
+
+    @Test
+    public void not_be_able_to_test_the_candidate_if_he_has_less_experienced_years_than_the_candidate(){
+        //Given
+        Recruiter recruiter = new Recruiter(recruiterSkills, 1);
+
+        //When
+        boolean recruiterCanTestCandidate = recruiter.canTest(candidate);
+
+        //Then
+        Assert.assertFalse(recruiterCanTestCandidate);
+    }
+ /*
     @Test
     public void not_be_able_to_test_candidate_if_another_recruiter_also_can_test_candidate() {
         //Given
@@ -88,6 +108,7 @@ public class RecruiterShould {
         //Then
         Assert.assertFalse(recruiterIsTheOnlyPotentialCandidate);
     }
+
 
     @Test
     public void not_be_able_to_test_candidate_if_another_recruiter_has_more_skills_in_common() {
