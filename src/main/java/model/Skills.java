@@ -2,16 +2,15 @@ package model;
 
 import java.util.List;
 
-public class Skills {
+class Skills {
     private final List<String> keySkills;
 
-    public Skills(List<String> keySkills) {
+    Skills(List<String> keySkills) {
         this.keySkills = keySkills;
     }
 
-    public List<String> getKeySkills() {
+    List<String> getKeySkills() {
         return keySkills;
     }
-
 
 }

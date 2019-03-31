@@ -1,6 +1,5 @@
 package model;
 
-import com.sun.java.swing.ui.OkCancelDialog;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -83,6 +82,7 @@ public class RecruiterShould {
         //Then
         Assert.assertFalse(recruiterCanTestCandidate);
     }
+
  /*
     @Test
     public void not_be_able_to_test_candidate_if_another_recruiter_also_can_test_candidate() {
@@ -108,7 +108,6 @@ public class RecruiterShould {
         //Then
         Assert.assertFalse(recruiterIsTheOnlyPotentialCandidate);
     }
-
 
     @Test
     public void not_be_able_to_test_candidate_if_another_recruiter_has_more_skills_in_common() {

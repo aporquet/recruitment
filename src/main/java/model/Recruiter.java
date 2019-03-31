@@ -1,24 +1,17 @@
 package model;
 
-import java.util.List;
-
-public class Recruiter {
+class Recruiter {
 
     private Skills skills;
     private int experienceYears;
 
-    public Recruiter(Skills skills, int experienceYears) {
+    Recruiter(Skills skills, int experienceYears) {
         this.skills = skills;
         this.experienceYears = experienceYears;
     }
 
-    public boolean canTest(Candidate candidate) {
-        return skills.getKeySkills().containsAll(candidate.getKeySkills()) && this.experienceYears > candidate.getExperienceYears();
-
-    }
-
-    public int getExperienceYears() {
-        return experienceYears;
+    boolean canTest(Candidate candidate) {
+        return skills.getKeySkills().containsAll(candidate.getKeySkills()) && experienceYears > candidate.getExperienceYears();
     }
 
     /*

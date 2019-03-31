@@ -2,22 +2,21 @@ package model;
 
 import java.util.List;
 
-public class Candidate {
+class Candidate {
 
     private Skills candidateSkills;
     private int experienceYears;
 
-    public Candidate(Skills skillsCandidate, int experienceYears) {
+    Candidate(Skills skillsCandidate, int experienceYears) {
         this.candidateSkills = skillsCandidate;
         this.experienceYears = experienceYears;
     }
 
-    public List<String> getKeySkills() {
+    List<String> getKeySkills() {
         return candidateSkills.getKeySkills();
-
     }
 
-    public int getExperienceYears() {
+    int getExperienceYears() {
         return experienceYears;
     }
 
