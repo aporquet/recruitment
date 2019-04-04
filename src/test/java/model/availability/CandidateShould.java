@@ -58,7 +58,7 @@ public class CandidateShould {
         Candidate candidate = new Candidate(availability);
 
         //When
-        boolean IsCurrentMonth = candidate.availabilitiesAreInCurrentMonth(candidate);
+        boolean IsCurrentMonth = candidate.availabilityIsInCurrentMonth(candidate);
 
         //Then
         Assert.assertFalse(IsCurrentMonth);

@@ -23,7 +23,7 @@ public class Candidate {
         return result;
     }
 
-    boolean availabilitiesAreInCurrentMonth(Candidate candidate) {
+    boolean availabilityIsInCurrentMonth(Candidate candidate) {
         LocalDateTime currentDate =  LocalDateTime.now();
         int currentMonth = currentDate.getMonthValue();
         int monthAvailable = candidate.availability.getMonthValue();
