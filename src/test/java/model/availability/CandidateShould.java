@@ -40,7 +40,9 @@ public class CandidateShould {
         List<Recruiter> recruiters = new ArrayList<>();
         List< LocalDateTime > firstRecruiterAvailabilities = new ArrayList<>();
         LocalDateTime firstRecruiterAvailability = LocalDateTime.of(2019, Month.JUNE, 3, 12, 30);
+        LocalDateTime secondRecruiterAvailability = LocalDateTime.of(2019, Month.JUNE, 4, 9, 30);
         firstRecruiterAvailabilities.add(firstRecruiterAvailability);
+        firstRecruiterAvailabilities.add(secondRecruiterAvailability);
         Recruiter firstRecruiter = new Recruiter(firstRecruiterAvailabilities);
         recruiters.add(firstRecruiter);
 
