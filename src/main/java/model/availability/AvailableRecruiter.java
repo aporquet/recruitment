@@ -7,6 +7,9 @@ public class AvailableRecruiter {
     private List<RecruiterDto> recruiters;
 
     public AvailableRecruiter(List<RecruiterDto> recruiters) {
+        if (recruiters == null || recruiters.isEmpty()) {
+            throw new AnyRecruiterAvailableException();
+        }
         this.recruiters = recruiters;
     }
 

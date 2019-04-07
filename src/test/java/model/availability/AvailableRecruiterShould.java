@@ -30,4 +30,24 @@ public class AvailableRecruiterShould {
         //Then
         Assert.assertEquals(firstAvailableRecruiter, firstRecruiter);
     }
+
+    @Test(expected = AnyRecruiterAvailableException.class)
+    public void throw_any_recruiter_available_exception_when_recruiters_list_is_empty(){
+        //Given
+        AvailableRecruiter availableRecruiter = new AvailableRecruiter(new ArrayList<>());
+
+        //When
+        availableRecruiter.getFirstAvailableRecruiter();
+
+    }
+
+    @Test(expected = AnyRecruiterAvailableException.class)
+    public void throw_any_recruiter_available_exception_when_recruiter_is_null(){
+        //Given
+        AvailableRecruiter availableRecruiter = new AvailableRecruiter(null);
+
+        //When
+        availableRecruiter.getFirstAvailableRecruiter();
+
+    }
 }
