@@ -12,10 +12,10 @@ class Candidate {
         this.availability = availability;
     }
 
-    List<Recruiter> findAvailableRecruiters(List<Recruiter> recruiters) {
-        List<Recruiter> result = new ArrayList<>();
-        for (Recruiter recruiter: recruiters) {
-            for (LocalDateTime recruiterAvailability : recruiter.availabilities()){
+    List<RecruiterDto> findAvailableRecruiters(List<RecruiterDto> recruiters) {
+        List<RecruiterDto> result = new ArrayList<>();
+        for (RecruiterDto recruiter: recruiters) {
+            for (LocalDateTime recruiterAvailability : recruiter.getRecruiterAvailabilities()){
                 if (recruiterAvailability.equals(availability)) {
                     result.add(recruiter);
                 }
