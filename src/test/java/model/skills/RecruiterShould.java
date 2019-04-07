@@ -19,11 +19,13 @@ public class RecruiterShould {
     @Before
     public void init() {
         recruiterKeySkills = new ArrayList<>();
-        this.recruiterSkills = new SkillsDto(recruiterKeySkills);
+        this.recruiterSkills = new SkillsDto();
+        recruiterSkills.setKeySkills(recruiterKeySkills);
         recruiter = new Recruiter(recruiterSkills, 10);
 
         candidateKeySkills = new ArrayList<>();
-        this.candidateSkills = new SkillsDto(candidateKeySkills);
+        this.candidateSkills = new SkillsDto();
+        candidateSkills.setKeySkills(candidateKeySkills);
         candidate = new Candidate(candidateSkills, 3);
     }
 

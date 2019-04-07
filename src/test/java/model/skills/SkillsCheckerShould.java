@@ -16,7 +16,8 @@ public class SkillsCheckerShould {
         //Given
         List<String> keySkills = new ArrayList<>();
         keySkills.add("Java");
-        SkillsDto candidateSkills = new SkillsDto(keySkills);
+        SkillsDto candidateSkills = new SkillsDto();
+        candidateSkills.setKeySkills(keySkills);
         CandidateDto candidate = new CandidateDto();
         candidate.setSkills(candidateSkills);
 
@@ -24,7 +25,8 @@ public class SkillsCheckerShould {
         RecruiterDto firstRecruiter = new RecruiterDto();
         List<String> recruiterKeySkills = new ArrayList<>();
         recruiterKeySkills.add("Java");
-        SkillsDto skillsDto = new SkillsDto(recruiterKeySkills);
+        SkillsDto skillsDto = new SkillsDto();
+        skillsDto.setKeySkills(recruiterKeySkills);
         firstRecruiter.setRecruiterSkills(skillsDto);
         recruiters.add(firstRecruiter);
 
@@ -40,5 +42,34 @@ public class SkillsCheckerShould {
     }
 
     //Todo : Add tests to verify all conditions
+    // refactor .add to Arrayslist
+
+    @Test
+    public void return_competent_recruiters_sorted_by_their_other_skills(){
+        //Given
+        List<String> keySkills = new ArrayList<>();
+        keySkills.add("Java");
+
+        List<String> otherSkills = new ArrayList<>();
+        otherSkills.add("DotNet");
+        otherSkills.add("DevOps");
+
+        SkillsDto candidateSkills = new SkillsDto();
+        candidateSkills.setKeySkills(keySkills);
+        candidateSkills.setOtherSkills(otherSkills);
+        CandidateDto candidate = new CandidateDto();
+        candidate.setSkills(candidateSkills);
+
+        List<RecruiterDto> recruiters = new ArrayList<>();
+        RecruiterDto firstRecruiter = new RecruiterDto();
+        List<String> recruiterKeySkills = new ArrayList<>();
+        recruiterKeySkills.add("Java");
+        SkillsDto skillsDto = new SkillsDto();
+        skillsDto.setKeySkills(keySkills);
+        firstRecruiter.setRecruiterSkills(skillsDto);
+        recruiters.add(firstRecruiter);
+
+        SkillsChecker skills = new SkillsChecker(candidate, recruiters);
+    }
 
 }
