@@ -1,15 +1,15 @@
-package model.skills;
+package common;
 
 import java.util.List;
 
-class Skills {
+public class SkillsDto {
     private final List<String> keySkills;
 
-    Skills(List<String> keySkills) {
+    public SkillsDto(List<String> keySkills) {
         this.keySkills = keySkills;
     }
 
-    List<String> getKeySkills() {
+    public List<String> getKeySkills() {
         return keySkills;
     }
 

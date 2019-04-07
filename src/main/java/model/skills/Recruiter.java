@@ -1,11 +1,13 @@
 package model.skills;
 
+import common.SkillsDto;
+
 class Recruiter {
 
-    private Skills skills;
+    private SkillsDto skills;
     private int experienceYears;
 
-    Recruiter(Skills skills, int experienceYears) {
+    Recruiter(SkillsDto skills, int experienceYears) {
         this.skills = skills;
         this.experienceYears = experienceYears;
     }

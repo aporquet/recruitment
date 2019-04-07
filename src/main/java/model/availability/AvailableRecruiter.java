@@ -1,5 +1,7 @@
 package model.availability;
 
+import common.RecruiterDto;
+
 import java.util.List;
 
 public class AvailableRecruiter {

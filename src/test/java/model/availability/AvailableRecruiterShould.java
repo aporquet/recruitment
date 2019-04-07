@@ -1,5 +1,6 @@
 package model.availability;
 
+import common.RecruiterDto;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -50,4 +51,6 @@ public class AvailableRecruiterShould {
         availableRecruiter.getFirstAvailableRecruiter();
 
     }
+
+    //Todo : Verify all tests exists
 }

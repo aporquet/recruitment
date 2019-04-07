@@ -1,5 +1,6 @@
 package model.availability;
 
+import common.RecruiterDto;
 import org.junit.Assert;
 import org.junit.Test;
 

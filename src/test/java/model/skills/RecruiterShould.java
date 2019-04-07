@@ -1,5 +1,6 @@
 package model.skills;
 
+import common.SkillsDto;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,19 +11,19 @@ import java.util.List;
 public class RecruiterShould {
     private Recruiter recruiter;
     private Candidate candidate;
-    private Skills recruiterSkills;
-    private Skills candidateSkills;
+    private SkillsDto recruiterSkills;
+    private SkillsDto candidateSkills;
     private List<String> recruiterKeySkills;
     private List<String> candidateKeySkills;
 
     @Before
     public void init() {
-        recruiterKeySkills = new ArrayList<String>();
-        this.recruiterSkills = new Skills(recruiterKeySkills);
+        recruiterKeySkills = new ArrayList<>();
+        this.recruiterSkills = new SkillsDto(recruiterKeySkills);
         recruiter = new Recruiter(recruiterSkills, 10);
 
-        candidateKeySkills = new ArrayList<String>();
-        this.candidateSkills = new Skills(candidateKeySkills);
+        candidateKeySkills = new ArrayList<>();
+        this.candidateSkills = new SkillsDto(candidateKeySkills);
         candidate = new Candidate(candidateSkills, 3);
     }
 
@@ -31,12 +32,12 @@ public class RecruiterShould {
         //Given
         recruiterKeySkills.add("React");
         recruiterKeySkills.add("Java");
-        recruiterKeySkills.add("Devops");
+        recruiterKeySkills.add("DevOps");
         recruiterKeySkills.add("HTML5");
 
         candidateKeySkills.add("HTML5");
         candidateKeySkills.add("Java");
-        candidateKeySkills.add("Devops");
+        candidateKeySkills.add("DevOps");
 
         //When
         boolean recruiterCanTestCandidate = recruiter.canTest(candidate);
@@ -53,7 +54,7 @@ public class RecruiterShould {
         recruiterKeySkills.add("HTML5");
 
         candidateKeySkills.add("Java");
-        candidateKeySkills.add("Devops");
+        candidateKeySkills.add("DevOps");
 
         //When
         boolean recruiterCanTestCandidate = recruiter.canTest(candidate);

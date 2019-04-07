@@ -1,5 +1,7 @@
 package model.availability;
 
+import common.RecruiterDto;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
