@@ -22,4 +22,7 @@ class Candidate {
         return experienceYears;
     }
 
+    List<String> getOtherSkills() {
+        return candidateSkills.getOtherSkills();
+    }
 }

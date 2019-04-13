@@ -17,4 +17,8 @@ public class SkillsDto {
     public void setOtherSkills(List<String> otherSkills) {
         this.otherSkills = otherSkills;
     }
+
+    public List<String> getOtherSkills() {
+        return otherSkills;
+    }
 }
