@@ -23,7 +23,8 @@ public class SkillsChecker {
         List<RecruiterDto> competentRecruiter = new ArrayList<>();
         competentRecruiter.addAll(recruiters);
         for (RecruiterDto recruiterDto: recruiters){
-            Recruiter recruiter = new Recruiter(recruiterDto.getRecruiterSkills(), recruiterDto.getExperienceYears());
+            Skills skills = new Skills(recruiterDto.getRecruiterSkills().getKeySkills(), recruiterDto.getRecruiterSkills().getOtherSkills());
+            Recruiter recruiter = new Recruiter(skills, recruiterDto.getExperienceYears());
             if(!recruiter.canTest(candidate)){
                 competentRecruiter.remove(recruiterDto);
             }
@@ -37,7 +38,8 @@ public class SkillsChecker {
         }
         Map<RecruiterDto, Integer> mapRecruiters = new HashMap<>();
         for (RecruiterDto recruiterDto: recruiters){
-            Recruiter recruiter = new Recruiter(recruiterDto.getRecruiterSkills(), recruiterDto.getExperienceYears());
+            Skills skills = new Skills(recruiterDto.getRecruiterSkills().getKeySkills(), recruiterDto.getRecruiterSkills().getOtherSkills());
+            Recruiter recruiter = new Recruiter(skills, recruiterDto.getExperienceYears());
             int numberOfCommonOtherSkills = candidate.getOtherSkills().stream()
                     .filter(recruiter.getOtherSkills()::contains)
                     .collect(toList()).size();

@@ -11,24 +11,22 @@ import java.util.List;
 public class RecruiterShould {
     private Recruiter recruiter;
     private Candidate candidate;
-    private SkillsDto recruiterSkills;
-    private SkillsDto candidateSkills;
+    private Skills recruiterSkills;
+    private Skills candidateSkills;
     private List<String> recruiterKeySkills;
     private List<String> candidateKeySkills;
 
     @Before
     public void init() {
         recruiterKeySkills = new ArrayList<>();
-        this.recruiterSkills = new SkillsDto();
-        recruiterSkills.setKeySkills(recruiterKeySkills);
+        List<String> recruiterOtherSkills = new ArrayList<>();
+        this.recruiterSkills = new Skills(recruiterKeySkills, recruiterOtherSkills);
         recruiter = new Recruiter(recruiterSkills, 10);
 
         candidateKeySkills = new ArrayList<>();
-        this.candidateSkills = new SkillsDto();
-        candidateSkills.setKeySkills(candidateKeySkills);
         List<String> candidateOtherSkills = new ArrayList<>();
-        Skills skills = new Skills(candidateKeySkills, candidateOtherSkills);
-        candidate = new Candidate(skills, 3);
+        this.candidateSkills = new Skills(candidateKeySkills, candidateOtherSkills);
+        candidate = new Candidate(candidateSkills, 3);
     }
 
     @Test
