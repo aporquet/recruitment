@@ -1,26 +1,27 @@
 package model.skills;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
+import common.RecruiterDto;
+
+import java.util.*;
+
+import static java.util.stream.Collectors.toMap;
 
 class SortRecruiters {
 
-    private Map<Recruiter, Integer> unSotedRecruiters;
+    private Map<RecruiterDto, Integer> unSotedRecruiters;
 
-    public SortRecruiters (Map<Recruiter, Integer> unSotedRecruiters){
+    public SortRecruiters (Map<RecruiterDto, Integer> unSotedRecruiters){
         this.unSotedRecruiters = unSotedRecruiters;
     }
 
-/*    Set<Recruiter> sort (){
-        Map<Recruiter, Integer> collect = unSotedRecruiters.entrySet()
+    Set<RecruiterDto> sort (){
+        Map<RecruiterDto, Integer> collect = unSotedRecruiters
+                .entrySet()
                 .stream()
-                .sorted(Map.Entry.<Recruiter, Integer>comparingByValue())
-                .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
+                .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+                .collect(toMap(e -> e.getKey(), e -> e.getValue(), (e1, e2) -> e2, LinkedHashMap::new));
         return collect.keySet();
-    }*/
-
+    }
 
 }
 

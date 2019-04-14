@@ -2,42 +2,46 @@ package model.skills;
 
 import common.CandidateDto;
 import common.RecruiterDto;
-import common.SkillsDto;
 
 import java.util.*;
+import static java.util.stream.Collectors.toList;
 
 public class SkillsChecker {
     private CandidateDto candidateDto;
     private List<RecruiterDto> recruiters;
 
     public SkillsChecker(CandidateDto candidate, List<RecruiterDto> recruiters) {
-
         this.candidateDto = candidate;
         this.recruiters = recruiters;
     }
 
-/*    public Set<Recruiter> getTechnicallyCompetentRecruiters() {
+    public List<RecruiterDto> getTechnicallyCompetentRecruitersSortByOtherSkills() {
         Candidate candidate = new Candidate(candidateDto.getCandidateSkills(), candidateDto.getExperienceYears());
+        List<RecruiterDto> competentRecruiter = new ArrayList<>();
+        competentRecruiter.addAll(recruiters);
         for (RecruiterDto recruiterDto: recruiters){
             Recruiter recruiter = new Recruiter(recruiterDto.getRecruiterSkills(), recruiterDto.getExperienceYears());
             if(!recruiter.canTest(candidate)){
-                recruiters.remove(recruiter);
+                competentRecruiter.remove(recruiterDto);
             }
         }
-        Set<Recruiter> sortedRecruiters = sortByOtherSkillsInCommon(candidate, recruiters);
-        return sortedRecruiters;
-    }*/
+        return sortByOtherSkillsInCommon(candidate, competentRecruiter);
+    }
 
-/*    private Set<Recruiter> sortByOtherSkillsInCommon(Candidate candidate, List<RecruiterDto> recruiters) {
-        //List<RecruiterDto> sortedRecruiters = new ArrayList<>();
-        Map<Recruiter, Integer> mapRecruiters = new HashMap<>();
-        int i = 0;
+    private List<RecruiterDto> sortByOtherSkillsInCommon(Candidate candidate, List<RecruiterDto> recruiters) {
+        if(recruiters.isEmpty()){
+            return recruiters;
+        }
+        Map<RecruiterDto, Integer> mapRecruiters = new HashMap<>();
         for (RecruiterDto recruiterDto: recruiters){
             Recruiter recruiter = new Recruiter(recruiterDto.getRecruiterSkills(), recruiterDto.getExperienceYears());
-            mapRecruiters.put(recruiter, i++);
+            int numberOfCommonOtherSkills = candidate.getOtherSkills().stream()
+                    .filter(recruiter.getOtherSkills()::contains)
+                    .collect(toList()).size();
+            mapRecruiters.put(recruiterDto, numberOfCommonOtherSkills);
         }
         SortRecruiters s = new SortRecruiters(mapRecruiters);
-        return s.sort();
-    }*/
+        return s.sort().stream().collect(toList());
+    }
 
 }

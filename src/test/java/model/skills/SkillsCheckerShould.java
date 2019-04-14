@@ -8,39 +8,55 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class SkillsCheckerShould {
 
-/*    @Test
+    @Test
     public void return_recruiters_who_are_technically_competent_to_evaluate_candidate(){
         //Given
         List<String> keySkills = new ArrayList<>();
         keySkills.add("Java");
+
+        List<String> otherSkills = new ArrayList<>();
+        otherSkills.add("DotNet");
+        otherSkills.add("DevOps");
+
         SkillsDto candidateSkills = new SkillsDto();
         candidateSkills.setKeySkills(keySkills);
+        candidateSkills.setOtherSkills(otherSkills);
         CandidateDto candidate = new CandidateDto();
         candidate.setSkills(candidateSkills);
+        candidate.setExperienceYears(3);
 
         List<RecruiterDto> recruiters = new ArrayList<>();
         RecruiterDto firstRecruiter = new RecruiterDto();
         List<String> recruiterKeySkills = new ArrayList<>();
         recruiterKeySkills.add("Java");
+
+        List<String> recruiterOtherSkills = new ArrayList<>();
+        recruiterOtherSkills.add("Js");
+        recruiterOtherSkills.add("CSS");
+
         SkillsDto skillsDto = new SkillsDto();
         skillsDto.setKeySkills(recruiterKeySkills);
+        skillsDto.setOtherSkills(recruiterOtherSkills);
         firstRecruiter.setRecruiterSkills(skillsDto);
+        firstRecruiter.setExperienceYears(5);
         recruiters.add(firstRecruiter);
 
         SkillsChecker skills = new SkillsChecker(candidate, recruiters);
 
         //When
-        Set<Recruiter> competentRecruiters = skills.getTechnicallyCompetentRecruiters();
+        List<RecruiterDto> competentRecruiters = skills.getTechnicallyCompetentRecruitersSortByOtherSkills();
 
         //Then
-        List<Recruiter> result = new ArrayList<>();
+        List<RecruiterDto> result = new ArrayList<>();
         result.add(firstRecruiter);
         Assert.assertEquals(competentRecruiters, result);
     }
+
+    // Add test recruiter experience years < candidat experience years
+    // Add test key skill not matching
 
     @Test
     public void return_competent_recruiters_sorted_by_their_other_skills(){
@@ -57,10 +73,12 @@ public class SkillsCheckerShould {
         candidateSkills.setOtherSkills(otherSkills);
         CandidateDto candidate = new CandidateDto();
         candidate.setSkills(candidateSkills);
+        candidate.setExperienceYears(1);
 
         List<RecruiterDto> recruiters = new ArrayList<>();
         RecruiterDto firstRecruiter = new RecruiterDto();
         RecruiterDto secondRecruiter = new RecruiterDto();
+        RecruiterDto thirdRecruiter = new RecruiterDto();
 
         List<String> firstRecruiterKeySkills = new ArrayList<>();
         firstRecruiterKeySkills.add("Java");
@@ -73,36 +91,48 @@ public class SkillsCheckerShould {
         secondRecruiterKeySkills.add("Java");
 
         List<String> secondRecruiterOtherSkills = new ArrayList<>();
-        secondRecruiterOtherSkills.add("Js");
+        secondRecruiterOtherSkills.add("DevOps");
         secondRecruiterOtherSkills.add("DotNet");
+
+        List<String> thirdRecruiterKeySkills = new ArrayList<>();
+        thirdRecruiterKeySkills.add("Java");
+
+        List<String> thirdRecruiterOtherSkills = new ArrayList<>();
+        thirdRecruiterOtherSkills.add("DotNet");
+        thirdRecruiterOtherSkills.add("HTML5");
 
         SkillsDto firstRecruiterSkillsDto = new SkillsDto();
         firstRecruiterSkillsDto.setKeySkills(firstRecruiterKeySkills);
         firstRecruiterSkillsDto.setOtherSkills(firstRecruiterOtherSkills);
         firstRecruiter.setRecruiterSkills(firstRecruiterSkillsDto);
+        firstRecruiter.setExperienceYears(10);
 
         SkillsDto secondRecruiterSkillsDto = new SkillsDto();
         secondRecruiterSkillsDto.setKeySkills(secondRecruiterKeySkills);
         secondRecruiterSkillsDto.setOtherSkills(secondRecruiterOtherSkills);
         secondRecruiter.setRecruiterSkills(secondRecruiterSkillsDto);
+        secondRecruiter.setExperienceYears(5);
+
+        SkillsDto thirdRecruiterSkillsDto = new SkillsDto();
+        thirdRecruiterSkillsDto.setKeySkills(thirdRecruiterKeySkills);
+        thirdRecruiterSkillsDto.setOtherSkills(thirdRecruiterOtherSkills);
+        thirdRecruiter.setRecruiterSkills(thirdRecruiterSkillsDto);
+        thirdRecruiter.setExperienceYears(7);
 
         recruiters.add(firstRecruiter);
         recruiters.add(secondRecruiter);
+        recruiters.add(thirdRecruiter);
         SkillsChecker skills = new SkillsChecker(candidate, recruiters);
 
         //When
-        Set<Recruiter> result = skills.getTechnicallyCompetentRecruiters();
+        List<RecruiterDto> result = skills.getTechnicallyCompetentRecruitersSortByOtherSkills();
 
         //Then
         List<RecruiterDto> expected = new ArrayList<>();
         expected.add(secondRecruiter);
+        expected.add(thirdRecruiter);
         expected.add(firstRecruiter);
         Assert.assertEquals(expected, result);
-    }*/
-
-    //Todo : Add tests to verify all conditions
-    // refactor .add to Arrayslist
-
-
+    }
 }
 
