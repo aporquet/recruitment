@@ -2,6 +2,7 @@ package model.skills;
 
 import common.CandidateDto;
 import common.RecruiterDto;
+import common.SkillsDto;
 
 import java.util.*;
 import static java.util.stream.Collectors.toList;
@@ -16,7 +17,9 @@ public class SkillsChecker {
     }
 
     public List<RecruiterDto> getTechnicallyCompetentRecruitersSortByOtherSkills() {
-        Candidate candidate = new Candidate(candidateDto.getCandidateSkills(), candidateDto.getExperienceYears());
+        SkillsDto candidateSkillsDto = candidateDto.getCandidateSkills();
+        Skills candidateSkills = new Skills(candidateSkillsDto.getKeySkills(), candidateSkillsDto.getOtherSkills());
+        Candidate candidate = new Candidate(candidateSkills, candidateDto.getExperienceYears());
         List<RecruiterDto> competentRecruiter = new ArrayList<>();
         competentRecruiter.addAll(recruiters);
         for (RecruiterDto recruiterDto: recruiters){

@@ -1,6 +1,5 @@
 package model.skills;
 
-import common.RecruiterDto;
 import common.SkillsDto;
 
 import java.util.List;

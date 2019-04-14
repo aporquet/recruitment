@@ -1,15 +1,13 @@
 package model.skills;
 
-import common.SkillsDto;
-
 import java.util.List;
 
 class Candidate {
 
-    private SkillsDto candidateSkills;
+    private Skills candidateSkills;
     private int experienceYears;
 
-    Candidate(SkillsDto skillsCandidate, int experienceYears) {
+    Candidate(Skills skillsCandidate, int experienceYears) {
         this.candidateSkills = skillsCandidate;
         this.experienceYears = experienceYears;
     }

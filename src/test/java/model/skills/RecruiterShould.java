@@ -26,7 +26,9 @@ public class RecruiterShould {
         candidateKeySkills = new ArrayList<>();
         this.candidateSkills = new SkillsDto();
         candidateSkills.setKeySkills(candidateKeySkills);
-        candidate = new Candidate(candidateSkills, 3);
+        List<String> candidateOtherSkills = new ArrayList<>();
+        Skills skills = new Skills(candidateKeySkills, candidateOtherSkills);
+        candidate = new Candidate(skills, 3);
     }
 
     @Test
