@@ -56,6 +56,51 @@ public class SkillsCheckerShould {
     }
 
     @Test
+    public void not_return_recruiters_if_their_key_skills_not_matching_with_candidate_key_skills(){
+        //Given
+        List<String> keySkills = new ArrayList<>();
+        keySkills.add("VueJs");
+
+        List<String> otherSkills = new ArrayList<>();
+        otherSkills.add("DotNet");
+        otherSkills.add("DevOps");
+
+        SkillsDto candidateSkills = new SkillsDto();
+        candidateSkills.setKeySkills(keySkills);
+        candidateSkills.setOtherSkills(otherSkills);
+        CandidateDto candidate = new CandidateDto();
+        candidate.setSkills(candidateSkills);
+        candidate.setExperienceYears(3);
+
+        List<RecruiterDto> recruiters = new ArrayList<>();
+        RecruiterDto firstRecruiter = new RecruiterDto();
+        List<String> recruiterKeySkills = new ArrayList<>();
+        recruiterKeySkills.add("Java");
+        recruiterKeySkills.add("Ruby");
+
+        List<String> recruiterOtherSkills = new ArrayList<>();
+        recruiterOtherSkills.add("Js");
+        recruiterOtherSkills.add("VueJs");
+
+        SkillsDto skillsDto = new SkillsDto();
+        skillsDto.setKeySkills(recruiterKeySkills);
+        skillsDto.setOtherSkills(recruiterOtherSkills);
+        firstRecruiter.setRecruiterSkills(skillsDto);
+        firstRecruiter.setExperienceYears(5);
+        recruiters.add(firstRecruiter);
+
+        SkillsChecker skills = new SkillsChecker(candidate, recruiters);
+
+        //When
+        List<RecruiterDto> competentRecruiters = skills.getTechnicallyCompetentRecruitersSortByOtherSkills();
+
+        //Then
+        List<RecruiterDto> result = new ArrayList<>();
+        result.add(firstRecruiter);
+        Assert.assertNotEquals(competentRecruiters, result);
+    }
+
+    @Test
     public void not_return_recruiters_if_candidate_experience_years_are_superiors(){
         //Given
         List<String> keySkills = new ArrayList<>();
