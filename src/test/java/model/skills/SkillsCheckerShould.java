@@ -55,7 +55,84 @@ public class SkillsCheckerShould {
         Assert.assertEquals(competentRecruiters, result);
     }
 
-    // Add test recruiter experience years < candidat experience years
+    @Test
+    public void not_return_recruiters_if_candidate_experience_years_are_superiors(){
+        //Given
+        List<String> keySkills = new ArrayList<>();
+        keySkills.add("Java");
+
+        List<String> otherSkills = new ArrayList<>();
+        otherSkills.add("DotNet");
+        otherSkills.add("DevOps");
+
+        SkillsDto candidateSkills = new SkillsDto();
+        candidateSkills.setKeySkills(keySkills);
+        candidateSkills.setOtherSkills(otherSkills);
+        CandidateDto candidate = new CandidateDto();
+        candidate.setSkills(candidateSkills);
+        candidate.setExperienceYears(12);
+
+        List<RecruiterDto> recruiters = new ArrayList<>();
+        RecruiterDto firstRecruiter = new RecruiterDto();
+        RecruiterDto secondRecruiter = new RecruiterDto();
+        RecruiterDto thirdRecruiter = new RecruiterDto();
+
+        List<String> firstRecruiterKeySkills = new ArrayList<>();
+        firstRecruiterKeySkills.add("Java");
+
+        List<String> firstRecruiterOtherSkills = new ArrayList<>();
+        firstRecruiterOtherSkills.add("BigData");
+        firstRecruiterOtherSkills.add("Cloud");
+
+        List<String> secondRecruiterKeySkills = new ArrayList<>();
+        secondRecruiterKeySkills.add("Java");
+
+        List<String> secondRecruiterOtherSkills = new ArrayList<>();
+        secondRecruiterOtherSkills.add("DevOps");
+        secondRecruiterOtherSkills.add("DotNet");
+
+        List<String> thirdRecruiterKeySkills = new ArrayList<>();
+        thirdRecruiterKeySkills.add("Java");
+
+        List<String> thirdRecruiterOtherSkills = new ArrayList<>();
+        thirdRecruiterOtherSkills.add("DotNet");
+        thirdRecruiterOtherSkills.add("HTML5");
+
+        SkillsDto firstRecruiterSkillsDto = new SkillsDto();
+        firstRecruiterSkillsDto.setKeySkills(firstRecruiterKeySkills);
+        firstRecruiterSkillsDto.setOtherSkills(firstRecruiterOtherSkills);
+        firstRecruiter.setRecruiterSkills(firstRecruiterSkillsDto);
+        firstRecruiter.setExperienceYears(3);
+
+        SkillsDto secondRecruiterSkillsDto = new SkillsDto();
+        secondRecruiterSkillsDto.setKeySkills(secondRecruiterKeySkills);
+        secondRecruiterSkillsDto.setOtherSkills(secondRecruiterOtherSkills);
+        secondRecruiter.setRecruiterSkills(secondRecruiterSkillsDto);
+        secondRecruiter.setExperienceYears(8);
+
+        SkillsDto thirdRecruiterSkillsDto = new SkillsDto();
+        thirdRecruiterSkillsDto.setKeySkills(thirdRecruiterKeySkills);
+        thirdRecruiterSkillsDto.setOtherSkills(thirdRecruiterOtherSkills);
+        thirdRecruiter.setRecruiterSkills(thirdRecruiterSkillsDto);
+        thirdRecruiter.setExperienceYears(5);
+
+        recruiters.add(firstRecruiter);
+        recruiters.add(secondRecruiter);
+        recruiters.add(thirdRecruiter);
+        SkillsChecker skills = new SkillsChecker(candidate, recruiters);
+
+        //When
+        List<RecruiterDto> result = skills.getTechnicallyCompetentRecruitersSortByOtherSkills();
+
+        //Then
+        List<RecruiterDto> expected = new ArrayList<>();
+        expected.add(secondRecruiter);
+        expected.add(thirdRecruiter);
+        expected.add(firstRecruiter);
+        Assert.assertNotEquals(expected, result);
+        Assert.assertEquals(result.size(), 0);
+    }
+
     // Add test key skill not matching
 
     @Test
