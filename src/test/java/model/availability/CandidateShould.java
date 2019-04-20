@@ -59,7 +59,9 @@ public class CandidateShould {
     @Test
     public void not_find_recruiters_available_if_his_availability_is_not_in_the_current_month(){
         //Given
-        LocalDateTime availability = LocalDateTime.of(2019, Month.DECEMBER, 13, 18, 30);
+        LocalDateTime currentDate =  LocalDateTime.now();
+        int CandidateMonthAvailability = currentDate.getMonthValue() + 1;
+        LocalDateTime availability = LocalDateTime.of(2019, CandidateMonthAvailability, 13, 18, 30);
         Candidate candidate = new Candidate(availability);
 
         //When
@@ -69,5 +71,19 @@ public class CandidateShould {
         Assert.assertFalse(IsCurrentMonth);
     }
 
+    @Test
+    public void find_recruiters_available_if_his_availability_is_in_the_current_month(){
+        //Given
+        LocalDateTime currentDate =  LocalDateTime.now();
+        int CandidateMonthAvailability = currentDate.getMonthValue();
+        LocalDateTime availability = LocalDateTime.of(2019, CandidateMonthAvailability, 13, 18, 30);
+        Candidate candidate = new Candidate(availability);
+
+        //When
+        boolean IsCurrentMonth = candidate.availabilityIsInCurrentMonth(candidate);
+
+        //Then
+        Assert.assertTrue(IsCurrentMonth);
+    }
 
 }

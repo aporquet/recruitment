@@ -30,6 +30,7 @@ public class AvailableRecruiterShould {
 
         //Then
         Assert.assertEquals(firstAvailableRecruiter, firstRecruiter);
+
     }
 
     @Test(expected = AnyRecruiterAvailableException.class)
@@ -52,5 +53,5 @@ public class AvailableRecruiterShould {
 
     }
 
-    //Todo : Verify all tests exists
+
 }
