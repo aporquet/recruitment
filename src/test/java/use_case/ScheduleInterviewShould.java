@@ -57,7 +57,7 @@ public class ScheduleInterviewShould {
 
     @Test
     public void save_new_interview(){
-        //verify(interviewRespository).save(Mockito.any(InterviewDto.class));
+        verify(interviewRespository).save(Mockito.any(InterviewDto.class));
     }
 
 }

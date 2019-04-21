@@ -1,5 +1,6 @@
 package use_case;
 
+import common.InterviewDto;
 import common.RecruiterDto;
 import model.availability.AvailableRecruiter;
 import model.skills.SkillsChecker;
@@ -28,7 +29,7 @@ public class ScheduleInterview {
         recruitersRepository.getRecruiters();
         skills.getTechnicallyCompetentRecruitersSortByOtherSkills();
         firstAvailableRecruiter = availability.getFirstAvailableRecruiter();
-        //interviewRespository.save();
+        interviewRespository.save(new InterviewDto());
     }
 
 }
