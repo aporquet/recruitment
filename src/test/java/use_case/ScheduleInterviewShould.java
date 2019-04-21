@@ -1,10 +1,12 @@
 package use_case;
 
+import common.InterviewDto;
 import common.RecruiterDto;
 import model.availability.AvailableRecruiter;
 import model.skills.SkillsChecker;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.util.UUID;
 
@@ -19,15 +21,17 @@ public class ScheduleInterviewShould {
     private SkillsChecker skills;
     private AvailableRecruiter availability;
     private ScheduleInterview interview;
+    private InterviewRespository interviewRespository;
 
     @Before
     public void init() {
         candidateRepository = mock(CandidateRepository.class);
         recruitersRepository = mock(RecruitersRepository.class);
+        interviewRespository = mock(InterviewRespository.class);
         availability = mock(AvailableRecruiter.class);
         skills = mock(SkillsChecker.class);
         idCandidate = UUID.randomUUID();
-        interview = new ScheduleInterview(candidateRepository, recruitersRepository, skills, availability);
+        interview = new ScheduleInterview(candidateRepository, recruitersRepository, skills, availability, interviewRespository);
         interview.schedule(idCandidate);
     }
 
@@ -49,6 +53,11 @@ public class ScheduleInterviewShould {
     @Test
     public void call_agregate_availability (){
        verify(availability).getFirstAvailableRecruiter();
+    }
+
+    @Test
+    public void save_new_interview(){
+        //verify(interviewRespository).save(Mockito.any(InterviewDto.class));
     }
 
 }

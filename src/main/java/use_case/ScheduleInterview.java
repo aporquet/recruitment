@@ -12,13 +12,15 @@ public class ScheduleInterview {
     private RecruitersRepository recruitersRepository;
     private SkillsChecker skills;
     private AvailableRecruiter availability;
+    private InterviewRespository interviewRespository;
     private RecruiterDto firstAvailableRecruiter;
 
-    public ScheduleInterview(CandidateRepository candidateRepository, RecruitersRepository recruitersRepository, SkillsChecker skills, AvailableRecruiter availability){
+    public ScheduleInterview(CandidateRepository candidateRepository, RecruitersRepository recruitersRepository, SkillsChecker skills, AvailableRecruiter availability, InterviewRespository interviewRespository){
         this.candidateRepository = candidateRepository;
         this.recruitersRepository = recruitersRepository;
         this.skills = skills;
         this.availability = availability;
+        this.interviewRespository = interviewRespository;
     }
 
     public void schedule(UUID candidateId) {
@@ -26,9 +28,7 @@ public class ScheduleInterview {
         recruitersRepository.getRecruiters();
         skills.getTechnicallyCompetentRecruitersSortByOtherSkills();
         firstAvailableRecruiter = availability.getFirstAvailableRecruiter();
+        //interviewRespository.save();
     }
 
-    public RecruiterDto getFirstAvailableRecruiter() {
-        return firstAvailableRecruiter;
-    }
 }
