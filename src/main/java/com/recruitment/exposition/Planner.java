@@ -6,6 +6,7 @@ import use_case.ScheduleInterview;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class Planner {
@@ -22,15 +23,14 @@ public class Planner {
     }
 
     @PostMapping("/ScheduleInterview")
-    public ScheduleInterview interview (@RequestParam int idCandidat, LocalDateTime date){
-        if(idCandidat <= 0){
+    public void interview (@RequestParam UUID idCandidat, LocalDateTime date){
+        if(idCandidat.equals(0)){
             // TODO: create Error Common Class -> idCandidat is not valid
         }
         if(date.compareTo(LocalDateTime.now()) < 0){
             // TODO: create Error Common Class -> interview date is anterior than current date
         }
+        repository.schedule(idCandidat);
     }
-
-
 
 }
