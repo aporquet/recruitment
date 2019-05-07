@@ -1,11 +1,11 @@
 package com.recruitment.exposition;
 
-import com.sun.xml.internal.bind.v2.TODO;
+import common.CandidatNotExistException;
+import common.InterviewDateIsPriorThanCurrentDateException;
 import org.springframework.web.bind.annotation.*;
 import use_case.ScheduleInterview;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -17,7 +17,7 @@ public class Planner {
         this.repository = repository;
     }
 
-    @RequestMapping(value = "/Interviews", method = RequestMethod.POST)
+    @RequestMapping(value = "/Interviews", method = RequestMethod.GET)
     public String listInterviews(){
         return "Interviews list";
     }
@@ -25,12 +25,14 @@ public class Planner {
     @PostMapping("/ScheduleInterview")
     public void interview (@RequestParam UUID idCandidat, LocalDateTime date){
         if(idCandidat.equals(0)){
-            // TODO: create Error Common Class -> idCandidat is not valid
+            throw new CandidatNotExistException();
         }
         if(date.compareTo(LocalDateTime.now()) < 0){
-            // TODO: create Error Common Class -> interview date is anterior than current date
+            throw new InterviewDateIsPriorThanCurrentDateException();
         }
         repository.schedule(idCandidat);
     }
+
+
 
 }
