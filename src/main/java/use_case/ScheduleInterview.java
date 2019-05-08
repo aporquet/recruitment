@@ -1,34 +1,32 @@
 package use_case;
 
 import common.InterviewDto;
-import common.RecruiterDto;
-import model.availability.AvailableRecruiter;
-import model.skills.SkillsChecker;
+import infra.CandidateRepositoryImpl;
+import infra.InterviewRepositoryImpl;
+import infra.RecruitersRepositoryImpl;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class ScheduleInterview {
 
-    private CandidateRepository candidateRepository;
-    private RecruitersRepository recruitersRepository;
-    private SkillsChecker skills;
-    private AvailableRecruiter availability;
-    private InterviewRespository interviewRespository;
-    private RecruiterDto firstAvailableRecruiter;
+    private CandidateRepositoryImpl candidateRepository;
+    private RecruitersRepositoryImpl recruitersRepository;
+    private InterviewRepositoryImpl interviewRespository;
+    private LocalDateTime date;
+    private UUID candidateId;
 
-    public ScheduleInterview(CandidateRepository candidateRepository, RecruitersRepository recruitersRepository, SkillsChecker skills, AvailableRecruiter availability, InterviewRespository interviewRespository){
+    public ScheduleInterview(CandidateRepositoryImpl candidateRepository, RecruitersRepositoryImpl recruitersRepository, InterviewRepositoryImpl interviewRespository, LocalDateTime date, UUID candidateId){
         this.candidateRepository = candidateRepository;
         this.recruitersRepository = recruitersRepository;
-        this.skills = skills;
-        this.availability = availability;
         this.interviewRespository = interviewRespository;
+        this.date = date;
+        this.candidateId = candidateId;
     }
 
     public void schedule(UUID candidateId) {
         candidateRepository.getCandidateById(candidateId);
         recruitersRepository.getRecruiters();
-        skills.getTechnicallyCompetentRecruitersSortByOtherSkills();
-        firstAvailableRecruiter = availability.getFirstAvailableRecruiter();
         interviewRespository.save(new InterviewDto());
     }
 

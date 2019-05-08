@@ -1,13 +1,16 @@
 package use_case;
 
 import common.InterviewDto;
-import common.RecruiterDto;
+import infra.CandidateRepositoryImpl;
+import infra.InterviewRepositoryImpl;
+import infra.RecruitersRepositoryImpl;
 import model.availability.AvailableRecruiter;
 import model.skills.SkillsChecker;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static org.mockito.Mockito.mock;
@@ -15,23 +18,20 @@ import static org.mockito.Mockito.verify;
 
 public class ScheduleInterviewShould {
 
-    private CandidateRepository candidateRepository;
-    private RecruitersRepository recruitersRepository;
+    private CandidateRepositoryImpl candidateRepository;
+    private RecruitersRepositoryImpl recruitersRepository;
+    private InterviewRepositoryImpl interviewRespository;
     private UUID idCandidate;
-    private SkillsChecker skills;
-    private AvailableRecruiter availability;
     private ScheduleInterview interview;
-    private InterviewRespository interviewRespository;
+    private LocalDateTime date;
 
     @Before
     public void init() {
-        candidateRepository = mock(CandidateRepository.class);
-        recruitersRepository = mock(RecruitersRepository.class);
-        interviewRespository = mock(InterviewRespository.class);
-        availability = mock(AvailableRecruiter.class);
-        skills = mock(SkillsChecker.class);
+        candidateRepository = mock(CandidateRepositoryImpl.class);
+        recruitersRepository = mock(RecruitersRepositoryImpl.class);
+        interviewRespository = mock(InterviewRepositoryImpl.class);
         idCandidate = UUID.randomUUID();
-        interview = new ScheduleInterview(candidateRepository, recruitersRepository, skills, availability, interviewRespository);
+        interview = new ScheduleInterview(candidateRepository, recruitersRepository, interviewRespository, date, idCandidate);
         interview.schedule(idCandidate);
     }
 
@@ -46,18 +46,6 @@ public class ScheduleInterviewShould {
     }
 
     @Test
-    public void call_agregate_skills (){
-        verify(skills).getTechnicallyCompetentRecruitersSortByOtherSkills();
-    }
-
-    @Test
-    public void call_agregate_availability (){
-       verify(availability).getFirstAvailableRecruiter();
-    }
-
-    @Test
-    public void save_new_interview(){
-        verify(interviewRespository).save(Mockito.any(InterviewDto.class));
-    }
+    public void save_new_interview(){ verify(interviewRespository).save(Mockito.any(InterviewDto.class)); }
 
 }
