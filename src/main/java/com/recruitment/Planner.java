@@ -1,4 +1,4 @@
-package com.recruitment.exposition;
+package com.recruitment;
 
 import common.CandidatNotExistException;
 import common.InterviewDateIsPriorThanCurrentDateException;
@@ -21,17 +21,17 @@ public class Planner {
 
     private ScheduleInterview scheduler = new ScheduleInterview(candidateRepository, recruitersRepository, interviewRespository, date, candidateId);
 
-    @RequestMapping(value = "/Interviews", method = RequestMethod.GET)
+    @RequestMapping(value = "/interview", method = RequestMethod.GET)
     public String listInterviews(){
         return "Interviews list";
     }
 
-    @PostMapping("/ScheduleInterview")
+    @PostMapping("/schedule")
     public void scheduleInterview (@RequestParam UUID idCandidat, LocalDateTime date){
-        if(idCandidat.equals(0)){
+        if(idCandidat == null){
             throw new CandidatNotExistException();
         }
-        if(date.compareTo(LocalDateTime.now()) < 0){
+        if(date.compareTo(LocalDateTime.now()) <= 0){
             throw new InterviewDateIsPriorThanCurrentDateException();
         }
         scheduler.schedule(idCandidat);
