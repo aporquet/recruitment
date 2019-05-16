@@ -4,15 +4,11 @@ import common.InterviewDto;
 import infra.CandidateRepositoryImpl;
 import infra.InterviewRepositoryImpl;
 import infra.RecruitersRepositoryImpl;
-import model.availability.AvailableRecruiter;
-import model.skills.SkillsChecker;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 

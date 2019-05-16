@@ -21,11 +21,6 @@ public class Planner {
 
     private ScheduleInterview scheduler = new ScheduleInterview(candidateRepository, recruitersRepository, interviewRespository, date, candidateId);
 
-    @RequestMapping(value = "/interview", method = RequestMethod.GET)
-    public String listInterviews(){
-        return "Interviews list";
-    }
-
     @PostMapping("/schedule")
     public void scheduleInterview (@RequestParam UUID idCandidat, LocalDateTime date){
         if(idCandidat == null){
