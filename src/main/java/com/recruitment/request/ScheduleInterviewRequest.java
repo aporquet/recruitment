@@ -1,6 +1,7 @@
 package com.recruitment.request;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 public class ScheduleInterviewRequest extends BaseRequest{
@@ -28,4 +29,5 @@ public class ScheduleInterviewRequest extends BaseRequest{
         }
         return true;
     }
+
 }

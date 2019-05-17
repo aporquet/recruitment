@@ -1,4 +1,4 @@
-package com.recruitment.request;
+package com.recruitment.response;
 
 public abstract class BaseResponse {
 
