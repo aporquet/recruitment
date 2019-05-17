@@ -1,5 +1,6 @@
 package com.recruitment;
 
+import com.recruitment.exposition.Planner;
 import common.CandidatNotExistException;
 import common.InterviewDateIsPriorThanCurrentDateException;
 import org.junit.Test;
@@ -27,13 +28,8 @@ public class PlannerShould {
         planner.scheduleInterview(idCandidate, date);
     }
 
-/*    @Test
-    public void call_application_layer_if_parameters_are_valid(){
-        scheduleInterview = mock(ScheduleInterview.class);
-        Planner planner = new Planner();
-        LocalDateTime date = LocalDateTime.now().plusMonths(1);;
-        UUID idCandidate = UUID.randomUUID();
-        planner.scheduleInterview(idCandidate, date);
-        verify(scheduleInterview).schedule(Mockito.any(UUID.class));
-    }*/
+    /*INTEGRATION */
+    @Test public void schedule_interview(){
+        return;
+    }
 }
