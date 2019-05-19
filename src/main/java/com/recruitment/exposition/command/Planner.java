@@ -1,7 +1,8 @@
-package com.recruitment.exposition;
+package com.recruitment.exposition.command;
 
-import com.recruitment.response.BaseResponse;
+import com.fasterxml.jackson.databind.*;
 import com.recruitment.request.ScheduleInterviewRequest;
+import com.recruitment.response.ScheduleInterviewResponse;
 import common.CandidatNotExistException;
 import common.InterviewDateIsPriorThanCurrentDateException;
 import infra.CandidateRepositoryImpl;
@@ -23,20 +24,33 @@ public class Planner {
 
     private ScheduleInterview scheduler = new ScheduleInterview(candidateRepository, recruitersRepository, interviewRespository, date, candidateId);
 
-    @GetMapping("/interviews")
-    public String getInterviews (){
-        return "Interviews";
-    }
-
     @PostMapping("/schedule")
-    public void scheduleInterview (UUID candidateId, LocalDateTime date) {
-        if(candidateId == null){
+    public void scheduleInterview (ScheduleInterviewRequest request, ScheduleInterviewResponse response) {
+        if(request.getIdCandidat() == null){
+            response.setStatus("404");
             throw new CandidatNotExistException();
         }
         if(date.compareTo(LocalDateTime.now()) <= 0){
+            response.setStatus("404");
             throw new InterviewDateIsPriorThanCurrentDateException();
         }
-        scheduler.schedule(candidateId);
+        response.setStatus("200");
+        response.setType("application/json");
+        //TODO : Check conditions
+        response.work();
+        scheduler.schedule(request.getIdCandidat());
+    }
+
+    private void mapRequestDatas(ScheduleInterviewRequest request) {
+        try {
+            if (request.isValid()){
+                ObjectMapper mapper = new ObjectMapper();
+                request.setDate(mapper.readValue(, LocalDateTime.class));
+                request.setIdCandidat(mapper.readValue(, UUID.class));
+            }
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        }
     }
 
 }

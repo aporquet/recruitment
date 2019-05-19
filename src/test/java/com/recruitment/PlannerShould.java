@@ -1,6 +1,6 @@
 package com.recruitment;
 
-import com.recruitment.exposition.Planner;
+import com.recruitment.exposition.command.Planner;
 import common.CandidatNotExistException;
 import common.InterviewDateIsPriorThanCurrentDateException;
 import org.junit.Test;

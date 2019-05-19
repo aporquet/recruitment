@@ -1,10 +1,9 @@
 package com.recruitment.request;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
-public class ScheduleInterviewRequest extends BaseRequest{
+public class  ScheduleInterviewRequest extends BaseRequest{
 
     private UUID idCandidat;
     private LocalDateTime date;
@@ -20,6 +19,14 @@ public class ScheduleInterviewRequest extends BaseRequest{
 
     public LocalDateTime getDate() {
         return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public void setIdCandidat(UUID idCandidat) {
+        this.idCandidat = idCandidat;
     }
 
     @Override
