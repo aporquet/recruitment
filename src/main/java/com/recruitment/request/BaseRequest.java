@@ -1,9 +1,7 @@
 package com.recruitment.request;
 
-public abstract class BaseRequest {
+public interface BaseRequest {
 
-    protected String body;
-
-    public abstract boolean isValid();
+    boolean isValid();
 
 }

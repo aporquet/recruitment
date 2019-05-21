@@ -1,13 +1,12 @@
 package com.recruitment.exposition.command;
 
-import com.fasterxml.jackson.databind.*;
 import com.recruitment.request.ScheduleInterviewRequest;
-import com.recruitment.response.ScheduleInterviewResponse;
-import common.CandidatNotExistException;
-import common.InterviewDateIsPriorThanCurrentDateException;
 import infra.CandidateRepositoryImpl;
 import infra.InterviewRepositoryImpl;
 import infra.RecruitersRepositoryImpl;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import use_case.ScheduleInterview;
 import java.time.LocalDateTime;
@@ -25,32 +24,22 @@ public class Planner {
     private ScheduleInterview scheduler = new ScheduleInterview(candidateRepository, recruitersRepository, interviewRespository, date, candidateId);
 
     @PostMapping("/schedule")
-    public void scheduleInterview (ScheduleInterviewRequest request, ScheduleInterviewResponse response) {
-        if(request.getIdCandidat() == null){
-            response.setStatus("404");
-            throw new CandidatNotExistException();
-        }
-        if(date.compareTo(LocalDateTime.now()) <= 0){
-            response.setStatus("404");
-            throw new InterviewDateIsPriorThanCurrentDateException();
-        }
-        response.setStatus("200");
-        response.setType("application/json");
-        //TODO : Check conditions
-        response.work();
-        scheduler.schedule(request.getIdCandidat());
-    }
-
-    private void mapRequestDatas(ScheduleInterviewRequest request) {
-        try {
-            if (request.isValid()){
-                ObjectMapper mapper = new ObjectMapper();
-                request.setDate(mapper.readValue(, LocalDateTime.class));
-                request.setIdCandidat(mapper.readValue(, UUID.class));
+    public ResponseEntity<ScheduleInterview> scheduleInterview (RequestEntity<ScheduleInterviewRequest> request) {
+        ResponseEntity<ScheduleInterview> responseEntity = new ResponseEntity("", HttpStatus.NO_CONTENT);
+        if(request.getBody().isValid()) {
+            if (request.getBody().getIdCandidat() == null) {
+                responseEntity.badRequest().body("Candidate doesn't exist");
+                responseEntity.status(HttpStatus.BAD_REQUEST);
             }
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
+            if (date.compareTo(LocalDateTime.now()) <= 0) {
+                responseEntity.badRequest().body("Interview date is prior than current date exception");
+                responseEntity.status(HttpStatus.BAD_REQUEST);
+            }
+            scheduler.schedule(request.getBody().getIdCandidat());
+            responseEntity.status(HttpStatus.ACCEPTED);
+            responseEntity.badRequest().body("Interview schedule is a success");
         }
+        return responseEntity;
     }
 
 }

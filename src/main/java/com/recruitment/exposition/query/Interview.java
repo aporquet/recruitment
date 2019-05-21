@@ -1,7 +1,6 @@
 package com.recruitment.exposition.query;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 
 public class Interview {
 
@@ -9,5 +8,7 @@ public class Interview {
     public String getInterviews (){
         return "Interviews";
     }
+
+    /*TODO: CRUD INTERVIEWS*/
 
 }

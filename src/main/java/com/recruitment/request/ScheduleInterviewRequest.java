@@ -1,9 +1,11 @@
 package com.recruitment.request;
 
+import org.springframework.http.RequestEntity;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class  ScheduleInterviewRequest extends BaseRequest{
+public class  ScheduleInterviewRequest implements BaseRequest{
 
     private UUID idCandidat;
     private LocalDateTime date;
@@ -31,10 +33,9 @@ public class  ScheduleInterviewRequest extends BaseRequest{
 
     @Override
     public boolean isValid() {
-        if ((idCandidat) == UUID.fromString( "00000000-0000-0000-0000-000000000000" ) || (date) == null){
+        if ((this.idCandidat) == UUID.fromString( "00000000-0000-0000-0000-000000000000" ) || (date) == null){
             return false;
         }
         return true;
     }
-
 }
