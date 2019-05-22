@@ -1,6 +1,8 @@
 package common;
 
 public class CandidateDto {
+
+    private int idCandidate;
     private SkillsDto candidateSkills;
     private int experienceYears;
 
@@ -18,5 +20,9 @@ public class CandidateDto {
 
     public void setExperienceYears(int experienceYears) {
         this.experienceYears = experienceYears;
+    }
+
+    public int getIdCandidate() {
+        return this.idCandidate;
     }
 }

@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class RecruiterDto {
+
+    private int idRecruiter;
     private LocalDateTime availableDate;
     private List<LocalDateTime> recruiterAvailabilities;
     private SkillsDto recruiterSkills;
@@ -44,5 +46,9 @@ public class RecruiterDto {
 
     public void setExperienceYears(int experienceYears) {
         this.experienceYears = experienceYears;
+    }
+
+    public int getIdRecruiter() {
+        return this.idRecruiter;
     }
 }

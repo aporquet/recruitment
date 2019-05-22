@@ -1,11 +1,16 @@
 package use_case;
 
+import com.recruitment.exposition.query.Interview;
+import common.CandidateDto;
 import common.InterviewDto;
+import common.RecruiterDto;
 import infra.CandidateRepositoryImpl;
 import infra.InterviewRepositoryImpl;
 import infra.RecruitersRepositoryImpl;
+import model.skills.SkillsChecker;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 public class ScheduleInterview {
@@ -25,9 +30,12 @@ public class ScheduleInterview {
     }
 
     public void schedule(UUID candidateId) {
-        candidateRepository.getCandidateById(candidateId);
-        recruitersRepository.getRecruiters();
-        interviewRespository.save(new InterviewDto());
+        CandidateDto candidate = candidateRepository.getCandidateById(candidateId);
+        List<RecruiterDto> recruiterDtoList = recruitersRepository.getRecruiters();
+        SkillsChecker skillsChecker = new SkillsChecker(candidate, recruiterDtoList);
+        List<RecruiterDto> competentRecruiters = skillsChecker.getTechnicallyCompetentRecruitersSortByOtherSkills();
+        InterviewDto interviewDto = new InterviewDto(candidate.getIdCandidate(), competentRecruiters.get(0).getIdRecruiter(), this.date);
+        interviewRespository.save(interviewDto);
     }
 
 }

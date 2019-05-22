@@ -23,6 +23,9 @@ class Candidate {
                 }
             }
         }
+        if (result.size() == 0){
+            throw new AnyRecruiterAvailableInSameTimeAsTheCandidateException();
+        }
         return result;
     }
 
@@ -30,6 +33,9 @@ class Candidate {
         LocalDateTime currentDate =  LocalDateTime.now();
         int currentMonth = currentDate.getMonthValue();
         int monthAvailable = candidate.availability.getMonthValue();
+        if(currentMonth != monthAvailable){
+            throw new CandidateAvailabilityIsNotInCurrentMonthException();
+        }
         return currentMonth == monthAvailable;
     }
 }
