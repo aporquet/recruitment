@@ -5,5 +5,7 @@ import common.InterviewDto;
 public interface InterviewRespository {
 
     void save(InterviewDto interviewDto);
+
+    String getInterviews();
 }
 

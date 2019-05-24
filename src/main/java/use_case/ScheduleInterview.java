@@ -1,6 +1,5 @@
 package use_case;
 
-import com.recruitment.exposition.query.Interview;
 import common.CandidateDto;
 import common.InterviewDto;
 import common.RecruiterDto;

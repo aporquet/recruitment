@@ -9,4 +9,10 @@ public class InterviewRepositoryImpl implements InterviewRespository {
     public void save(InterviewDto interviewDto) {
 
     }
+
+    @Override
+    public String getInterviews() {
+        return "Interviews";
+    }
+
 }
