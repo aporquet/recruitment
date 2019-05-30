@@ -3,9 +3,9 @@ package use_case;
 import common.CandidateDto;
 import common.InterviewDto;
 import common.RecruiterDto;
-import infra.CandidateRepositoryImpl;
-import infra.InterviewRepositoryImpl;
-import infra.RecruitersRepositoryImpl;
+import infra.mySQL.CandidateRepositoryImpl;
+import infra.mySQL.InterviewRepositoryImpl;
+import infra.mySQL.RecruitersRepositoryImpl;
 import model.skills.SkillsChecker;
 
 import java.time.LocalDateTime;

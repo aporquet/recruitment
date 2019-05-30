@@ -1,9 +1,9 @@
 package com.recruitment.exposition.command;
 
 import com.recruitment.request.ScheduleInterviewRequest;
-import infra.CandidateRepositoryImpl;
-import infra.InterviewRepositoryImpl;
-import infra.RecruitersRepositoryImpl;
+import infra.mySQL.CandidateRepositoryImpl;
+import infra.mySQL.InterviewRepositoryImpl;
+import infra.mySQL.RecruitersRepositoryImpl;
 import model.availability.AnyRecruiterAvailableException;
 import model.availability.AnyRecruiterAvailableInSameTimeAsTheCandidateException;
 import model.availability.CandidateAvailabilityIsNotInCurrentMonthException;
@@ -40,8 +40,7 @@ public class Planner {
                 responseEntity.badRequest().body("Candidate availability is not in the current month");
                 responseEntity.status(HttpStatus.BAD_REQUEST);
             }
-            responseEntity.status(HttpStatus.ACCEPTED);
-            responseEntity.badRequest().body("Interview schedule is a success");
+            responseEntity.status(HttpStatus.ACCEPTED).body("Interview schedule is a success");;
         }
         return responseEntity;
     }

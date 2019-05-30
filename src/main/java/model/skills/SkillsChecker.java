@@ -17,7 +17,7 @@ public class SkillsChecker {
     }
 
     public List<RecruiterDto> getTechnicallyCompetentRecruitersSortByOtherSkills() {
-        SkillsDto candidateSkillsDto = candidateDto.getCandidateSkills();
+         SkillsDto candidateSkillsDto = candidateDto.getCandidateSkills();
         Skills candidateSkills = new Skills(candidateSkillsDto.getKeySkills(), candidateSkillsDto.getOtherSkills());
         Candidate candidate = new Candidate(candidateSkills, candidateDto.getExperienceYears());
         List<RecruiterDto> competentRecruiter = new ArrayList<>();

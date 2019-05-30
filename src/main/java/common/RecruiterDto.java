@@ -2,14 +2,19 @@ package common;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 public class RecruiterDto {
 
-    private int idRecruiter;
+    private int id;
     private LocalDateTime availableDate;
     private List<LocalDateTime> recruiterAvailabilities;
     private SkillsDto recruiterSkills;
     private int experienceYears;
+
+    public RecruiterDto(UUID id, String firstName, String lastName, String mail) {
+
+    }
 
     public void setAvailability(LocalDateTime availableDate) {
         this.availableDate = availableDate;
@@ -49,6 +54,6 @@ public class RecruiterDto {
     }
 
     public int getIdRecruiter() {
-        return this.idRecruiter;
+        return this.id;
     }
 }

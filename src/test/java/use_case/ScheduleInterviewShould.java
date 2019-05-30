@@ -1,9 +1,9 @@
 package use_case;
 
 import common.InterviewDto;
-import infra.CandidateRepositoryImpl;
-import infra.InterviewRepositoryImpl;
-import infra.RecruitersRepositoryImpl;
+import infra.mySQL.CandidateRepositoryImpl;
+import infra.mySQL.InterviewRepositoryImpl;
+import infra.mySQL.RecruitersRepositoryImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -42,6 +42,8 @@ public class ScheduleInterviewShould {
     }
 
     @Test
-    public void save_new_interview(){ verify(interviewRespository).save(Mockito.any(InterviewDto.class)); }
+    public void save_new_interview(){
+        verify(interviewRespository).save(Mockito.any(InterviewDto.class));
+    }
 
 }

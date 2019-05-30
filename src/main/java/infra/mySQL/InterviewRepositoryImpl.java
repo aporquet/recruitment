@@ -1,4 +1,4 @@
-package infra;
+package infra.mySQL;
 
 import common.InterviewDto;
 import use_case.InterviewRespository;

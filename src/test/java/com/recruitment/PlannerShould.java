@@ -20,21 +20,18 @@ public class PlannerShould {
         this.mockMvc = builder.build();
     }
 
-    @Test
+/*    @Test
     public void return_candidate_not_exist_error_if_idCandidate_is_null(){
- /*       MockHttpServletRequestBuilder builder =
-                MockMvcRequestBuilders.post("/schedule")
-                .header("headerValue")
-                .content()*/
+        return true;
     }
 
     @Test
     public void return_interview_date_is_prior_than_current_date_error_if_date_is_equal_or_prior_than_current_date(){
-
+        return true;
     }
 
     @Test
     public void schedule_interview(){
-
-    }
+        return true;
+    }*/
 }
