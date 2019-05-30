@@ -12,13 +12,13 @@ public class Recruiter {
 
     // TODO: Get query recruiters requests
 
-    @GetMapping("/recruiters")
-    public String getRecruiters() {
-        return "Recruiters";
+    @GetMapping("/recruiters/id")
+    public String getRecruiter() {
+        return "Recruiter";
     }
 
-    @GetMapping("/recruiters/id")
-    public ResponseEntity<List<RecruiterDto>> getRecruiter() {
+    @GetMapping("/recruiters")
+    public ResponseEntity<List<RecruiterDto>> getRecruiters() {
         RecruitersRepositoryImpl recruitersRepository = new RecruitersRepositoryImpl();
         ResponseEntity<List<RecruiterDto>> responseEntity = new ResponseEntity("", HttpStatus.NO_CONTENT);
         recruitersRepository.getRecruiters();
