@@ -2,7 +2,6 @@ package common;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 public class RecruiterDto {
 
@@ -11,10 +10,6 @@ public class RecruiterDto {
     private List<LocalDateTime> recruiterAvailabilities;
     private SkillsDto recruiterSkills;
     private int experienceYears;
-
-    public RecruiterDto(UUID id, String firstName, String lastName, String mail) {
-
-    }
 
     public void setAvailability(LocalDateTime availableDate) {
         this.availableDate = availableDate;
@@ -53,7 +48,7 @@ public class RecruiterDto {
         this.experienceYears = experienceYears;
     }
 
-    public int getIdRecruiter() {
-        return this.id;
+    public int getId() {
+        return id;
     }
 }

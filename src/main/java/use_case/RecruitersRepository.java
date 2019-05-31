@@ -1,9 +1,12 @@
 package use_case;
 
 import common.RecruiterDto;
+import common.RecruiterFullDto;
 
 import java.util.List;
 
 public interface RecruitersRepository {
-    List<RecruiterDto> getRecruiters();
+    List<RecruiterFullDto> getRecruiters();
+
+    List<RecruiterDto> getRecruitersForSchedule();
 }

@@ -30,10 +30,10 @@ public class ScheduleInterview {
 
     public void schedule(UUID candidateId) {
         CandidateDto candidate = candidateRepository.getCandidateById(candidateId);
-        List<RecruiterDto> recruiterDtoList = recruitersRepository.getRecruiters();
+        List<RecruiterDto> recruiterDtoList = recruitersRepository.getRecruitersForSchedule();
         SkillsChecker skillsChecker = new SkillsChecker(candidate, recruiterDtoList);
         List<RecruiterDto> competentRecruiters = skillsChecker.getTechnicallyCompetentRecruitersSortByOtherSkills();
-        InterviewDto interviewDto = new InterviewDto(candidate.getIdCandidate(), competentRecruiters.get(0).getIdRecruiter(), this.date);
+        InterviewDto interviewDto = new InterviewDto(candidate.getIdCandidate(), competentRecruiters.get(0).getId(), this.date);
         interviewRespository.save(interviewDto);
     }
 
