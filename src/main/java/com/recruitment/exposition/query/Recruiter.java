@@ -12,14 +12,14 @@ import java.util.*;
 public class Recruiter {
 
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public @ResponseBody RecruiterFullDto getRecruiter(@PathVariable String id) {
         RecruitersRepositoryImpl recruitersRepository = new RecruitersRepositoryImpl();
         return recruitersRepository.getRecruiter(id);
     }
 
     @GetMapping()
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public @ResponseBody List<RecruiterFullDto> getRecruiters() {
         RecruitersRepositoryImpl recruitersRepository = new RecruitersRepositoryImpl();
         return recruitersRepository.getRecruiters();
