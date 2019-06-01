@@ -9,6 +9,7 @@ public class CandidateRepositoryImpl implements CandidateRepository {
 
     @Override
     public CandidateDto getCandidateById(UUID idCandidate) {
-        return null;
+        CandidateDto candidateDto = new CandidateDto();
+        return candidateDto;
     }
 }

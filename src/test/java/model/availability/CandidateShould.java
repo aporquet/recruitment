@@ -34,6 +34,7 @@ public class CandidateShould {
     }
 
     @Test
+            (expected = AnyRecruiterAvailableInSameTimeAsTheCandidateException.class)
     public void not_find_recruiters_if_their_availabilities_slots_are_different(){
         //Given
         LocalDateTime availability = LocalDateTime.of(2019, Month.JUNE, 2, 12, 30);
@@ -57,6 +58,7 @@ public class CandidateShould {
     }
 
     @Test
+            (expected = CandidateAvailabilityIsNotInCurrentMonthException.class)
     public void not_find_recruiters_available_if_his_availability_is_not_in_the_current_month(){
         //Given
         LocalDateTime currentDate =  LocalDateTime.now();

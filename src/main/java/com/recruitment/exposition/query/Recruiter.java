@@ -2,28 +2,27 @@ package com.recruitment.exposition.query;
 
 import common.RecruiterFullDto;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 import infra.mySQL.RecruitersRepositoryImpl;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.*;
 
 @RestController
+@RequestMapping(value = "/recruiters")
 public class Recruiter {
 
-    @GetMapping("/recruiters/id")
-    public ResponseEntity<String> getRecruiter() {
-        ResponseEntity<List<RecruiterFullDto>> responseEntity = new ResponseEntity("", HttpStatus.NO_CONTENT);
-        return responseEntity.status(HttpStatus.ACCEPTED).body("recruiters");
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public @ResponseBody RecruiterFullDto getRecruiter(@PathVariable String id) {
+        RecruitersRepositoryImpl recruitersRepository = new RecruitersRepositoryImpl();
+        return recruitersRepository.getRecruiter(id);
     }
 
-    @GetMapping("/recruiters")
-    public ResponseEntity<List<RecruiterFullDto>> getRecruiters() {
+    @GetMapping()
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public @ResponseBody List<RecruiterFullDto> getRecruiters() {
         RecruitersRepositoryImpl recruitersRepository = new RecruitersRepositoryImpl();
-        ResponseEntity<List<RecruiterFullDto>> responseEntity = new ResponseEntity("", HttpStatus.NO_CONTENT);
-        recruitersRepository.getRecruiters();
-        responseEntity.status(HttpStatus.ACCEPTED).body(recruitersRepository);
-        return responseEntity;
+        return recruitersRepository.getRecruiters();
     }
+
 }
