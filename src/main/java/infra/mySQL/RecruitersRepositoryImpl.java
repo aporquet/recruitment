@@ -52,7 +52,6 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
         String getRecruiters = "SELECT p.uuidPerson, p.firstName, p.lastName, p.mail, e.name FROM Person p INNER JOIN Enterprise e ON p.idEnterprise = e.idEnterprise";
         try {
             ResultSet resultset = statement.executeQuery(getRecruiters);
-            if (resultset.next()) {
                 while (resultset.next()) {
                     String uuidString = resultset.getString("uuidPerson");
                     UUID uuid = UUID.fromString(uuidString);
@@ -63,7 +62,7 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
                     RecruiterFullDto recruiterDto = new RecruiterFullDto(uuid, firstName, lastName, mail, enterprise);
                     recruiters.add(recruiterDto);
                 }
-            }else{
+            if(resultset == null){
                 throw new AnyRecruiterFoundException();
             }
         } catch (SQLException e) {
