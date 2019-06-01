@@ -1,7 +1,9 @@
 package infra.mySQL;
 
+import common.AnyRecruiterFoundException;
 import common.RecruiterDto;
 import common.RecruiterFullDto;
+import common.RecruiterNotFoundException;
 import use_case.RecruitersRepository;
 
 import java.io.*;
@@ -50,15 +52,19 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
         String getRecruiters = "SELECT p.uuidPerson, p.firstName, p.lastName, p.mail, e.name FROM Person p INNER JOIN Enterprise e ON p.idEnterprise = e.idEnterprise";
         try {
             ResultSet resultset = statement.executeQuery(getRecruiters);
-            while (resultset.next()){
-                String uuidString = resultset.getString("uuidPerson");
-                UUID uuid = UUID.fromString(uuidString);
-                String firstName = resultset.getString("firstName");
-                String lastName = resultset.getString("lastName");
-                String mail = resultset.getString("mail");
-                String enterprise = resultset.getString("name");
-                RecruiterFullDto recruiterDto = new RecruiterFullDto(uuid, firstName, lastName, mail, enterprise);
-                recruiters.add(recruiterDto);
+            if (resultset.next()) {
+                while (resultset.next()) {
+                    String uuidString = resultset.getString("uuidPerson");
+                    UUID uuid = UUID.fromString(uuidString);
+                    String firstName = resultset.getString("firstName");
+                    String lastName = resultset.getString("lastName");
+                    String mail = resultset.getString("mail");
+                    String enterprise = resultset.getString("name");
+                    RecruiterFullDto recruiterDto = new RecruiterFullDto(uuid, firstName, lastName, mail, enterprise);
+                    recruiters.add(recruiterDto);
+                }
+            }else{
+                throw new AnyRecruiterFoundException();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -92,6 +98,8 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
                     lastName = resultset.getString("lastName");
                     mail = resultset.getString("mail");
                     enterprise = resultset.getString("name");
+                }else{
+                    throw new RecruiterNotFoundException();
                 }
             } catch (SQLException e) {
                 e.printStackTrace();

@@ -1,5 +1,6 @@
 package com.recruitment.exposition.query;
 
+import common.AnyRecruiterFoundException;
 import common.RecruiterFullDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
