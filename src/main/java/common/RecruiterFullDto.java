@@ -13,8 +13,9 @@ public class RecruiterFullDto {
     private String experience;
     private String enterprise;
     private List<String> skills;
+    private List<String> keySkills;
 
-    public RecruiterFullDto(String id, UUID uuid, String firstName, String lastName,String experience, String mail, String enterprise, List<String> skills) {
+    public RecruiterFullDto(String id, UUID uuid, String firstName, String lastName,String experience, String mail, String enterprise, List<String> skills, List<String> keySkills) {
         this.id = id;
         this.uuid = uuid;
         this.firstName = firstName;
@@ -23,6 +24,7 @@ public class RecruiterFullDto {
         this.experience = experience;
         this.enterprise = enterprise;
         this.skills = skills;
+        this.keySkills = keySkills;
     }
 
     public String getFirstName() {
@@ -79,5 +81,13 @@ public class RecruiterFullDto {
 
     public String getExperience() {
         return experience;
+    }
+
+    public List<String> getKeySkills() {
+        return keySkills;
+    }
+
+    public void setKeySkills(List<String> keySkills) {
+        this.keySkills = keySkills;
     }
 }
