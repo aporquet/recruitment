@@ -8,7 +8,7 @@ import java.util.List;
 public interface RecruitersRepository {
     List<RecruiterFullDto> getRecruiters();
 
-    RecruiterFullDto getRecruiter(String id);
+    /*RecruiterFullDto getRecruiter(String id);*/
 
     List<RecruiterDto> getRecruitersForSchedule();
 }

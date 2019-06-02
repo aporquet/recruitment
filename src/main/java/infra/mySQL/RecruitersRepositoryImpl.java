@@ -3,7 +3,6 @@ package infra.mySQL;
 import common.AnyRecruiterFoundException;
 import common.RecruiterDto;
 import common.RecruiterFullDto;
-import common.RecruiterNotFoundException;
 import use_case.RecruitersRepository;
 
 import java.io.*;
@@ -16,10 +15,10 @@ import java.util.UUID;
 public class RecruitersRepositoryImpl implements RecruitersRepository {
     public Statement statement = null;
 
-    void mysqlConnection(){
+    void mysqlConnection() {
         Connection connection = null;
 
-        try(InputStream inputStream = new FileInputStream("/Users/Soat-AP/IdeaProjects/recruitment/jdbc.properties")) {
+        try (InputStream inputStream = new FileInputStream("/Users/Soat-AP/IdeaProjects/recruitment/jdbc.properties")) {
             Properties prop = new Properties();
             prop.load(inputStream);
             String url = prop.getProperty("db.url");
@@ -46,27 +45,95 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
     }
 
     @Override
+    /*public List<RecruiterFullDto> getRecruiters() {
+        mysqlConnection();
+        List<RecruiterFullDto> recruiters = new ArrayList<>();
+        String getRecruiters = "SELECT p.idPerson, p.uuidPerson, p.firstName, p.lastName, p.mail, e.name FROM Person p " +
+                "INNER JOIN Enterprise e ON p.idEnterprise = e.idEnterprise ";
+        try {
+            ResultSet resultset = statement.executeQuery(getRecruiters);
+            while (resultset.next()) {
+                String uuidString = resultset.getString("uuidPerson");
+                UUID uuid = UUID.fromString(uuidString);
+                String firstName = resultset.getString("firstName");
+                String lastName = resultset.getString("lastName");
+                String mail = resultset.getString("mail");
+                String enterprise = resultset.getString("name");
+                RecruiterFullDto recruiterDto = new RecruiterFullDto(uuid, firstName, lastName, mail, enterprise, null);
+                String getSkillsRecruiters = "SELECT s.nameSkill " +
+                        "FROM Person p " +
+                        "INNER JOIN SkillPersonConf spc ON spc.idPerson = p.idPerson " +
+                        "INNER JOIN Skill s ON s.idSkill = spc.idSkill " +
+                        "WHERE p.idPerson = " + resultset.getString("idPerson");
+                try {
+                    ResultSet resultsetSkills = statement.executeQuery(getSkillsRecruiters);
+                    List<String> skills = new ArrayList<>();
+                    while (resultsetSkills.next()) {
+                        String skill = resultsetSkills.getString("nameSkill");
+                        skills.add(skill);
+                    }
+                    recruiterDto.setSkills(skills);
+                    recruiters.add(recruiterDto);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                if (resultset == null) {
+                    throw new AnyRecruiterFoundException();
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return recruiters;
+    }*/
+
     public List<RecruiterFullDto> getRecruiters() {
         mysqlConnection();
         List<RecruiterFullDto> recruiters = new ArrayList<>();
-        String getRecruiters = "SELECT p.uuidPerson, p.firstName, p.lastName, p.mail, e.name FROM Person p INNER JOIN Enterprise e ON p.idEnterprise = e.idEnterprise";
+        RecruiterFullDto recruiterDto;
+        String getRecruiters = "SELECT p.idPerson, p.uuidPerson, p.firstName, p.lastName, p.experience, p.mail, e.name FROM Person p " +
+                "INNER JOIN Enterprise e ON p.idEnterprise = e.idEnterprise ";
         try {
             ResultSet resultset = statement.executeQuery(getRecruiters);
-                while (resultset.next()) {
-                    String uuidString = resultset.getString("uuidPerson");
-                    UUID uuid = UUID.fromString(uuidString);
-                    String firstName = resultset.getString("firstName");
-                    String lastName = resultset.getString("lastName");
-                    String mail = resultset.getString("mail");
-                    String enterprise = resultset.getString("name");
-                    RecruiterFullDto recruiterDto = new RecruiterFullDto(uuid, firstName, lastName, mail, enterprise);
-                    recruiters.add(recruiterDto);
+            while (resultset.next()) {
+                String uuidString = resultset.getString("uuidPerson");
+                UUID uuid = UUID.fromString(uuidString);
+                String id = resultset.getString("idPerson");
+                String firstName = resultset.getString("firstName");
+                String lastName = resultset.getString("lastName");
+                String mail = resultset.getString("mail");
+                String experience = resultset.getString("experience");
+                String enterprise = resultset.getString("name");
+                recruiterDto = new RecruiterFullDto(id, uuid, firstName, lastName, experience, mail, enterprise, null);
+                recruiters.add(recruiterDto);
+                if (resultset == null) {
+                    throw new AnyRecruiterFoundException();
                 }
-            if(resultset == null){
-                throw new AnyRecruiterFoundException();
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+
+        for(RecruiterFullDto recruiterFullDto : recruiters){
+            String getSkillsRecruiters = "SELECT s.nameSkill " +
+                    "FROM Person p " +
+                    "INNER JOIN SkillPersonConf spc ON spc.idPerson = p.idPerson " +
+                    "INNER JOIN Skill s ON s.idSkill = spc.idSkill " +
+                    "WHERE p.idPerson = " + recruiterFullDto.getId();
+            try {
+                ResultSet resultsetSkills = statement.executeQuery(getSkillsRecruiters);
+                List<String> skills = new ArrayList<>();
+                while (resultsetSkills.next()) {
+                    String skill = resultsetSkills.getString("nameSkill");
+                    skills.add(skill);
+                }
+                recruiterFullDto.setSkills(skills);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return recruiters;
     }
@@ -77,7 +144,8 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
         return recruiters;
     }
 
-    @Override
+
+/*    @Override
     public RecruiterFullDto getRecruiter(String id) {
         mysqlConnection();
         String uuidString ;
@@ -107,5 +175,5 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
         RecruiterFullDto recruiter = new RecruiterFullDto(uuid, firstName, lastName, mail, enterprise);
         return recruiter;
 
-    }
+    }*/
 }

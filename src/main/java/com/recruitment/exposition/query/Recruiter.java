@@ -11,12 +11,12 @@ import java.util.*;
 @RequestMapping(value = "/recruiters")
 public class Recruiter {
 
-    @GetMapping("/{id}")
+/*    @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody RecruiterFullDto getRecruiter(@PathVariable String id) {
         RecruitersRepositoryImpl recruitersRepository = new RecruitersRepositoryImpl();
         return recruitersRepository.getRecruiter(id);
-    }
+    }*/
 
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
