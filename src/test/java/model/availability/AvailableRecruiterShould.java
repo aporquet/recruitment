@@ -15,11 +15,14 @@ public class AvailableRecruiterShould {
     public void should_return_the_first_available_recruiter(){
         //Given
         List<RecruiterDto> recruiters = new ArrayList<>();
-        RecruiterDto firstRecruiter = new RecruiterDto();
+        List< LocalDateTime > firstRecruiterAvailabilities = new ArrayList<>();
+        LocalDateTime firstRecruiterAvailability = LocalDateTime.of(2019, Month.JUNE, 2, 12, 30);
+        firstRecruiterAvailabilities.add(firstRecruiterAvailability);
+        RecruiterDto firstRecruiter = new RecruiterDto(1, firstRecruiterAvailabilities, null, 2);
         LocalDateTime availableDate = LocalDateTime.of(2019, Month.JUNE, 2, 12, 30);
         firstRecruiter.setAvailability(availableDate);
         recruiters.add(firstRecruiter);
-        RecruiterDto secondRecruiter = new RecruiterDto();
+        RecruiterDto secondRecruiter = new RecruiterDto(1, firstRecruiterAvailabilities, null, 2);
         LocalDateTime secondAvailableDate = LocalDateTime.of(2019, Month.JUNE, 2, 12, 30);
         firstRecruiter.setAvailability(secondAvailableDate);
         recruiters.add(secondRecruiter);

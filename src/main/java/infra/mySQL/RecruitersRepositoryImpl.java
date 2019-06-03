@@ -1,13 +1,13 @@
 package infra.mySQL;
 
-import common.AnyRecruiterFoundException;
-import common.RecruiterDto;
-import common.RecruiterFullDto;
-import common.RecruiterNotFoundException;
+import common.*;
+import infra.DateMapper;
+import infra.InfraDateForm;
 import use_case.RecruitersRepository;
 
 import java.io.*;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -101,7 +101,77 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
 
     @Override
     public List<RecruiterDto> getRecruitersForSchedule() {
+        mysqlConnection();
         List<RecruiterDto> recruiters = new ArrayList<>();
+        RecruiterDto recruiterDto;
+        List<LocalDateTime> localDateTimes;
+        SkillsDto skillsDto;
+        String getRecruiters = "SELECT p.idPerson, p.uuidPerson, p.experience FROM Person p ";
+        try {
+            ResultSet resultset = statement.executeQuery(getRecruiters);
+            while (resultset.next()) {
+                String uuidString = resultset.getString("uuidPerson");
+                int id = Integer.parseInt(resultset.getString("idPerson"));
+                int experience = Integer.parseInt(resultset.getString("experience"));
+                skillsDto = new SkillsDto();
+                localDateTimes = new ArrayList<>();
+                recruiterDto = new RecruiterDto(id, localDateTimes, skillsDto, experience);
+                recruiters.add(recruiterDto);
+                if (resultset == null) {
+                    throw new AnyRecruiterFoundException();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        for(RecruiterDto recruiterDtoForSchedule : recruiters) {
+            String getSkillsRecruiters = "SELECT s.nameSkill, spc.isKeySkill " +
+                    "FROM Person p " +
+                    "INNER JOIN SkillPersonConf spc ON spc.idPerson = p.idPerson " +
+                    "INNER JOIN Skill s ON s.idSkill = spc.idSkill " +
+                    "WHERE p.idPerson = " + recruiterDtoForSchedule.getId();
+            try {
+                ResultSet resultsetSkills = statement.executeQuery(getSkillsRecruiters);
+                List<String> keySkills = new ArrayList<>();
+                List<String> skills = new ArrayList<>();
+                skillsDto = new SkillsDto();
+                while (resultsetSkills.next()) {
+                    String skill = resultsetSkills.getString("nameSkill");
+                    if (resultsetSkills.getInt("isKeySkill") == 0) {
+                        skills.add(skill);
+                    } else {
+                        keySkills.add(skill);
+                    }
+                }
+                skillsDto.setKeySkills(keySkills);
+                skillsDto.setOtherSkills(skills);
+                recruiterDtoForSchedule.setRecruiterSkills(skillsDto);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        for(RecruiterDto recruiterDtoForSchedule : recruiters) {
+            String getAvailabilitiesRecruiters = "SELECT p.idPerson, ac.idPerson, ac.idAvailabilityMonth, ac.idAvailabilityDay, ac.idAvailabilityHour " +
+                    "FROM Person p " +
+                    "INNER JOIN AvailabilityConf ac ON ac.idPerson = p.idPerson " +
+                    "WHERE p.idPerson = " + recruiterDtoForSchedule.getId();
+            try {
+                ResultSet resultsetAvailabilities = statement.executeQuery(getAvailabilitiesRecruiters);
+                List<LocalDateTime> availabilities = new ArrayList<>();
+                DateMapper dateMapper = new DateMapper();
+                while (resultsetAvailabilities.next()) {
+                    int month = Integer.parseInt(resultsetAvailabilities.getString("idAvailabilityMonth"));
+                    int day = Integer.parseInt(resultsetAvailabilities.getString("idAvailabilityDay"));
+                    int hour = Integer.parseInt(resultsetAvailabilities.getString("idAvailabilityHour"));
+                    InfraDateForm infraDateForm = new InfraDateForm(month, day, hour);
+                    LocalDateTime dateTime = dateMapper.mapInfraDateFormToDateTime(infraDateForm);
+                    availabilities.add(dateTime);
+                }
+                recruiterDtoForSchedule.setAvailabilities(availabilities);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
         return recruiters;
     }
 

@@ -1,15 +1,13 @@
 package infra;
 
-import com.google.common.collect.HashBiMap;
-
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-class DateMapper {
+public class DateMapper {
 
     private int mapHour(int hourInfra, int hourDateTime){
-        HashBiMap<Integer, Integer> map = new HashBiMap<>();
+        HashMap<Integer, Integer> map = new HashMap<>();
         map.put(9, 1);
         map.put(10, 2);
         map.put(11, 3);
@@ -25,7 +23,12 @@ class DateMapper {
             return map.get(hourDateTime);
         }
         else {
-            return map.inverse().get(hourInfra);
+            for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+                if (entry.getValue().equals(hourInfra)) {
+                    return entry.getKey();
+                }
+            }
+            return 0;
         }
     }
 
@@ -37,7 +40,7 @@ class DateMapper {
         return infraDateForm;
     }
 
-    public LocalDateTime mapDateTimeToInfraDateForm(InfraDateForm infraDateForm){
+    public LocalDateTime mapInfraDateFormToDateTime(InfraDateForm infraDateForm){
         LocalDateTime localDateTime = LocalDateTime.now().plusHours(mapHour(infraDateForm.getHour(), 0))
                 .plusMonths(infraDateForm.getMonth())
                 .plusDays(infraDateForm.getDay());

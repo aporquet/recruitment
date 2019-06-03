@@ -11,6 +11,13 @@ public class RecruiterDto {
     private SkillsDto recruiterSkills;
     private int experienceYears;
 
+    public RecruiterDto(int id, List<LocalDateTime> recruiterAvailabilities, SkillsDto recruiterSkills, int experienceYears){
+        this.id=id;
+        this.recruiterAvailabilities = recruiterAvailabilities;
+        this.recruiterSkills = recruiterSkills;
+        this.experienceYears = experienceYears;
+    }
+
     public void setAvailability(LocalDateTime availableDate) {
         this.availableDate = availableDate;
     }

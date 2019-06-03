@@ -21,7 +21,7 @@ public class CandidateShould {
         List< LocalDateTime > firstRecruiterAvailabilities = new ArrayList<>();
         LocalDateTime firstRecruiterAvailability = LocalDateTime.of(2019, Month.JUNE, 2, 12, 30);
         firstRecruiterAvailabilities.add(firstRecruiterAvailability);
-        RecruiterDto firstRecruiter = new RecruiterDto();
+        RecruiterDto firstRecruiter = new RecruiterDto(1, firstRecruiterAvailabilities, null, 2);
         firstRecruiter.setAvailabilities(firstRecruiterAvailabilities);
         recruiters.add(firstRecruiter);
 
@@ -46,7 +46,7 @@ public class CandidateShould {
         LocalDateTime secondRecruiterAvailability = LocalDateTime.of(2019, Month.JUNE, 4, 9, 30);
         firstRecruiterAvailabilities.add(firstRecruiterAvailability);
         firstRecruiterAvailabilities.add(secondRecruiterAvailability);
-        RecruiterDto firstRecruiter = new RecruiterDto();
+        RecruiterDto firstRecruiter = new RecruiterDto(1, firstRecruiterAvailabilities, null, 2);;
         firstRecruiter.setAvailabilities(firstRecruiterAvailabilities);
         recruiters.add(firstRecruiter);
 
