@@ -6,6 +6,8 @@ import common.SkillsDto;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +31,12 @@ public class SkillsCheckerShould {
         candidate.setExperienceYears(3);
 
         List<RecruiterDto> recruiters = new ArrayList<>();
-        RecruiterDto firstRecruiter = new RecruiterDto();
+        List<LocalDateTime> firstRecruiterAvailabilities = new ArrayList<>();
+        LocalDateTime firstRecruiterAvailability = LocalDateTime.of(2019, Month.JUNE, 3, 12, 30);
+        LocalDateTime secondRecruiterAvailability = LocalDateTime.of(2019, Month.JUNE, 4, 9, 30);
+        firstRecruiterAvailabilities.add(firstRecruiterAvailability);
+        firstRecruiterAvailabilities.add(secondRecruiterAvailability);
+        RecruiterDto firstRecruiter = new RecruiterDto(1, firstRecruiterAvailabilities, null, 2);
         List<String> recruiterKeySkills = new ArrayList<>();
         recruiterKeySkills.add("Java");
 
@@ -73,7 +80,12 @@ public class SkillsCheckerShould {
         candidate.setExperienceYears(3);
 
         List<RecruiterDto> recruiters = new ArrayList<>();
-        RecruiterDto firstRecruiter = new RecruiterDto();
+        List<LocalDateTime> firstRecruiterAvailabilities = new ArrayList<>();
+        LocalDateTime firstRecruiterAvailability = LocalDateTime.of(2019, Month.JUNE, 3, 12, 30);
+        LocalDateTime secondRecruiterAvailability = LocalDateTime.of(2019, Month.JUNE, 4, 9, 30);
+        firstRecruiterAvailabilities.add(firstRecruiterAvailability);
+        firstRecruiterAvailabilities.add(secondRecruiterAvailability);
+        RecruiterDto firstRecruiter = new RecruiterDto(1, firstRecruiterAvailabilities, null, 2);
         List<String> recruiterKeySkills = new ArrayList<>();
         recruiterKeySkills.add("Java");
         recruiterKeySkills.add("Ruby");
@@ -118,9 +130,28 @@ public class SkillsCheckerShould {
         candidate.setExperienceYears(12);
 
         List<RecruiterDto> recruiters = new ArrayList<>();
-        RecruiterDto firstRecruiter = new RecruiterDto();
-        RecruiterDto secondRecruiter = new RecruiterDto();
-        RecruiterDto thirdRecruiter = new RecruiterDto();
+        List<LocalDateTime> firstRecruiterAvailabilities = new ArrayList<>();
+        LocalDateTime firstRecruiterAvailability = LocalDateTime.of(2019, Month.JUNE, 3, 12, 30);
+        LocalDateTime secondRecruiterAvailability = LocalDateTime.of(2019, Month.JUNE, 4, 9, 30);
+        firstRecruiterAvailabilities.add(firstRecruiterAvailability);
+        firstRecruiterAvailabilities.add(secondRecruiterAvailability);
+        RecruiterDto firstRecruiter = new RecruiterDto(1, firstRecruiterAvailabilities, null, 2);
+
+
+        List<LocalDateTime> secondRecruiterAvailabilities = new ArrayList<>();
+        LocalDateTime firstRecruiterAvailability2 = LocalDateTime.of(2019, Month.JUNE, 3, 12, 30);
+        LocalDateTime secondRecruiterAvailability2 = LocalDateTime.of(2019, Month.JUNE, 4, 9, 30);
+        secondRecruiterAvailabilities.add(firstRecruiterAvailability2);
+        secondRecruiterAvailabilities.add(secondRecruiterAvailability2);
+        RecruiterDto secondRecruiter = new RecruiterDto(1, secondRecruiterAvailabilities, null, 2);
+
+
+        List<LocalDateTime> thirdRecruiterAvailabilities = new ArrayList<>();
+        LocalDateTime firstRecruiterAvailability3 = LocalDateTime.of(2019, Month.JUNE, 3, 12, 30);
+        LocalDateTime secondRecruiterAvailability3 = LocalDateTime.of(2019, Month.JUNE, 4, 9, 30);
+        thirdRecruiterAvailabilities.add(firstRecruiterAvailability3);
+        thirdRecruiterAvailabilities.add(secondRecruiterAvailability3);
+        RecruiterDto thirdRecruiter = new RecruiterDto(1, thirdRecruiterAvailabilities, null, 2);
 
         List<String> firstRecruiterKeySkills = new ArrayList<>();
         firstRecruiterKeySkills.add("Java");
@@ -198,9 +229,28 @@ public class SkillsCheckerShould {
         candidate.setExperienceYears(1);
 
         List<RecruiterDto> recruiters = new ArrayList<>();
-        RecruiterDto firstRecruiter = new RecruiterDto();
-        RecruiterDto secondRecruiter = new RecruiterDto();
-        RecruiterDto thirdRecruiter = new RecruiterDto();
+        List<LocalDateTime> firstRecruiterAvailabilities = new ArrayList<>();
+        LocalDateTime firstRecruiterAvailability = LocalDateTime.of(2019, Month.JUNE, 3, 12, 30);
+        LocalDateTime secondRecruiterAvailability = LocalDateTime.of(2019, Month.JUNE, 4, 9, 30);
+        firstRecruiterAvailabilities.add(firstRecruiterAvailability);
+        firstRecruiterAvailabilities.add(secondRecruiterAvailability);
+        RecruiterDto firstRecruiter = new RecruiterDto(1, firstRecruiterAvailabilities, null, 2);
+
+
+        List<LocalDateTime> secondRecruiterAvailabilities = new ArrayList<>();
+        LocalDateTime firstRecruiterAvailability2 = LocalDateTime.of(2019, Month.JUNE, 3, 12, 30);
+        LocalDateTime secondRecruiterAvailability2 = LocalDateTime.of(2019, Month.JUNE, 4, 9, 30);
+        secondRecruiterAvailabilities.add(firstRecruiterAvailability2);
+        secondRecruiterAvailabilities.add(secondRecruiterAvailability2);
+        RecruiterDto secondRecruiter = new RecruiterDto(1, secondRecruiterAvailabilities, null, 2);
+
+
+        List<LocalDateTime> thirdRecruiterAvailabilities = new ArrayList<>();
+        LocalDateTime firstRecruiterAvailability3 = LocalDateTime.of(2019, Month.JUNE, 3, 12, 30);
+        LocalDateTime secondRecruiterAvailability3 = LocalDateTime.of(2019, Month.JUNE, 4, 9, 30);
+        thirdRecruiterAvailabilities.add(firstRecruiterAvailability3);
+        thirdRecruiterAvailabilities.add(secondRecruiterAvailability3);
+        RecruiterDto thirdRecruiter = new RecruiterDto(1, thirdRecruiterAvailabilities, null, 2);
 
         List<String> firstRecruiterKeySkills = new ArrayList<>();
         firstRecruiterKeySkills.add("Java");

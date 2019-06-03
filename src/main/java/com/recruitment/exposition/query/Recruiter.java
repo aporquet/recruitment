@@ -1,5 +1,6 @@
 package com.recruitment.exposition.query;
 
+import common.RecruiterDto;
 import common.RecruiterFullDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -25,4 +26,10 @@ public class Recruiter {
         return recruitersRepository.getRecruiters();
     }
 
+    @GetMapping("/recruitersSchedulable")
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody List<RecruiterDto> getRecruitersForSchedule() {
+        RecruitersRepositoryImpl recruitersRepository = new RecruitersRepositoryImpl();
+        return recruitersRepository.getRecruitersForSchedule();
+    }
 }
