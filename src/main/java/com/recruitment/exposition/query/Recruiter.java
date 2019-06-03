@@ -26,10 +26,11 @@ public class Recruiter {
         return recruitersRepository.getRecruiters();
     }
 
-    @GetMapping("/recruitersSchedulable")
+    @GetMapping("/sch")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody List<RecruiterDto> getRecruitersForSchedule() {
         RecruitersRepositoryImpl recruitersRepository = new RecruitersRepositoryImpl();
+        System.out.println("before call repository");
         return recruitersRepository.getRecruitersForSchedule();
     }
 }

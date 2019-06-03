@@ -124,6 +124,7 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        System.out.println("1st request ");
         for(RecruiterDto recruiterDtoForSchedule : recruiters) {
             String getSkillsRecruiters = "SELECT s.nameSkill, spc.isKeySkill " +
                     "FROM Person p " +
@@ -150,10 +151,11 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
                 e.printStackTrace();
             }
         }
+        System.out.println("2nd request ");
         for(RecruiterDto recruiterDtoForSchedule : recruiters) {
             String getAvailabilitiesRecruiters = "SELECT p.idPerson, ac.idPerson, ac.idAvailabilityMonth, ac.idAvailabilityDay, ac.idAvailabilityHour " +
                     "FROM Person p " +
-                    "INNER JOIN AvailabilityConf ac ON ac.idPerson = p.idPerson " +
+                    "INNER JOIN PersonAvailabilityConf ac ON ac.idPerson = p.idPerson " +
                     "WHERE p.idPerson = " + recruiterDtoForSchedule.getId();
             try {
                 ResultSet resultsetAvailabilities = statement.executeQuery(getAvailabilitiesRecruiters);
@@ -172,6 +174,7 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
                 e.printStackTrace();
             }
         }
+        System.out.println("Third request ");
         return recruiters;
     }
 
