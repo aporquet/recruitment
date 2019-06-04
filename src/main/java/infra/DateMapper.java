@@ -41,9 +41,7 @@ public class DateMapper {
     }
 
     public LocalDateTime mapInfraDateFormToDateTime(InfraDateForm infraDateForm){
-        LocalDateTime localDateTime = LocalDateTime.now().plusHours(mapHour(infraDateForm.getHour(), 0))
-                .plusMonths(infraDateForm.getMonth())
-                .plusDays(infraDateForm.getDay());
+        LocalDateTime localDateTime = LocalDateTime.of(2019, infraDateForm.getMonth(), infraDateForm.getDay(), mapHour(infraDateForm.getHour(), 0), 0);
         return localDateTime;
     }
 
