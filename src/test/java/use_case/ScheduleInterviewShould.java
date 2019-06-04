@@ -30,7 +30,7 @@ public class ScheduleInterviewShould {
         idCandidate = UUID.randomUUID();
         date = LocalDateTime.now();
         interview = new ScheduleInterview(candidateRepository, recruitersRepository, interviewRespository, date, idCandidate);
-        interview.schedule(idCandidate);
+        interview.schedule();
     }
 
     @Test

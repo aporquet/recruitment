@@ -29,7 +29,7 @@ public class Planner {
             UUID candidateId = request.getBody().getIdCandidat();
             try{
                 ScheduleInterview scheduler = new ScheduleInterview(candidateRepository, recruitersRepository, interviewRespository, date, candidateId);
-                scheduler.schedule(request.getBody().getIdCandidat());
+                scheduler.schedule();
             }catch (AnyRecruiterAvailableException e){
                 responseEntity.badRequest().body("Any recruiters are available");
                 responseEntity.status(HttpStatus.NOT_FOUND);

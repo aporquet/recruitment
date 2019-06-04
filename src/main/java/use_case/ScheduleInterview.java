@@ -28,7 +28,7 @@ public class ScheduleInterview {
         this.candidateId = candidateId;
     }
 
-    public void schedule(UUID candidateId) {
+    public void schedule() {
         CandidateDto candidate = candidateRepository.getCandidateById(candidateId);
         List<RecruiterDto> recruiterDtoList = recruitersRepository.getRecruitersForSchedule();
         SkillsChecker skillsChecker = new SkillsChecker(candidate, recruiterDtoList);
