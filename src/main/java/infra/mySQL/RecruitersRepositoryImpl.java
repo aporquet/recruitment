@@ -49,7 +49,9 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
         List<RecruiterFullDto> recruiters = new ArrayList<>();
         RecruiterFullDto recruiterDto;
         String getRecruiters = "SELECT p.idPerson, p.uuidPerson, p.firstName, p.lastName, p.experience, p.mail, e.name FROM Person p " +
-                "INNER JOIN Enterprise e ON p.idEnterprise = e.idEnterprise ";
+                "INNER JOIN Enterprise e ON p.idEnterprise = e.idEnterprise "+
+                "INNER JOIN Profile pr ON p.idPerson = pr.idProfile " +
+                "WHERE pr.isRecruiter = " +1;
         try {
             ResultSet resultset = statement.executeQuery(getRecruiters);
             while (resultset.next()) {
@@ -105,7 +107,10 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
         RecruiterDto recruiterDto;
         List<LocalDateTime> localDateTimes;
         SkillsDto skillsDto;
-        String getRecruiters = "SELECT p.idPerson, p.uuidPerson, p.experience FROM Person p ";
+        String getRecruiters = "SELECT p.idPerson, p.uuidPerson, p.experience " +
+                "FROM Person p "+
+                "INNER JOIN Profile pr ON p.idPerson = pr.idProfile " +
+                "AND pr.isRecruiter = " +1;
         try {
             ResultSet resultset = statement.executeQuery(getRecruiters);
             while (resultset.next()) {
@@ -187,7 +192,11 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
         String mail = null;
         String enterprise = null;
 
-            String getRecruiter = "SELECT p.idPerson, p.uuidPerson, p.firstName, p.lastName, p.experience, p.mail, e.name FROM Person p INNER JOIN Enterprise e ON p.idEnterprise = e.idEnterprise WHERE p.idPerson = "+id;
+            String getRecruiter = "SELECT p.idPerson, p.uuidPerson, p.firstName, p.lastName, p.experience, p.mail, e.name " +
+                    "FROM Person p INNER JOIN Enterprise e ON p.idEnterprise = e.idEnterprise " +
+                    "INNER JOIN Profile pr ON p.idPerson = pr.idProfile " +
+                    "AND pr.isRecruiter = " +1+" "+
+                    "WHERE p.idPerson = "+id;
             try {
                 ResultSet resultset = statement.executeQuery(getRecruiter);
                 if (resultset.next()) {
