@@ -45,7 +45,7 @@ public class CandidateRepositoryImpl implements CandidateRepository {
     }
 
     @Override
-    public CandidateFullDto getCandidateById(String idCandidate) {
+    public CandidateFullDto getCandidate(String idCandidate) {
         mysqlConnection();
         String idPerson = null;
         String uuidString;

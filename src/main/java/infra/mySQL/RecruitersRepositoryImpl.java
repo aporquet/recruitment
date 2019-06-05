@@ -179,7 +179,6 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
         return recruiters;
     }
 
-
     @Override
     public RecruiterFullDto getRecruiter(String id) {
         mysqlConnection();
