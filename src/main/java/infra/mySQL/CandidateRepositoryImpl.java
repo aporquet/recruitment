@@ -1,9 +1,6 @@
 package infra.mySQL;
 
-import common.CandidateDto;
-import common.CandidateFullDto;
-import common.RecruiterFullDto;
-import common.RecruiterNotFoundException;
+import common.*;
 import use_case.CandidateRepository;
 
 import java.io.FileInputStream;
@@ -59,12 +56,12 @@ public class CandidateRepositoryImpl implements CandidateRepository {
         String mail = null;
         String enterprise = null;
 
-        String getCandidate = "SELECT p.idPerson, p.uuidPerson, p.firstName, p.lastName, p.experience, p.mail, e.name " +
+        String getCandidate = "SELECT p.idPerson, p.uuidPerson, p.firstName, p.lastName, p.mail, p.experience, p.mail, e.name " +
                 "FROM Person p " +
                 "INNER JOIN Enterprise e ON p.idEnterprise = e.idEnterprise " +
-                "INNER JOIN Profile pr ON p.idPerson = pr.idProfile "+
-                "WHERE p.idPerson = "+idCandidate+" "+
-                "AND pr.isCandidate = "+1;
+                "INNER JOIN Profile pr ON p.idPerson = pr.idProfile " +
+                "WHERE p.idPerson = " + idCandidate + " " +
+                "AND pr.isCandidate = " + 1;
 
         try {
             ResultSet resultset = statement.executeQuery(getCandidate);
@@ -74,16 +71,16 @@ public class CandidateRepositoryImpl implements CandidateRepository {
                 uuid = UUID.fromString(uuidString);
                 firstName = resultset.getString("firstName");
                 lastName = resultset.getString("lastName");
-                experience = resultset.getString("experience");
                 mail = resultset.getString("mail");
+                experience = resultset.getString("experience");
                 enterprise = resultset.getString("name");
-            }else{
-                throw new RecruiterNotFoundException();
+            } else {
+                throw new CandidateNotFoundException();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        CandidateFullDto candidateFullDto = new CandidateFullDto(idPerson, uuid, firstName, lastName, experience, mail, enterprise, null, null);
+        CandidateFullDto candidateFullDto = new CandidateFullDto(idPerson, uuid, firstName, lastName, mail, experience, enterprise, null, null);
 
         String getSkillsCandidate = "SELECT s.nameSkill, spc.isKeySkill " +
                 "FROM Person p " +
@@ -94,11 +91,11 @@ public class CandidateRepositoryImpl implements CandidateRepository {
             ResultSet resultsetSkills = statement.executeQuery(getSkillsCandidate);
             List<String> keySkills = new ArrayList<>();
             List<String> skills = new ArrayList<>();
-            while(resultsetSkills.next()) {
+            while (resultsetSkills.next()) {
                 String skill = resultsetSkills.getString("nameSkill");
-                if(resultsetSkills.getInt("isKeySkill") == 0){
+                if (resultsetSkills.getInt("isKeySkill") == 0) {
                     skills.add(skill);
-                }else{
+                } else {
                     keySkills.add(skill);
                 }
             }
@@ -114,7 +111,64 @@ public class CandidateRepositoryImpl implements CandidateRepository {
     }
 
     @Override
-    public CandidateDto getCandidateByUUIDForSchedule(UUID uuidCandidate) {
+    public List<CandidateFullDto> getCandidates() {
+        mysqlConnection();
+        List<CandidateFullDto> candidateFullDtos = new ArrayList<>();
+        CandidateFullDto candidateFullDto;
+        String getCandidates = "SELECT p.idPerson, p.uuidPerson, p.firstName, p.lastName, p.experience, p.mail, e.name FROM Person p " +
+                "INNER JOIN Enterprise e ON p.idEnterprise = e.idEnterprise " +
+                "INNER JOIN Profile pr ON p.idPerson = pr.idProfile " +
+                "WHERE pr.isCandidate = " + 1;
+        try {
+            ResultSet resultset = statement.executeQuery(getCandidates);
+            while (resultset.next()) {
+                String uuidString = resultset.getString("uuidPerson");
+                UUID uuid = UUID.fromString(uuidString);
+                String id = resultset.getString("idPerson");
+                String firstName = resultset.getString("firstName");
+                String lastName = resultset.getString("lastName");
+                String experience = resultset.getString("experience");
+                String mail = resultset.getString("mail");
+                String enterprise = resultset.getString("name");
+                candidateFullDto = new CandidateFullDto(id, uuid, firstName, lastName, experience, mail, enterprise, null, null);
+                candidateFullDtos.add(candidateFullDto);
+                if (resultset == null) {
+                    throw new AnyCandidateFoundException();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        for (CandidateFullDto candidateFullDto1 : candidateFullDtos) {
+            String getSkillsRecruiters = "SELECT s.nameSkill, spc.isKeySkill " +
+                    "FROM Person p " +
+                    "INNER JOIN SkillPersonConf spc ON spc.idPerson = p.idPerson " +
+                    "INNER JOIN Skill s ON s.idSkill = spc.idSkill " +
+                    "WHERE p.idPerson = " + candidateFullDto1.getId();
+            try {
+                ResultSet resultsetSkills = statement.executeQuery(getSkillsRecruiters);
+                List<String> keySkills = new ArrayList<>();
+                List<String> skills = new ArrayList<>();
+                while (resultsetSkills.next()) {
+                    String skill = resultsetSkills.getString("nameSkill");
+                    if (resultsetSkills.getInt("isKeySkill") == 0) {
+                        skills.add(skill);
+                    } else {
+                        keySkills.add(skill);
+                    }
+                }
+                candidateFullDto1.setKeySkills(keySkills);
+                candidateFullDto1.setSkills(skills);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return candidateFullDtos;
+    }
+
+    @Override
+    public CandidateDto getCandidateForSchedule(UUID uuidCandidate) {
         return null;
     }
+
 }

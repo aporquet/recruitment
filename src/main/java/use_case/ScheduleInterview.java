@@ -29,7 +29,7 @@ public class ScheduleInterview {
     }
 
     public void schedule() {
-        CandidateDto candidate = candidateRepository.getCandidateByUUIDForSchedule(candidateId);
+        CandidateDto candidate = candidateRepository.getCandidateForSchedule(candidateId);
         List<RecruiterDto> recruiterDtoList = recruitersRepository.getRecruitersForSchedule();
         SkillsChecker skillsChecker = new SkillsChecker(candidate, recruiterDtoList);
         List<RecruiterDto> competentRecruiters = skillsChecker.getTechnicallyCompetentRecruitersSortByOtherSkills();
