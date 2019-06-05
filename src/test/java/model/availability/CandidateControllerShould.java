@@ -9,7 +9,7 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CandidateShould {
+public class CandidateControllerShould {
 
     @Test
     public void find_recruiters_for_its_availability_slots(){

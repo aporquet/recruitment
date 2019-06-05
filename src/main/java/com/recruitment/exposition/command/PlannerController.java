@@ -1,9 +1,9 @@
 package com.recruitment.exposition.command;
 
 import com.recruitment.request.ScheduleInterviewRequest;
-import infra.mySQL.CandidateRepositoryImpl;
-import infra.mySQL.InterviewRepositoryImpl;
-import infra.mySQL.RecruitersRepositoryImpl;
+import infra.mysql.CandidateRepositoryImpl;
+import infra.mysql.InterviewRepositoryImpl;
+import infra.mysql.RecruitersRepositoryImpl;
 import model.availability.AnyRecruiterAvailableException;
 import model.availability.AnyRecruiterAvailableInSameTimeAsTheCandidateException;
 import model.availability.CandidateAvailabilityIsNotInCurrentMonthException;
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @RestController
-public class Planner {
+public class PlannerController {
 
     @PostMapping("/schedule")
     public ResponseEntity<ScheduleInterview> scheduleInterview (RequestEntity<ScheduleInterviewRequest> request) {

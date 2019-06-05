@@ -9,7 +9,7 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AvailableRecruiterShould {
+public class AvailableRecruiterControllerShould {
 
     @Test
     public void should_return_the_first_available_recruiter(){

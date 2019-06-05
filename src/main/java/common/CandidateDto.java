@@ -9,8 +9,8 @@ public class CandidateDto {
     private SkillsDto candidateSkills;
     private int experienceYears;
 
-    public CandidateDto(UUID uuidCandidate, SkillsDto candidateSkills, int experienceYears){
-        this.uuidCandidate = uuidCandidate;
+    public CandidateDto(int idCandidate, SkillsDto candidateSkills, int experienceYears){
+        this.idCandidate = idCandidate;
         this.candidateSkills = candidateSkills;
         this.experienceYears = experienceYears;
     }
@@ -35,7 +35,4 @@ public class CandidateDto {
         return this.idCandidate;
     }
 
-    public UUID getUuidCandidate() {
-        return uuidCandidate;
-    }
 }

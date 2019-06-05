@@ -26,7 +26,8 @@ public class SkillsCheckerShould {
         SkillsDto candidateSkills = new SkillsDto();
         candidateSkills.setKeySkills(keySkills);
         candidateSkills.setOtherSkills(otherSkills);
-        CandidateDto candidate = new CandidateDto();
+
+        CandidateDto candidate = new CandidateDto(3, candidateSkills, 1);
         candidate.setSkills(candidateSkills);
         candidate.setExperienceYears(3);
 
@@ -75,7 +76,7 @@ public class SkillsCheckerShould {
         SkillsDto candidateSkills = new SkillsDto();
         candidateSkills.setKeySkills(keySkills);
         candidateSkills.setOtherSkills(otherSkills);
-        CandidateDto candidate = new CandidateDto();
+        CandidateDto candidate = new CandidateDto( 3, candidateSkills, 1);
         candidate.setSkills(candidateSkills);
         candidate.setExperienceYears(3);
 
@@ -125,7 +126,7 @@ public class SkillsCheckerShould {
         SkillsDto candidateSkills = new SkillsDto();
         candidateSkills.setKeySkills(keySkills);
         candidateSkills.setOtherSkills(otherSkills);
-        CandidateDto candidate = new CandidateDto();
+        CandidateDto candidate = new CandidateDto(3, candidateSkills, 1);
         candidate.setSkills(candidateSkills);
         candidate.setExperienceYears(12);
 
@@ -224,7 +225,7 @@ public class SkillsCheckerShould {
         SkillsDto candidateSkills = new SkillsDto();
         candidateSkills.setKeySkills(keySkills);
         candidateSkills.setOtherSkills(otherSkills);
-        CandidateDto candidate = new CandidateDto();
+        CandidateDto candidate = new CandidateDto(3, candidateSkills, 1);
         candidate.setSkills(candidateSkills);
         candidate.setExperienceYears(1);
 

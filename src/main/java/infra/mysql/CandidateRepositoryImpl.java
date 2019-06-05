@@ -1,4 +1,4 @@
-package infra.mySQL;
+package infra.mysql;
 
 import common.*;
 import use_case.CandidateRepository;

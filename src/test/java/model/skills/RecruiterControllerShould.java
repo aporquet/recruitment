@@ -8,7 +8,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecruiterShould {
+public class RecruiterControllerShould {
     private Recruiter recruiter;
     private Candidate candidate;
     private Skills recruiterSkills;

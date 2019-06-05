@@ -1,7 +1,7 @@
 package com.recruitment.exposition.query;
 
 import com.recruitment.request.GetInterviewsRequest;
-import infra.mySQL.InterviewRepositoryImpl;
+import infra.mysql.InterviewRepositoryImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,7 @@ import use_case.ScheduleInterview;
 
 @RestController
 @RequestMapping(value = "/interviews")
-public class Interview {
+public class InterviewController {
 
     @GetMapping("")
     public ResponseEntity<ScheduleInterview> getInterviews (RequestEntity<GetInterviewsRequest> request){

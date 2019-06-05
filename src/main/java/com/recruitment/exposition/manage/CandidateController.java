@@ -2,7 +2,7 @@ package com.recruitment.exposition.manage;
 
 import common.CandidateDto;
 import common.CandidateFullDto;
-import infra.mySQL.CandidateRepositoryImpl;
+import infra.mysql.CandidateRepositoryImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/candidates")
-public class Candidate {
+public class CandidateController {
 
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)

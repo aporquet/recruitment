@@ -1,0 +1,11 @@
+
+server.port: 8090
+spring.datasource.driver-class-name: com.mysql.cj.jdbc.Driver
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+
+spring.security.user.name: 'test-user'

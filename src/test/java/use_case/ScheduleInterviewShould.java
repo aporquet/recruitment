@@ -2,9 +2,9 @@
 package use_case;
 
 import common.InterviewDto;
-import infra.mySQL.CandidateRepositoryImpl;
-import infra.mySQL.InterviewRepositoryImpl;
-import infra.mySQL.RecruitersRepositoryImpl;
+import infra.mysql.CandidateRepositoryImpl;
+import infra.mysql.InterviewRepositoryImpl;
+import infra.mysql.RecruitersRepositoryImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;

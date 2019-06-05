@@ -4,13 +4,13 @@ import common.RecruiterDto;
 import common.RecruiterFullDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import infra.mySQL.RecruitersRepositoryImpl;
+import infra.mysql.RecruitersRepositoryImpl;
 
 import java.util.*;
 
 @RestController
 @RequestMapping(value = "/recruiters")
-public class Recruiter {
+public class RecruiterController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
