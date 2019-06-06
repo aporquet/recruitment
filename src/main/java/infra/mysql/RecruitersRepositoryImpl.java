@@ -4,41 +4,20 @@ import common.*;
 import infra.DateMapper;
 import infra.InfraDateForm;
 import use_case.RecruitersRepository;
-import java.io.*;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.UUID;
 
 public class RecruitersRepositoryImpl implements RecruitersRepository {
     public Statement statement = null;
 
     void mysqlConnection() {
-        Connection connection = null;
-        try (InputStream inputStream = new FileInputStream("/Users/Soat-AP/IdeaProjects/recruitment/jdbc.properties")) {
-            Properties prop = new Properties();
-            prop.load(inputStream);
-            String url = prop.getProperty("db.url");
-            String username = prop.getProperty("db.user");
-            String password = prop.getProperty("db.password");
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                connection = DriverManager.getConnection(url, username, password);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-            try {
-                statement = connection.createStatement();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        Connection connection = DbConnect.getConnection();
+        try {
+            statement = connection.createStatement();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

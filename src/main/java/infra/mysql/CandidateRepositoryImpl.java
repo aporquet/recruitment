@@ -2,47 +2,21 @@ package infra.mysql;
 
 import common.*;
 import use_case.CandidateRepository;
-
-import javax.management.StringValueExp;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.UUID;
 
 public class CandidateRepositoryImpl implements CandidateRepository {
     public Statement statement = null;
 
     void mysqlConnection() {
-        Connection connection = null;
-        try (InputStream inputStream = new FileInputStream("/Users/Soat-AP/IdeaProjects/recruitment/jdbc.properties")) {
-            Properties prop = new Properties();
-            prop.load(inputStream);
-            String url = prop.getProperty("db.url");
-            String username = prop.getProperty("db.user");
-            String password = prop.getProperty("db.password");
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                connection = DriverManager.getConnection(url, username, password);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+        Connection connection = DbConnect.getConnection();
             try {
                 statement = connection.createStatement();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
