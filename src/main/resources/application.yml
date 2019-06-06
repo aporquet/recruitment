@@ -9,3 +9,11 @@ management:
 
 
 spring.security.user.name: 'test-user'
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/recruitment?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password: vega281318
+  jpa:
+    hibernate:
+      ddl-auto: none
