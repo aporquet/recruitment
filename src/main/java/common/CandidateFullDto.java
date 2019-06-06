@@ -5,18 +5,16 @@ import java.util.UUID;
 
 public class CandidateFullDto {
 
-    private String id;
     private UUID uuid;
     private String firstName;
     private String lastName;
     private String mail;
-    private String experience;
+    private int experience;
     private String enterprise;
     private List<String> skills;
     private List<String> keySkills;
 
-    public CandidateFullDto(String id, UUID uuid, String firstName, String lastName, String mail, String experience, String enterprise, List<String> skills, List<String> keySkills){
-        this.id = id;
+    public CandidateFullDto(UUID uuid, String firstName, String lastName, String mail, int experience, String enterprise, List<String> skills, List<String> keySkills){
         this.uuid = uuid;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -27,54 +25,6 @@ public class CandidateFullDto {
         this.keySkills = keySkills;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public String getExperience() {
-        return experience;
-    }
-
-    public void setExperience(String experience) {
-        this.experience = experience;
-    }
-
-    public String getEnterprise() {
-        return enterprise;
-    }
-
-    public void setEnterprise(String enterprise) {
-        this.enterprise = enterprise;
-    }
-
     public List<String> getSkills() {
         return skills;
     }
@@ -83,11 +33,35 @@ public class CandidateFullDto {
         this.skills = skills;
     }
 
-    public List<String> getKeySkills() {
-        return keySkills;
-    }
-
     public void setKeySkills(List<String> keySkills) {
         this.keySkills = keySkills;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public int getExperience() {
+        return experience;
+    }
+
+    public String getEnterprise() {
+        return enterprise;
+    }
+
+    public List<String> getKeySkills() {
+        return keySkills;
     }
 }

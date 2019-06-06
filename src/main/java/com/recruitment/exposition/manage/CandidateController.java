@@ -21,17 +21,17 @@ public class CandidateController {
         return candidateRepository.getCandidates();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{uuid}")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody CandidateFullDto getCandidate(@PathVariable String id) {
+    public @ResponseBody CandidateFullDto getCandidate(@PathVariable UUID uuid) {
         CandidateRepositoryImpl candidateRepository = new CandidateRepositoryImpl();
-        return candidateRepository.getCandidate(id);
+        return candidateRepository.getCandidate(uuid);
     }
 
-    @GetMapping("/sch")
+    @GetMapping("/sch/{uuid}")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    CandidateDto getCandidate(@PathVariable UUID uuid) {
+    CandidateDto getCandidateForSchedule(@PathVariable UUID uuid) {
         CandidateRepositoryImpl candidateRepository = new CandidateRepositoryImpl();
         return candidateRepository.getCandidateForSchedule(uuid);
     }

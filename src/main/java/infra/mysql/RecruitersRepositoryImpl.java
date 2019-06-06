@@ -48,8 +48,8 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
         mysqlConnection();
         List<RecruiterFullDto> recruiters = new ArrayList<>();
         RecruiterFullDto recruiterDto;
-        String getRecruiters = "SELECT p.idPerson, p.uuidPerson, p.firstName, p.lastName, p.experience, p.mail, e.name FROM Person p " +
-                "INNER JOIN Enterprise e ON p.idEnterprise = e.idEnterprise "+
+        String getRecruiters = "SELECT p.uuidPerson, p.firstName, p.lastName, p.experience, p.mail, e.name FROM Person p " +
+                "INNER JOIN Enterprise e ON p.id_enterprise = e.id_enterprise "+
                 "INNER JOIN Profile pr ON p.idPerson = pr.idProfile " +
                 "WHERE pr.isRecruiter = " +1;
         try {
@@ -57,13 +57,12 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
             while (resultset.next()) {
                 String uuidString = resultset.getString("uuidPerson");
                 UUID uuid = UUID.fromString(uuidString);
-                String id = resultset.getString("idPerson");
                 String firstName = resultset.getString("firstName");
                 String lastName = resultset.getString("lastName");
                 String experience = resultset.getString("experience");
                 String mail = resultset.getString("mail");
                 String enterprise = resultset.getString("name");
-                recruiterDto = new RecruiterFullDto(id, uuid, firstName, lastName, experience, mail, enterprise, null, null);
+                recruiterDto = new RecruiterFullDto(uuid, firstName, lastName, experience, mail, enterprise, null, null);
                 recruiters.add(recruiterDto);
                 if (resultset == null) {
                     throw new AnyRecruiterFoundException();
@@ -78,7 +77,7 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
                     "FROM Person p " +
                     "INNER JOIN SkillPersonConf spc ON spc.idPerson = p.idPerson " +
                     "INNER JOIN Skill s ON s.idSkill = spc.idSkill " +
-                    "WHERE p.idPerson = " + recruiterFullDto.getId();
+                    "WHERE p.uuidPerson = " + "'"+recruiterFullDto.getUuid().toString()+"'";
             try {
                 ResultSet resultsetSkills = statement.executeQuery(getSkillsRecruiters);
                 List<String> keySkills = new ArrayList<>();
@@ -107,7 +106,7 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
         RecruiterDto recruiterDto;
         List<LocalDateTime> localDateTimes;
         SkillsDto skillsDto;
-        String getRecruiters = "SELECT p.idPerson, p.uuidPerson, p.experience " +
+        String getRecruiters = "SELECT p.uuidPerson, p.experience " +
                 "FROM Person p "+
                 "INNER JOIN Profile pr ON p.idPerson = pr.idProfile " +
                 "AND pr.isRecruiter = " +1;
@@ -115,11 +114,11 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
             ResultSet resultset = statement.executeQuery(getRecruiters);
             while (resultset.next()) {
                 String uuidString = resultset.getString("uuidPerson");
-                int id = Integer.parseInt(resultset.getString("idPerson"));
+                UUID uuid = UUID.fromString(uuidString);
                 int experience = Integer.parseInt(resultset.getString("experience"));
                 skillsDto = new SkillsDto();
                 localDateTimes = new ArrayList<>();
-                recruiterDto = new RecruiterDto(id, localDateTimes, skillsDto, experience);
+                recruiterDto = new RecruiterDto(uuid, localDateTimes, skillsDto, experience);
                 recruiters.add(recruiterDto);
                 if (resultset == null) {
                     throw new AnyRecruiterFoundException();
@@ -133,7 +132,7 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
                     "FROM Person p " +
                     "INNER JOIN SkillPersonConf spc ON spc.idPerson = p.idPerson " +
                     "INNER JOIN Skill s ON s.idSkill = spc.idSkill " +
-                    "WHERE p.idPerson = " + recruiterDtoForSchedule.getId();
+                    "WHERE p.uuidPerson = " + "'"+recruiterDtoForSchedule.getUuid().toString()+"'";
             try {
                 ResultSet resultsetSkills = statement.executeQuery(getSkillsRecruiters);
                 List<String> keySkills = new ArrayList<>();
@@ -155,10 +154,10 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
             }
         }
         for(RecruiterDto recruiterDtoForSchedule : recruiters) {
-            String getAvailabilitiesRecruiters = "SELECT p.idPerson, ac.idPerson, ac.idAvailabilityMonth, ac.idAvailabilityDay, ac.idAvailabilityHour " +
+            String getAvailabilitiesRecruiters = "SELECT ac.idPerson, ac.idAvailabilityMonth, ac.idAvailabilityDay, ac.idAvailabilityHour " +
                     "FROM Person p " +
                     "INNER JOIN PersonAvailabilityConf ac ON ac.idPerson = p.idPerson " +
-                    "WHERE p.idPerson = " + recruiterDtoForSchedule.getId();
+                    "WHERE p.uuidPerson = " + "'"+recruiterDtoForSchedule.getUuid().toString()+"'";
             try {
                 ResultSet resultsetAvailabilities = statement.executeQuery(getAvailabilitiesRecruiters);
                 List<LocalDateTime> availabilities = new ArrayList<>();
@@ -180,28 +179,26 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
     }
 
     @Override
-    public RecruiterFullDto getRecruiter(String id) {
+    public RecruiterFullDto getRecruiter(UUID uuid) {
         mysqlConnection();
-        String idPerson = null;
         String uuidString;
-        UUID uuid = null;
+        UUID uuidRecruiter = null;
         String firstName = null;
         String lastName = null;
         String experience = null;
         String mail = null;
         String enterprise = null;
 
-            String getRecruiter = "SELECT p.idPerson, p.uuidPerson, p.firstName, p.lastName, p.experience, p.mail, e.name " +
-                    "FROM Person p INNER JOIN Enterprise e ON p.idEnterprise = e.idEnterprise " +
+            String getRecruiter = "SELECT p.uuidPerson, p.firstName, p.lastName, p.experience, p.mail, e.name " +
+                    "FROM Person p INNER JOIN Enterprise e ON p.id_enterprise = e.id_enterprise " +
                     "INNER JOIN Profile pr ON p.idPerson = pr.idProfile " +
                     "AND pr.isRecruiter = " +1+" "+
-                    "WHERE p.idPerson = "+id;
+                    "WHERE p.uuidPerson = " + "'"+uuid+"'";
             try {
                 ResultSet resultset = statement.executeQuery(getRecruiter);
                 if (resultset.next()) {
-                    idPerson = resultset.getString("idPerson");
                     uuidString = resultset.getString("uuidPerson");
-                    uuid = UUID.fromString(uuidString);
+                    uuidRecruiter = UUID.fromString(uuidString);
                     firstName = resultset.getString("firstName");
                     lastName = resultset.getString("lastName");
                     experience = resultset.getString("experience");
@@ -213,13 +210,13 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        RecruiterFullDto recruiter = new RecruiterFullDto(idPerson, uuid, firstName, lastName, experience, mail, enterprise, null, null);
+        RecruiterFullDto recruiter = new RecruiterFullDto(uuidRecruiter, firstName, lastName, experience, mail, enterprise, null, null);
 
         String getSkillsRecruiter = "SELECT s.nameSkill, spc.isKeySkill " +
                 "FROM Person p " +
                 "INNER JOIN SkillPersonConf spc ON spc.idPerson = p.idPerson " +
                 "INNER JOIN Skill s ON s.idSkill = spc.idSkill " +
-                "WHERE p.idPerson = " + recruiter.getId();
+                "WHERE p.uuidPerson = " + "'"+recruiter.getUuid().toString()+"'";
         try {
             ResultSet resultsetSkills = statement.executeQuery(getSkillsRecruiter);
             List<String> keySkills = new ArrayList<>();

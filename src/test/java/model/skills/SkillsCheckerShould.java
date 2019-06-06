@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class SkillsCheckerShould {
 
@@ -26,8 +27,9 @@ public class SkillsCheckerShould {
         SkillsDto candidateSkills = new SkillsDto();
         candidateSkills.setKeySkills(keySkills);
         candidateSkills.setOtherSkills(otherSkills);
+        UUID uuidCandidate = UUID.randomUUID();
 
-        CandidateDto candidate = new CandidateDto(3, candidateSkills, 1);
+        CandidateDto candidate = new CandidateDto(uuidCandidate, candidateSkills, 1);
         candidate.setSkills(candidateSkills);
         candidate.setExperienceYears(3);
 
@@ -37,7 +39,8 @@ public class SkillsCheckerShould {
         LocalDateTime secondRecruiterAvailability = LocalDateTime.of(2019, Month.JUNE, 4, 9, 30);
         firstRecruiterAvailabilities.add(firstRecruiterAvailability);
         firstRecruiterAvailabilities.add(secondRecruiterAvailability);
-        RecruiterDto firstRecruiter = new RecruiterDto(1, firstRecruiterAvailabilities, null, 2);
+        UUID uuidRecruiter = UUID.randomUUID();
+        RecruiterDto firstRecruiter = new RecruiterDto(uuidRecruiter, firstRecruiterAvailabilities, null, 2);
         List<String> recruiterKeySkills = new ArrayList<>();
         recruiterKeySkills.add("Java");
 
@@ -76,7 +79,8 @@ public class SkillsCheckerShould {
         SkillsDto candidateSkills = new SkillsDto();
         candidateSkills.setKeySkills(keySkills);
         candidateSkills.setOtherSkills(otherSkills);
-        CandidateDto candidate = new CandidateDto( 3, candidateSkills, 1);
+        UUID uuid = UUID.randomUUID();
+        CandidateDto candidate = new CandidateDto( uuid, candidateSkills, 1);
         candidate.setSkills(candidateSkills);
         candidate.setExperienceYears(3);
 
@@ -86,7 +90,8 @@ public class SkillsCheckerShould {
         LocalDateTime secondRecruiterAvailability = LocalDateTime.of(2019, Month.JUNE, 4, 9, 30);
         firstRecruiterAvailabilities.add(firstRecruiterAvailability);
         firstRecruiterAvailabilities.add(secondRecruiterAvailability);
-        RecruiterDto firstRecruiter = new RecruiterDto(1, firstRecruiterAvailabilities, null, 2);
+        UUID uuidRecruiter = UUID.randomUUID();
+        RecruiterDto firstRecruiter = new RecruiterDto(uuidRecruiter, firstRecruiterAvailabilities, null, 2);
         List<String> recruiterKeySkills = new ArrayList<>();
         recruiterKeySkills.add("Java");
         recruiterKeySkills.add("Ruby");
@@ -126,7 +131,8 @@ public class SkillsCheckerShould {
         SkillsDto candidateSkills = new SkillsDto();
         candidateSkills.setKeySkills(keySkills);
         candidateSkills.setOtherSkills(otherSkills);
-        CandidateDto candidate = new CandidateDto(3, candidateSkills, 1);
+        UUID uuidCandidate = UUID.randomUUID();
+        CandidateDto candidate = new CandidateDto(uuidCandidate, candidateSkills, 1);
         candidate.setSkills(candidateSkills);
         candidate.setExperienceYears(12);
 
@@ -136,7 +142,8 @@ public class SkillsCheckerShould {
         LocalDateTime secondRecruiterAvailability = LocalDateTime.of(2019, Month.JUNE, 4, 9, 30);
         firstRecruiterAvailabilities.add(firstRecruiterAvailability);
         firstRecruiterAvailabilities.add(secondRecruiterAvailability);
-        RecruiterDto firstRecruiter = new RecruiterDto(1, firstRecruiterAvailabilities, null, 2);
+        UUID uuidRecruiterFirst = UUID.randomUUID();
+        RecruiterDto firstRecruiter = new RecruiterDto(uuidRecruiterFirst, firstRecruiterAvailabilities, null, 2);
 
 
         List<LocalDateTime> secondRecruiterAvailabilities = new ArrayList<>();
@@ -144,7 +151,8 @@ public class SkillsCheckerShould {
         LocalDateTime secondRecruiterAvailability2 = LocalDateTime.of(2019, Month.JUNE, 4, 9, 30);
         secondRecruiterAvailabilities.add(firstRecruiterAvailability2);
         secondRecruiterAvailabilities.add(secondRecruiterAvailability2);
-        RecruiterDto secondRecruiter = new RecruiterDto(1, secondRecruiterAvailabilities, null, 2);
+        UUID uuidRecruiterSecond = UUID.randomUUID();
+        RecruiterDto secondRecruiter = new RecruiterDto(uuidRecruiterSecond, secondRecruiterAvailabilities, null, 2);
 
 
         List<LocalDateTime> thirdRecruiterAvailabilities = new ArrayList<>();
@@ -152,7 +160,8 @@ public class SkillsCheckerShould {
         LocalDateTime secondRecruiterAvailability3 = LocalDateTime.of(2019, Month.JUNE, 4, 9, 30);
         thirdRecruiterAvailabilities.add(firstRecruiterAvailability3);
         thirdRecruiterAvailabilities.add(secondRecruiterAvailability3);
-        RecruiterDto thirdRecruiter = new RecruiterDto(1, thirdRecruiterAvailabilities, null, 2);
+        UUID uuidRecruiterThird = UUID.randomUUID();
+        RecruiterDto thirdRecruiter = new RecruiterDto(uuidRecruiterThird, thirdRecruiterAvailabilities, null, 2);
 
         List<String> firstRecruiterKeySkills = new ArrayList<>();
         firstRecruiterKeySkills.add("Java");
@@ -225,7 +234,8 @@ public class SkillsCheckerShould {
         SkillsDto candidateSkills = new SkillsDto();
         candidateSkills.setKeySkills(keySkills);
         candidateSkills.setOtherSkills(otherSkills);
-        CandidateDto candidate = new CandidateDto(3, candidateSkills, 1);
+        UUID uuid = UUID.randomUUID();
+        CandidateDto candidate = new CandidateDto(uuid, candidateSkills, 1);
         candidate.setSkills(candidateSkills);
         candidate.setExperienceYears(1);
 
@@ -235,7 +245,8 @@ public class SkillsCheckerShould {
         LocalDateTime secondRecruiterAvailability = LocalDateTime.of(2019, Month.JUNE, 4, 9, 30);
         firstRecruiterAvailabilities.add(firstRecruiterAvailability);
         firstRecruiterAvailabilities.add(secondRecruiterAvailability);
-        RecruiterDto firstRecruiter = new RecruiterDto(1, firstRecruiterAvailabilities, null, 2);
+        UUID uuidRecruiterFirst = UUID.randomUUID();
+        RecruiterDto firstRecruiter = new RecruiterDto(uuidRecruiterFirst, firstRecruiterAvailabilities, null, 2);
 
 
         List<LocalDateTime> secondRecruiterAvailabilities = new ArrayList<>();
@@ -243,7 +254,8 @@ public class SkillsCheckerShould {
         LocalDateTime secondRecruiterAvailability2 = LocalDateTime.of(2019, Month.JUNE, 4, 9, 30);
         secondRecruiterAvailabilities.add(firstRecruiterAvailability2);
         secondRecruiterAvailabilities.add(secondRecruiterAvailability2);
-        RecruiterDto secondRecruiter = new RecruiterDto(1, secondRecruiterAvailabilities, null, 2);
+        UUID uuidRecruiterSecond = UUID.randomUUID();
+        RecruiterDto secondRecruiter = new RecruiterDto(uuidRecruiterSecond, secondRecruiterAvailabilities, null, 2);
 
 
         List<LocalDateTime> thirdRecruiterAvailabilities = new ArrayList<>();
@@ -251,7 +263,8 @@ public class SkillsCheckerShould {
         LocalDateTime secondRecruiterAvailability3 = LocalDateTime.of(2019, Month.JUNE, 4, 9, 30);
         thirdRecruiterAvailabilities.add(firstRecruiterAvailability3);
         thirdRecruiterAvailabilities.add(secondRecruiterAvailability3);
-        RecruiterDto thirdRecruiter = new RecruiterDto(1, thirdRecruiterAvailabilities, null, 2);
+        UUID uuidRecruiterThird = UUID.randomUUID();
+        RecruiterDto thirdRecruiter = new RecruiterDto(uuidRecruiterThird, thirdRecruiterAvailabilities, null, 2);
 
         List<String> firstRecruiterKeySkills = new ArrayList<>();
         firstRecruiterKeySkills.add("Java");

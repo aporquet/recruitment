@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface CandidateRepository {
-    CandidateFullDto getCandidate(String idCandidate);
+    CandidateFullDto getCandidate(UUID uuid);
 
     List<CandidateFullDto> getCandidates();
 

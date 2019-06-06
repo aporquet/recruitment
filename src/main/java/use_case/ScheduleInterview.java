@@ -33,7 +33,7 @@ public class ScheduleInterview {
         List<RecruiterDto> recruiterDtoList = recruitersRepository.getRecruitersForSchedule();
         SkillsChecker skillsChecker = new SkillsChecker(candidate, recruiterDtoList);
         List<RecruiterDto> competentRecruiters = skillsChecker.getTechnicallyCompetentRecruitersSortByOtherSkills();
-        InterviewDto interviewDto = new InterviewDto(candidate.getIdCandidate(), competentRecruiters.get(0).getId(), this.date);
+        InterviewDto interviewDto = new InterviewDto(candidate.getUuidCandidate(), competentRecruiters.get(0).getUuid(), this.date);
         interviewRespository.save(interviewDto);
     }
 

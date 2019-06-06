@@ -2,17 +2,18 @@ package common;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 public class RecruiterDto {
 
-    private int id;
+    private UUID uuid;
     private LocalDateTime availableDate;
     private List<LocalDateTime> recruiterAvailabilities;
     private SkillsDto recruiterSkills;
     private int experienceYears;
 
-    public RecruiterDto(int id, List<LocalDateTime> recruiterAvailabilities, SkillsDto recruiterSkills, int experienceYears){
-        this.id=id;
+    public RecruiterDto(UUID uuid, List<LocalDateTime> recruiterAvailabilities, SkillsDto recruiterSkills, int experienceYears){
+        this.uuid = uuid;
         this.recruiterAvailabilities = recruiterAvailabilities;
         this.recruiterSkills = recruiterSkills;
         this.experienceYears = experienceYears;
@@ -55,7 +56,7 @@ public class RecruiterDto {
         this.experienceYears = experienceYears;
     }
 
-    public int getId() {
-        return id;
+    public UUID getUuid() {
+        return uuid;
     }
 }

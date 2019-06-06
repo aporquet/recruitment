@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class CandidateControllerShould {
 
@@ -21,7 +22,8 @@ public class CandidateControllerShould {
         List< LocalDateTime > firstRecruiterAvailabilities = new ArrayList<>();
         LocalDateTime firstRecruiterAvailability = LocalDateTime.of(2019, Month.JUNE, 2, 12, 30);
         firstRecruiterAvailabilities.add(firstRecruiterAvailability);
-        RecruiterDto firstRecruiter = new RecruiterDto(1, firstRecruiterAvailabilities, null, 2);
+        UUID uuid = UUID.randomUUID();
+        RecruiterDto firstRecruiter = new RecruiterDto(uuid, firstRecruiterAvailabilities, null, 2);
         firstRecruiter.setAvailabilities(firstRecruiterAvailabilities);
         recruiters.add(firstRecruiter);
 
@@ -46,7 +48,8 @@ public class CandidateControllerShould {
         LocalDateTime secondRecruiterAvailability = LocalDateTime.of(2019, Month.JUNE, 4, 9, 30);
         firstRecruiterAvailabilities.add(firstRecruiterAvailability);
         firstRecruiterAvailabilities.add(secondRecruiterAvailability);
-        RecruiterDto firstRecruiter = new RecruiterDto(1, firstRecruiterAvailabilities, null, 2);
+        UUID uuid = UUID.randomUUID();
+        RecruiterDto firstRecruiter = new RecruiterDto(uuid, firstRecruiterAvailabilities, null, 2);
         firstRecruiter.setAvailabilities(firstRecruiterAvailabilities);
         recruiters.add(firstRecruiter);
 

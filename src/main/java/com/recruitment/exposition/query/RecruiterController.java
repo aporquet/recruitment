@@ -12,11 +12,11 @@ import java.util.*;
 @RequestMapping(value = "/recruiters")
 public class RecruiterController {
 
-    @GetMapping("/{id}")
+    @GetMapping("/{uuid}")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody RecruiterFullDto getRecruiter(@PathVariable String id) {
+    public @ResponseBody RecruiterFullDto getRecruiter(@PathVariable UUID uuid) {
         RecruitersRepositoryImpl recruitersRepository = new RecruitersRepositoryImpl();
-        return recruitersRepository.getRecruiter(id);
+        return recruitersRepository.getRecruiter(uuid);
     }
 
     @GetMapping()
@@ -30,7 +30,6 @@ public class RecruiterController {
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody List<RecruiterDto> getRecruitersForSchedule() {
         RecruitersRepositoryImpl recruitersRepository = new RecruitersRepositoryImpl();
-        System.out.println("before call repository");
         return recruitersRepository.getRecruitersForSchedule();
     }
 }

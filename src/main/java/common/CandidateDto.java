@@ -4,13 +4,12 @@ import java.util.UUID;
 
 public class CandidateDto {
 
-    private int idCandidate;
     private UUID uuidCandidate;
     private SkillsDto candidateSkills;
     private int experienceYears;
 
-    public CandidateDto(int idCandidate, SkillsDto candidateSkills, int experienceYears){
-        this.idCandidate = idCandidate;
+    public CandidateDto(UUID uuidCandidate, SkillsDto candidateSkills, int experienceYears){
+        this.uuidCandidate = uuidCandidate;
         this.candidateSkills = candidateSkills;
         this.experienceYears = experienceYears;
     }
@@ -31,8 +30,7 @@ public class CandidateDto {
         this.experienceYears = experienceYears;
     }
 
-    public int getIdCandidate() {
-        return this.idCandidate;
+    public UUID getUuidCandidate() {
+        return uuidCandidate;
     }
-
 }

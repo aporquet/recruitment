@@ -1,15 +1,17 @@
 package common;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class InterviewDto {
 
-    private int idCandidate;
-    private int idRecruiter;
+    private final UUID uuidCandidate;
+    private final UUID uuidRecruiter;
     private LocalDateTime dateTime;
 
-    public InterviewDto(int idCandidate, int idRecruiter, LocalDateTime dateTime){
-        this.idCandidate = idCandidate;
-        this.idRecruiter = idRecruiter;
+    public InterviewDto(UUID uuidCandidate, UUID uuidRecruiter, LocalDateTime dateTime){
+        this.uuidCandidate = uuidCandidate;
+        this.uuidRecruiter = uuidRecruiter;
+        this.dateTime = dateTime;
     }
 }
