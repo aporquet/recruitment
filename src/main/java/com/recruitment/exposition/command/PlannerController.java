@@ -26,9 +26,9 @@ public class PlannerController {
             RecruitersRepositoryImpl recruitersRepository = new RecruitersRepositoryImpl();
             InterviewRepositoryImpl interviewRespository = new InterviewRepositoryImpl();
             LocalDateTime date = request.getBody().getDate();
-            UUID candidateId = request.getBody().getIdCandidat();
+            UUID candidateUuid = request.getBody().getIdCandidat();
             try{
-                ScheduleInterview scheduler = new ScheduleInterview(candidateRepository, recruitersRepository, interviewRespository, date, candidateId);
+                ScheduleInterview scheduler = new ScheduleInterview(candidateRepository, recruitersRepository, interviewRespository, date, candidateUuid);
                 scheduler.schedule();
             }catch (AnyRecruiterAvailableException e){
                 responseEntity.badRequest().body("Any recruiters are available");

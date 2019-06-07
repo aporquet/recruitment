@@ -9,9 +9,10 @@ import java.sql.Statement;
 public class InterviewRepositoryImpl implements InterviewRespository {
 
     public Statement statement = null;
+    Connection connection;
 
     void mysqlConnection() {
-        Connection connection = DbConnect.getConnection();
+        connection = DbConnect.getConnection();
         try {
             statement = connection.createStatement();
         } catch (SQLException e) {

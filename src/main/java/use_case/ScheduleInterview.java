@@ -18,18 +18,18 @@ public class ScheduleInterview {
     private RecruitersRepositoryImpl recruitersRepository;
     private InterviewRepositoryImpl interviewRespository;
     private LocalDateTime date;
-    private UUID candidateId;
+    private UUID candidateUuid;
 
-    public ScheduleInterview(CandidateRepositoryImpl candidateRepository, RecruitersRepositoryImpl recruitersRepository, InterviewRepositoryImpl interviewRespository, LocalDateTime date, UUID candidateId){
+    public ScheduleInterview(CandidateRepositoryImpl candidateRepository, RecruitersRepositoryImpl recruitersRepository, InterviewRepositoryImpl interviewRespository, LocalDateTime date, UUID candidateUuid){
         this.candidateRepository = candidateRepository;
         this.recruitersRepository = recruitersRepository;
         this.interviewRespository = interviewRespository;
         this.date = date;
-        this.candidateId = candidateId;
+        this.candidateUuid = candidateUuid;
     }
 
     public void schedule() {
-        CandidateDto candidate = candidateRepository.getCandidateForSchedule(candidateId);
+        CandidateDto candidate = candidateRepository.getCandidateForSchedule(candidateUuid);
         List<RecruiterDto> recruiterDtoList = recruitersRepository.getRecruitersForSchedule();
         SkillsChecker skillsChecker = new SkillsChecker(candidate, recruiterDtoList);
         List<RecruiterDto> competentRecruiters = skillsChecker.getTechnicallyCompetentRecruitersSortByOtherSkills();

@@ -9,9 +9,10 @@ import java.util.UUID;
 
 public class CandidateRepositoryImpl implements CandidateRepository {
     public Statement statement = null;
+    Connection connection;
 
     void mysqlConnection() {
-        Connection connection = DbConnect.getConnection();
+        connection = DbConnect.getConnection();
             try {
                 statement = connection.createStatement();
             } catch (SQLException e) {
@@ -77,6 +78,8 @@ public class CandidateRepositoryImpl implements CandidateRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        DbConnect.closeConnection(connection);
         return candidateFullDto;
     }
 
@@ -133,6 +136,7 @@ public class CandidateRepositoryImpl implements CandidateRepository {
                 e.printStackTrace();
             }
         }
+        DbConnect.closeConnection(connection);
         return candidateFullDtos;
     }
 
@@ -186,7 +190,7 @@ public class CandidateRepositoryImpl implements CandidateRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        DbConnect.closeConnection(connection);
         return candidateDto;
     }
 

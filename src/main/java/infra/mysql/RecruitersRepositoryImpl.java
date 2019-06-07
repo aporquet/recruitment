@@ -12,9 +12,10 @@ import java.util.UUID;
 
 public class RecruitersRepositoryImpl implements RecruitersRepository {
     public Statement statement = null;
+    public Connection connection;
 
     void mysqlConnection() {
-        Connection connection = DbConnect.getConnection();
+        connection = DbConnect.getConnection();
         try {
             statement = connection.createStatement();
         } catch (SQLException e) {
@@ -75,6 +76,7 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
                 e.printStackTrace();
             }
         }
+        DbConnect.closeConnection(connection);
         return recruiters;
     }
 
@@ -154,6 +156,7 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
                 e.printStackTrace();
             }
         }
+        DbConnect.closeConnection(connection);
         return recruiters;
     }
 
@@ -213,6 +216,7 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        DbConnect.closeConnection(connection);
         return recruiter;
     }
 
