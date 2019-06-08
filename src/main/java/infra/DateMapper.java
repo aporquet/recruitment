@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class DateMapper {
 
-    private int mapHour(int hourInfra, int hourDateTime){
+    public int mapHour(int hourInfra, int hourDateTime){
         HashMap<Integer, Integer> map = new HashMap<>();
         map.put(9, 1);
         map.put(10, 2);
@@ -41,7 +41,7 @@ public class DateMapper {
     }
 
     public LocalDateTime mapInfraDateFormToDateTime(InfraDateForm infraDateForm){
-        LocalDateTime localDateTime = LocalDateTime.of(2019, infraDateForm.getMonth(), infraDateForm.getDay(), mapHour(infraDateForm.getHour(), 0), 0);
+        LocalDateTime localDateTime = LocalDateTime.of(2019, infraDateForm.getMonth(), infraDateForm.getDay(), mapHour(infraDateForm.getHour(), 0), 0, 0);
         return localDateTime;
     }
 

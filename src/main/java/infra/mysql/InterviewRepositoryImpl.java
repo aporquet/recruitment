@@ -5,11 +5,14 @@ import common.dto.CandidateFullDto;
 import common.dto.InterviewDto;
 import common.dto.InterviewFullDto;
 import common.dto.RecruiterFullDto;
+import infra.DateMapper;
+import infra.InfraDateForm;
 import use_case.InterviewRespository;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -40,16 +43,25 @@ public class InterviewRepositoryImpl implements InterviewRespository {
         InterviewFullDto interviewFullDto;
 
         int idInterview;
+        LocalDateTime dateInterview;
         CandidateFullDto candidateFullDto;
         RecruiterFullDto recruiterFullDto;
 
-        String getInterviews = "SELECT i.idInterview, i.idCandidate, i.idRecruiter " +
+        DateMapper dateMapper = new DateMapper();
+
+        String getInterviews = "SELECT i.idInterview, i.idCandidate, i.idRecruiter," +
+                " i.idAvailabilityMonth, i.idAvailabilityDay, i.idAvailabilityHour " +
                 "FROM Interview i ";
         try {
             ResultSet resultset = statement.executeQuery(getInterviews);
             while (resultset.next()) {
                 idInterview = resultset.getInt("idInterview");
-                interviewFullDto = new InterviewFullDto(idInterview, null, null);
+                int idAvailabilityMonth = resultset.getInt("idAvailabilityMonth");
+                int idAvailabilityDay = resultset.getInt("idAvailabilityDay");
+                int idAvailabilityHour = resultset.getInt("idAvailabilityHour");
+                InfraDateForm infraDateForm = new InfraDateForm(idAvailabilityMonth, idAvailabilityDay, idAvailabilityHour);
+                dateInterview = dateMapper.mapInfraDateFormToDateTime(infraDateForm);
+                interviewFullDto = new InterviewFullDto(idInterview, null, null, dateInterview);
                 interviewFullDtos.add(interviewFullDto);
                 if (resultset == null) {
                     throw new AnyInterviewFoundException();
