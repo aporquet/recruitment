@@ -1,8 +1,8 @@
 package model.skills;
 
-import common.CandidateDto;
-import common.RecruiterDto;
-import common.SkillsDto;
+import common.dto.CandidateDto;
+import common.dto.RecruiterDto;
+import common.dto.SkillsDto;
 
 import java.util.*;
 import static java.util.stream.Collectors.toList;

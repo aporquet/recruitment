@@ -1,6 +1,9 @@
 package infra.mysql;
 
 import common.*;
+import common.dto.RecruiterDto;
+import common.dto.RecruiterFullDto;
+import common.dto.SkillsDto;
 import infra.DateMapper;
 import infra.InfraDateForm;
 import use_case.RecruitersRepository;

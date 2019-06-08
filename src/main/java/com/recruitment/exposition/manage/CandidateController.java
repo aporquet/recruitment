@@ -1,7 +1,7 @@
 package com.recruitment.exposition.manage;
 
-import common.CandidateDto;
-import common.CandidateFullDto;
+import common.dto.CandidateDto;
+import common.dto.CandidateFullDto;
 import infra.mysql.CandidateRepositoryImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

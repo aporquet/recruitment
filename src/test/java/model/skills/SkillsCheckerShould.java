@@ -1,8 +1,8 @@
 package model.skills;
 
-import common.CandidateDto;
-import common.RecruiterDto;
-import common.SkillsDto;
+import common.dto.CandidateDto;
+import common.dto.RecruiterDto;
+import common.dto.SkillsDto;
 import org.junit.Assert;
 import org.junit.Test;
 

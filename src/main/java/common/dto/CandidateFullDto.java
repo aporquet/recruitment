@@ -1,20 +1,20 @@
-package common;
+package common.dto;
 
 import java.util.List;
 import java.util.UUID;
 
-public class RecruiterFullDto {
+public class CandidateFullDto {
 
     private UUID uuid;
     private String firstName;
     private String lastName;
     private String mail;
-    private String experience;
+    private int experience;
     private String enterprise;
     private List<String> skills;
     private List<String> keySkills;
 
-    public RecruiterFullDto(UUID uuid, String firstName, String lastName,String experience, String mail, String enterprise, List<String> skills, List<String> keySkills) {
+    public CandidateFullDto(UUID uuid, String firstName, String lastName, String mail, int experience, String enterprise, List<String> skills, List<String> keySkills){
         this.uuid = uuid;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -23,14 +23,6 @@ public class RecruiterFullDto {
         this.enterprise = enterprise;
         this.skills = skills;
         this.keySkills = keySkills;
-    }
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
     }
 
     public List<String> getSkills() {
@@ -45,6 +37,10 @@ public class RecruiterFullDto {
         this.keySkills = keySkills;
     }
 
+    public UUID getUuid() {
+        return uuid;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -57,7 +53,7 @@ public class RecruiterFullDto {
         return mail;
     }
 
-    public String getExperience() {
+    public int getExperience() {
         return experience;
     }
 

@@ -1,7 +1,7 @@
 package use_case;
 
-import common.CandidateDto;
-import common.CandidateFullDto;
+import common.dto.CandidateDto;
+import common.dto.CandidateFullDto;
 
 import java.util.List;
 import java.util.UUID;

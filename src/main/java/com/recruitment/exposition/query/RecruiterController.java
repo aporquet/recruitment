@@ -1,7 +1,7 @@
 package com.recruitment.exposition.query;
 
-import common.RecruiterDto;
-import common.RecruiterFullDto;
+import common.dto.RecruiterDto;
+import common.dto.RecruiterFullDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import infra.mysql.RecruitersRepositoryImpl;

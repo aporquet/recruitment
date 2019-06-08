@@ -1,6 +1,6 @@
 package model.availability;
 
-import common.RecruiterDto;
+import common.dto.RecruiterDto;
 
 import java.util.List;
 

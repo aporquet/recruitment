@@ -1,4 +1,4 @@
-package common;
+package common.dto;
 
 import java.util.UUID;
 

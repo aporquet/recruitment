@@ -1,6 +1,9 @@
 package infra.mysql;
 
 import common.*;
+import common.dto.CandidateDto;
+import common.dto.CandidateFullDto;
+import common.dto.SkillsDto;
 import use_case.CandidateRepository;
 import java.sql.*;
 import java.util.ArrayList;

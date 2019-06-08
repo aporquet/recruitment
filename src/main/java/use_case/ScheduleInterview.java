@@ -1,8 +1,8 @@
 package use_case;
 
-import common.CandidateDto;
-import common.InterviewDto;
-import common.RecruiterDto;
+import common.dto.CandidateDto;
+import common.dto.InterviewDto;
+import common.dto.RecruiterDto;
 import infra.mysql.CandidateRepositoryImpl;
 import infra.mysql.InterviewRepositoryImpl;
 import infra.mysql.RecruitersRepositoryImpl;

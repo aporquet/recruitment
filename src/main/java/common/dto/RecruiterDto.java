@@ -1,4 +1,4 @@
-package common;
+package common.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -1,7 +1,7 @@
 package use_case;
 
-import common.RecruiterDto;
-import common.RecruiterFullDto;
+import common.dto.RecruiterDto;
+import common.dto.RecruiterFullDto;
 
 import java.util.List;
 import java.util.UUID;
