@@ -35,4 +35,25 @@ public class CandidateController {
         CandidateRepositoryImpl candidateRepository = new CandidateRepositoryImpl();
         return candidateRepository.getCandidateForSchedule(uuid);
     }
+
+    @DeleteMapping("/{uuid}")
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody boolean deleteCandidate(@PathVariable UUID uuid) {
+        CandidateRepositoryImpl candidateRepository = new CandidateRepositoryImpl();
+        return candidateRepository.deleteCandidate(uuid);
+    }
+
+    @PostMapping("/{candidate}/enterprise/{idEntreprise}")
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody boolean insertCandidate(@PathVariable CandidateFullDto candidate, int idEntreprise) {
+        CandidateRepositoryImpl candidateRepository = new CandidateRepositoryImpl();
+        return candidateRepository.insertCandidate(candidate, idEntreprise);
+    }
+
+    @PostMapping("/{candidate}")
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody boolean updateCandidate(@PathVariable CandidateFullDto candidate) {
+        CandidateRepositoryImpl candidateRepository = new CandidateRepositoryImpl();
+        return candidateRepository.updateCandidate(candidate);
+    }
 }

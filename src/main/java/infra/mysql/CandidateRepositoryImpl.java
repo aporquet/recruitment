@@ -5,6 +5,7 @@ import common.dto.CandidateDto;
 import common.dto.CandidateFullDto;
 import common.dto.SkillsDto;
 import use_case.CandidateRepository;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +17,11 @@ public class CandidateRepositoryImpl implements CandidateRepository {
 
     void mysqlConnection() {
         connection = DbConnect.getConnection();
-            try {
-                statement = connection.createStatement();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        try {
+            statement = connection.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -38,7 +39,7 @@ public class CandidateRepositoryImpl implements CandidateRepository {
                 "FROM Person p " +
                 "INNER JOIN Enterprise e ON p.id_enterprise = e.id_enterprise " +
                 "INNER JOIN Profile pr ON p.idPerson = pr.idProfile " +
-                "WHERE p.uuidPerson = " + "'"+uuidCandidate.toString()+"' "+
+                "WHERE p.uuidPerson = " + "'" + uuidCandidate.toString() + "' " +
                 "AND pr.isCandidate = " + 1;
 
         try {
@@ -63,7 +64,7 @@ public class CandidateRepositoryImpl implements CandidateRepository {
                 "FROM Person p " +
                 "INNER JOIN SkillPersonConf spc ON spc.idPerson = p.idPerson " +
                 "INNER JOIN Skill s ON s.idSkill = spc.idSkill " +
-                "WHERE p.uuidPerson = " + "'"+uuidCandidate.toString()+"' ";
+                "WHERE p.uuidPerson = " + "'" + uuidCandidate.toString() + "' ";
         try {
             ResultSet resultsetSkills = statement.executeQuery(getSkillsCandidate);
             List<String> keySkills = new ArrayList<>();
@@ -120,7 +121,7 @@ public class CandidateRepositoryImpl implements CandidateRepository {
                     "FROM Person p " +
                     "INNER JOIN SkillPersonConf spc ON spc.idPerson = p.idPerson " +
                     "INNER JOIN Skill s ON s.idSkill = spc.idSkill " +
-                    "WHERE p.uuidPerson = " + "'"+candidateFullDto1.getUuid()+"'";
+                    "WHERE p.uuidPerson = " + "'" + candidateFullDto1.getUuid() + "'";
             try {
                 ResultSet resultsetSkills = statement.executeQuery(getSkillsRecruiters);
                 List<String> keySkills = new ArrayList<>();
@@ -152,7 +153,7 @@ public class CandidateRepositoryImpl implements CandidateRepository {
         SkillsDto skillsDto;
         String getCandidate = "SELECT p.uuidPerson, p.experience " +
                 "FROM Person p " +
-                "WHERE p.uuidPerson = " + "'"+uuidCandidate.toString()+"'";
+                "WHERE p.uuidPerson = " + "'" + uuidCandidate.toString() + "'";
         try {
             ResultSet resultset = statement.executeQuery(getCandidate);
             if (resultset.next()) {
@@ -165,14 +166,14 @@ public class CandidateRepositoryImpl implements CandidateRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        CandidateDto candidateDto = new CandidateDto(uuid, null , experience);
+        CandidateDto candidateDto = new CandidateDto(uuid, null, experience);
 
         String getSkillsCandidate = "SELECT s.nameSkill, spc.isKeySkill " +
                 "FROM Person p " +
                 "INNER JOIN SkillPersonConf spc ON spc.idPerson = p.idPerson " +
                 "INNER JOIN Skill s ON s.idSkill = spc.idSkill " +
                 "INNER JOIN Profile pr ON p.idPerson = pr.idProfile " +
-                "WHERE p.uuidPerson = " + "'"+uuidCandidate.toString()+"'"+
+                "WHERE p.uuidPerson = " + "'" + uuidCandidate.toString() + "'" +
                 "AND pr.isCandidate = " + 1;
         try {
             ResultSet resultsetSkills = statement.executeQuery(getSkillsCandidate);
@@ -197,4 +198,87 @@ public class CandidateRepositoryImpl implements CandidateRepository {
         return candidateDto;
     }
 
+    public boolean deleteCandidate(UUID uuid) {
+        mysqlConnection();
+        boolean work;
+        String deleteCandidate = "Delete p.idPerson, p.uuidPerson, p.firstName, p.lastName, " +
+                "p.mail, p.experience, p.id_entreprise " +
+                "FROM Person p " +
+                "INNER JOIN Profile pr ON p.idPerson = pr.idProfile " +
+                "WHERE p.uuidPerson = " + "'" + uuid.toString() + "' " +
+                "AND pr.isCandidate = " + 1;
+
+        try {
+            statement.execute(deleteCandidate);
+            work = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            work = false;
+        }
+        DbConnect.closeConnection(connection);
+        return work;
+    }
+
+    public boolean insertCandidate(CandidateFullDto candidateFullDto, int id_entreprise) {
+        mysqlConnection();
+        boolean work = false;
+        String firstNameCandidate = candidateFullDto.getFirstName();
+        String lastName = candidateFullDto.getLastName();
+        String mail = candidateFullDto.getMail();
+        int experience = candidateFullDto.getExperience();
+        int newIdCandidate = 0;
+        String insertCandidate = "INSERT INTO Person " +
+                "(firstName, lastName, mail, experience, id_enterprise)" +
+                "VALUES " + firstNameCandidate + ", +" + lastName + ", +" + mail + ", +" + experience + ", +" + id_entreprise;
+        try {
+            statement.execute(insertCandidate);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        ResultSet generatedKeys = null;
+        try {
+            generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                newIdCandidate = generatedKeys.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        String insertProfil = "INSERT INTO Profil " +
+                "(idPerson, idCandidate, idRecruiter )" +
+                "VALUES " + newIdCandidate + ", +" + 1 + ", +" + 0;
+        try {
+            statement.execute(insertProfil);
+            work = true;
+        } catch (SQLException e) {
+            work = false;
+            e.printStackTrace();
+        }
+        DbConnect.closeConnection(connection);
+        return work;
+    }
+
+    public boolean updateCandidate(CandidateFullDto candidate) {
+        mysqlConnection();
+        boolean work;
+        String firstNameCandidate = candidate.getFirstName();
+        String lastName = candidate.getLastName();
+        String mail = candidate.getMail();
+        int experience = candidate.getExperience();
+        String insertCandidate = "UPDATE Person " +
+                "(firstName, lastName, mail, experience )" +
+                "SET " + firstNameCandidate + ", +" + lastName + ", +" + mail + ", +" + experience + " " +
+                "WHERE uuidPersion = " + candidate.getUuid().toString();
+        try {
+            statement.execute(insertCandidate);
+            work = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            work = false;
+        }
+        DbConnect.closeConnection(connection);
+        return work;
+    }
 }

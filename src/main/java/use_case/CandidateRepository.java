@@ -12,4 +12,8 @@ public interface CandidateRepository {
     List<CandidateFullDto> getCandidates();
 
     CandidateDto getCandidateForSchedule(UUID uuidCandidate);
+
+    boolean deleteCandidate(UUID uuidCandidate);
+
+    boolean insertCandidate(CandidateFullDto candidateFullDto, int id_entreprise);
 }
