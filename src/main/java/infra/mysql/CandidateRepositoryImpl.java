@@ -201,13 +201,12 @@ public class CandidateRepositoryImpl implements CandidateRepository {
     public boolean deleteCandidate(UUID uuid) {
         mysqlConnection();
         boolean work;
-        String deleteCandidate = "Delete p.idPerson, p.uuidPerson, p.firstName, p.lastName, " +
-                "p.mail, p.experience, p.id_entreprise " +
+        String deleteCandidate = "Delete p "+
                 "FROM Person p " +
                 "INNER JOIN Profile pr ON p.idPerson = pr.idProfile " +
                 "WHERE p.uuidPerson = " + "'" + uuid.toString() + "' " +
                 "AND pr.isCandidate = " + 1;
-
+        System.out.println(deleteCandidate);
         try {
             statement.execute(deleteCandidate);
             work = true;
@@ -215,17 +214,19 @@ public class CandidateRepositoryImpl implements CandidateRepository {
             e.printStackTrace();
             work = false;
         }
+
         DbConnect.closeConnection(connection);
         return work;
     }
 
-    public boolean insertCandidate(CandidateFullDto candidateFullDto, int id_entreprise) {
+    public boolean insertCandidate(CandidateFullDto candidateFullDto) {
         mysqlConnection();
         boolean work = false;
         String firstNameCandidate = candidateFullDto.getFirstName();
         String lastName = candidateFullDto.getLastName();
         String mail = candidateFullDto.getMail();
         int experience = candidateFullDto.getExperience();
+        String id_entreprise = candidateFullDto.getEnterprise();
         int newIdCandidate = 0;
         String insertCandidate = "INSERT INTO Person " +
                 "(firstName, lastName, mail, experience, id_enterprise)" +
@@ -262,17 +263,20 @@ public class CandidateRepositoryImpl implements CandidateRepository {
 
     public boolean updateCandidate(CandidateFullDto candidate) {
         mysqlConnection();
+        System.out.println("connection");
         boolean work;
         String firstNameCandidate = candidate.getFirstName();
         String lastName = candidate.getLastName();
         String mail = candidate.getMail();
         int experience = candidate.getExperience();
-        String insertCandidate = "UPDATE Person " +
+        System.out.println("before request");
+        String updateCandidate = "UPDATE Person " +
                 "(firstName, lastName, mail, experience )" +
                 "SET " + firstNameCandidate + ", +" + lastName + ", +" + mail + ", +" + experience + " " +
                 "WHERE uuidPersion = " + candidate.getUuid().toString();
+        System.out.println(updateCandidate);
         try {
-            statement.execute(insertCandidate);
+            statement.execute(updateCandidate);
             work = true;
         } catch (SQLException e) {
             e.printStackTrace();

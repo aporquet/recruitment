@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(value = "/candidates")
+@RequestMapping(value = "/candidates", method = {RequestMethod.GET, RequestMethod.DELETE, RequestMethod.PUT})
 public class CandidateController {
 
     @GetMapping()
@@ -36,23 +36,23 @@ public class CandidateController {
         return candidateRepository.getCandidateForSchedule(uuid);
     }
 
-    @DeleteMapping("/{uuid}")
+    @DeleteMapping("/delete/{uuid}")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody boolean deleteCandidate(@PathVariable UUID uuid) {
+    public boolean deleteCandidate(@PathVariable UUID uuid) {
         CandidateRepositoryImpl candidateRepository = new CandidateRepositoryImpl();
         return candidateRepository.deleteCandidate(uuid);
     }
 
-    @PostMapping("/{candidate}/enterprise/{idEntreprise}")
+    @PostMapping("/insert")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody boolean insertCandidate(@PathVariable CandidateFullDto candidate, int idEntreprise) {
+    public @ResponseBody boolean insertCandidate(@RequestBody CandidateFullDto candidate) {
         CandidateRepositoryImpl candidateRepository = new CandidateRepositoryImpl();
-        return candidateRepository.insertCandidate(candidate, idEntreprise);
+        return candidateRepository.insertCandidate(candidate);
     }
 
-    @PostMapping("/{candidate}")
+    @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody boolean updateCandidate(@PathVariable CandidateFullDto candidate) {
+    public @ResponseBody boolean updateCandidate(@RequestBody CandidateFullDto candidate) {
         CandidateRepositoryImpl candidateRepository = new CandidateRepositoryImpl();
         return candidateRepository.updateCandidate(candidate);
     }

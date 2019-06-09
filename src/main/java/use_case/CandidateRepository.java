@@ -15,5 +15,5 @@ public interface CandidateRepository {
 
     boolean deleteCandidate(UUID uuidCandidate);
 
-    boolean insertCandidate(CandidateFullDto candidateFullDto, int id_entreprise);
+    boolean insertCandidate(CandidateFullDto candidateFullDto);
 }

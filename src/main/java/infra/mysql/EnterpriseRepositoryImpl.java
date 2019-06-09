@@ -36,14 +36,14 @@ public class EnterpriseRepositoryImpl implements EnterpriseRepository {
         int idEnterprise;
         String nameEnterprise;
 
-        String getEnterprises = "SELECT e.idEnterprise, e.name" +
+        String getEnterprises = "SELECT e.id_enterprise, e.name " +
                 "FROM Enterprise e ";
 
         try {
             ResultSet resultset = statement.executeQuery(getEnterprises);
             while (resultset.next()) {
                 idEnterprise = resultset.getInt("id_enterprise");
-                nameEnterprise = resultset.getString("nameEnterprise");
+                nameEnterprise = resultset.getString("name");
                 if (resultset == null) {
                     throw new AnyEnterpriseFoundException();
                 }
@@ -53,6 +53,7 @@ public class EnterpriseRepositoryImpl implements EnterpriseRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        DbConnect.closeConnection(connection);
         return enterpriseDtoList;
     }
 }

@@ -155,7 +155,7 @@ public class InterviewRepositoryImpl implements InterviewRespository {
                     mailCandidate = resultsetCandidate.getString("mail");
                     enterpriseCandidate = resultsetCandidate.getString("name");
                     if (resultsetCandidate == null) {
-                        throw new AnyRecruiterFoundException();
+                        throw new AnyCandidateFoundException();
                     }
                 }
             } catch (SQLException e) {
@@ -167,7 +167,7 @@ public class InterviewRepositoryImpl implements InterviewRespository {
                     "FROM Person p " +
                     "INNER JOIN SkillPersonConf spc ON spc.idPerson = p.idPerson " +
                     "INNER JOIN Skill s ON s.idSkill = spc.idSkill " +
-                    "WHERE p.uuidPerson = " + "'" + uuidCandidate.toString() + "' ";
+                    "WHERE p.uuidPerson = " + "'" + candidateFullDto.getUuid().toString() + "' ";
             try {
                 ResultSet resultsetSkills = statement.executeQuery(getSkillsCandidate);
                 List<String> keySkills = new ArrayList<>();
