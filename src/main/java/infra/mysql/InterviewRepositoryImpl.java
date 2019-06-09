@@ -33,6 +33,79 @@ public class InterviewRepositoryImpl implements InterviewRespository {
 
     @Override
     public void save(InterviewDto interviewDto) {
+        mysqlConnection();
+        LocalDateTime dateTime = interviewDto.getDateTime();
+        DateMapper dateMapper = new DateMapper();
+        InfraDateForm infraDateForm = dateMapper.mapDateTimeToInfraDateForm(dateTime);
+        int idRecruiter = 0;
+        int idCandidate = 0;
+        int hourAvailability = infraDateForm.getHour();
+        int dayAvailability = infraDateForm.getDay();
+        int monthAvailability = infraDateForm.getMonth();
+
+        String getRecruiter = "SELECT idPerson FROM Person " +
+                "WHERE uuidPerson = "+interviewDto.getUuidRecruiter().toString();
+        ResultSet rsRecruiter = null;
+        try {
+            rsRecruiter = statement.executeQuery(getRecruiter);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        while (true) {
+            try {
+                if (!rsRecruiter.next()) break;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                idRecruiter = rsRecruiter.getInt(1);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        String getCandidate = "SELECT idPerson FROM Person " +
+                "WHERE uuidPerson = "+interviewDto.getUuidCandidate().toString();
+        ResultSet rsCandidate = null;
+        try {
+            rsCandidate = statement.executeQuery(getCandidate);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        while (true) {
+            try {
+                if (!rsCandidate.next()) break;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                idCandidate = rsCandidate.getInt(1);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        String postInterview = "INSERT INTO Interview " +
+                "(idCandidate, idRecruiter, idAvailabilityHour, idAvailabilityDay, idAvailabilityMonth )" +
+                "VALUES " + idCandidate + ", +" + idRecruiter +
+                ", +" + hourAvailability + ", +" + dayAvailability + ", +" + monthAvailability;
+        try {
+            statement.execute(postInterview);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        String deleteRecruiterAvailability = "Delete " +
+                "FROM PersonAvailabilityConf " +
+                "WHERE idPerson = "+ idRecruiter;
+        try {
+            statement.execute(deleteRecruiterAvailability);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void delete(int idInterview) {
 
     }
 

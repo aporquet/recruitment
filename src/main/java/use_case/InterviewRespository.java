@@ -9,6 +9,8 @@ public interface InterviewRespository {
 
     void save(InterviewDto interviewDto);
 
+    void delete(int idInterview);
+
     List<InterviewFullDto> getInterviews();
 }
 

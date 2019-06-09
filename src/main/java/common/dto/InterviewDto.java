@@ -14,4 +14,20 @@ public class InterviewDto {
         this.uuidRecruiter = uuidRecruiter;
         this.dateTime = dateTime;
     }
+
+    public UUID getUuidCandidate() {
+        return uuidCandidate;
+    }
+
+    public UUID getUuidRecruiter() {
+        return uuidRecruiter;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
 }
