@@ -102,10 +102,26 @@ public class InterviewRepositoryImpl implements InterviewRespository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        DbConnect.closeConnection(connection);
     }
 
     @Override
-    public void delete(int idInterview) {
+    public void deleteInterview(InterviewFullDto interviewFullDto) {
+        mysqlConnection();
+        DateMapper dateMapper = new DateMapper();
+        InfraDateForm infraDateForm = dateMapper.mapDateTimeToInfraDateForm(interviewFullDto.getLocalDateTime());
+        int hourAvailability = infraDateForm.getHour();
+        int dayAvailability = infraDateForm.getDay();
+        int monthAvailability = infraDateForm.getMonth();
+        String deleteInterview = "DELETE " +
+                "FROM Interview " +
+                "WHERE idInterview = "+interviewFullDto.getIdInterview();
+        try {
+            statement.executeQuery(deleteInterview);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        // TODO : Re asign availability to recruiter after interview was canceled
 
     }
 

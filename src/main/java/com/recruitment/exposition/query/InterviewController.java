@@ -3,23 +3,27 @@ package com.recruitment.exposition.query;
 import common.dto.InterviewFullDto;
 import infra.mysql.InterviewRepositoryImpl;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/interviews")
+@RequestMapping(value = "/interviews",  method = {RequestMethod.GET, RequestMethod.DELETE})
 public class InterviewController {
 
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public List<InterviewFullDto>  getInterviews (){
-            InterviewRepositoryImpl interviewRepository = new InterviewRepositoryImpl();
-            List<InterviewFullDto> interviewFullDtos = interviewRepository.getInterviews();
-            return interviewFullDtos;
-        }
+    public List<InterviewFullDto> getInterviews() {
+        InterviewRepositoryImpl interviewRepository = new InterviewRepositoryImpl();
+        List<InterviewFullDto> interviewFullDtos = interviewRepository.getInterviews();
+        return interviewFullDtos;
+    }
+
+    @DeleteMapping("/delete")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteInterview(@RequestBody InterviewFullDto interviewFullDto) {
+        InterviewRepositoryImpl interviewRepository = new InterviewRepositoryImpl();
+        interviewRepository.deleteInterview(interviewFullDto);
+    }
 
 }
