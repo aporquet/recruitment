@@ -8,6 +8,7 @@ import infra.mysql.RecruitersRepositoryImpl;
 
 import java.util.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/recruiters")
 public class RecruiterController {

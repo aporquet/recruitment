@@ -102,7 +102,6 @@ public class InterviewRepositoryImpl implements InterviewRespository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         DbConnect.closeConnection(connection);
     }
 
@@ -153,6 +152,8 @@ public class InterviewRepositoryImpl implements InterviewRespository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        DbConnect.closeConnection(connection);
     }
 
     @Override
