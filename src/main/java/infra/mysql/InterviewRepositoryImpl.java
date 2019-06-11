@@ -102,12 +102,14 @@ public class InterviewRepositoryImpl implements InterviewRespository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         DbConnect.closeConnection(connection);
     }
 
     @Override
     public void deleteInterview(InterviewFullDto interviewFullDto) {
         mysqlConnection();
+        int idRecruiter = 0;
         DateMapper dateMapper = new DateMapper();
         InfraDateForm infraDateForm = dateMapper.mapDateTimeToInfraDateForm(interviewFullDto.getLocalDateTime());
         int hourAvailability = infraDateForm.getHour();
@@ -121,8 +123,36 @@ public class InterviewRepositoryImpl implements InterviewRespository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        // TODO : Re asign availability to recruiter after interview was canceled
 
+        String getRecruiter = "SELECT idPerson FROM Person " +
+                "WHERE uuidPerson = "+interviewFullDto.getRecruiterFullDto().getUuid().toString();
+        ResultSet rsRecruiter = null;
+        try {
+            rsRecruiter = statement.executeQuery(getRecruiter);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        while (true) {
+            try {
+                if (!rsRecruiter.next()) break;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                idRecruiter = rsRecruiter.getInt(1);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        String reInsertRecruiterAvailability = "INSERT INTO PersonAvailabilityConf" +
+                "(idPerson, idAvailabilityMonth, idAvailabilityDay, idAvailabilityHour)" +
+                "VALUES " + idRecruiter + ", " + monthAvailability + ", " + dayAvailability+ ", " + hourAvailability;;
+        try {
+            statement.executeQuery(reInsertRecruiterAvailability);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
