@@ -8,6 +8,7 @@ import common.dto.RecruiterFullDto;
 import infra.DateMapper;
 import infra.InfraDateForm;
 import use_case.InterviewRespository;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -44,28 +45,22 @@ public class InterviewRepositoryImpl implements InterviewRespository {
         int monthAvailability = infraDateForm.getMonth();
 
         String getRecruiter = "SELECT idPerson FROM Person " +
-                "WHERE uuidPerson = "+interviewDto.getUuidRecruiter().toString();
+                "WHERE uuidPerson = " + "'"+interviewDto.getUuidRecruiter().toString()+"'";
         ResultSet rsRecruiter = null;
         try {
             rsRecruiter = statement.executeQuery(getRecruiter);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        while (true) {
-            try {
-                if (!rsRecruiter.next()) break;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                idRecruiter = rsRecruiter.getInt(1);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        try {
+            idRecruiter = rsRecruiter.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
+
         String getCandidate = "SELECT idPerson FROM Person " +
-                "WHERE uuidPerson = "+interviewDto.getUuidCandidate().toString();
+                "WHERE uuidPerson = " + "'"+interviewDto.getUuidCandidate().toString()+"'";
         ResultSet rsCandidate = null;
         try {
             rsCandidate = statement.executeQuery(getCandidate);
@@ -96,7 +91,7 @@ public class InterviewRepositoryImpl implements InterviewRespository {
         }
         String deleteRecruiterAvailability = "Delete " +
                 "FROM PersonAvailabilityConf " +
-                "WHERE idPerson = "+ idRecruiter;
+                "WHERE idPerson = " + idRecruiter;
         try {
             statement.execute(deleteRecruiterAvailability);
         } catch (SQLException e) {
@@ -116,7 +111,7 @@ public class InterviewRepositoryImpl implements InterviewRespository {
         int monthAvailability = infraDateForm.getMonth();
         String deleteInterview = "DELETE " +
                 "FROM Interview " +
-                "WHERE idInterview = "+interviewFullDto.getIdInterview();
+                "WHERE idInterview = " + interviewFullDto.getIdInterview();
         try {
             statement.executeQuery(deleteInterview);
         } catch (SQLException e) {
@@ -124,7 +119,7 @@ public class InterviewRepositoryImpl implements InterviewRespository {
         }
 
         String getRecruiter = "SELECT idPerson FROM Person " +
-                "WHERE uuidPerson = "+interviewFullDto.getRecruiterFullDto().getUuid().toString();
+                "WHERE uuidPerson = " + "'"+ interviewFullDto.getRecruiterFullDto().getUuid().toString()+"'";
         ResultSet rsRecruiter = null;
         try {
             rsRecruiter = statement.executeQuery(getRecruiter);
@@ -146,7 +141,8 @@ public class InterviewRepositoryImpl implements InterviewRespository {
 
         String reInsertRecruiterAvailability = "INSERT INTO PersonAvailabilityConf" +
                 "(idPerson, idAvailabilityMonth, idAvailabilityDay, idAvailabilityHour)" +
-                "VALUES " + idRecruiter + ", " + monthAvailability + ", " + dayAvailability+ ", " + hourAvailability;;
+                "VALUES " + idRecruiter + ", " + monthAvailability + ", " + dayAvailability + ", " + hourAvailability;
+        ;
         try {
             statement.executeQuery(reInsertRecruiterAvailability);
         } catch (SQLException e) {
@@ -187,11 +183,11 @@ public class InterviewRepositoryImpl implements InterviewRespository {
                     throw new AnyInterviewFoundException();
                 }
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        for(InterviewFullDto interviewFullDto1 : interviewFullDtos) {
+        for (InterviewFullDto interviewFullDto1 : interviewFullDtos) {
             String uuidStringRecruiter;
             UUID uuidRecruiter = null;
             String firstNameRecruiter = null;
@@ -309,7 +305,7 @@ public class InterviewRepositoryImpl implements InterviewRespository {
             interviewFullDto1.setRecruiterFullDto(recruiterFullDto);
             interviewFullDto1.setCandidateFullDto(candidateFullDto);
         }
-                DbConnect.closeConnection(connection);
-                return interviewFullDtos;
+        DbConnect.closeConnection(connection);
+        return interviewFullDtos;
     }
 }
