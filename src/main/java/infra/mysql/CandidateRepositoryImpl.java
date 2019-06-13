@@ -271,10 +271,12 @@ public class CandidateRepositoryImpl implements CandidateRepository {
         String mail = candidate.getMail();
         int experience = candidate.getExperience();
         System.out.println("before request");
-        String updateCandidate = "UPDATE Person " +
-                "(firstName, lastName, mail, experience )" +
-                "SET " + firstNameCandidate + ", +" + lastName + ", +" + mail + ", +" + experience + " " +
-                "WHERE uuidPersion = " + candidate.getUuid().toString();
+        String updateCandidate = "UPDATE recruitment.Person " +
+                "SET firstName = " + "'" + firstNameCandidate + "', " +
+                "lastName = " + "'" + lastName + "', " +
+                "mail = " + "'" + mail + "', " +
+                "experience = " + "'" + experience + "' " +
+                "WHERE uuidPerson = " + "'" + candidate.getUuid().toString() + "'";
         System.out.println(updateCandidate);
         try {
             statement.execute(updateCandidate);
