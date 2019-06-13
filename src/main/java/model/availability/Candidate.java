@@ -29,6 +29,10 @@ class Candidate {
         return result;
     }
 
+    public RecruiterDto getFirstAvailableRecruiter(List<RecruiterDto> recruiters) {
+        return recruiters.get(0);
+    }
+
     boolean availabilityIsInCurrentMonth(Candidate candidate) {
         LocalDateTime currentDate =  LocalDateTime.now();
         int currentMonth = currentDate.getMonthValue();

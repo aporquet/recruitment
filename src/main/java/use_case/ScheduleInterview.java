@@ -6,6 +6,7 @@ import common.dto.RecruiterDto;
 import infra.mysql.CandidateRepositoryImpl;
 import infra.mysql.InterviewRepositoryImpl;
 import infra.mysql.RecruitersRepositoryImpl;
+import model.availability.AvailableRecruiter;
 import model.skills.SkillsChecker;
 
 import java.time.LocalDateTime;
@@ -33,7 +34,9 @@ public class ScheduleInterview {
         List<RecruiterDto> recruiterDtoList = recruitersRepository.getRecruitersForSchedule();
         SkillsChecker skillsChecker = new SkillsChecker(candidate, recruiterDtoList);
         List<RecruiterDto> competentRecruiters = skillsChecker.getTechnicallyCompetentRecruitersSortByOtherSkills();
-        InterviewDto interviewDto = new InterviewDto(candidate.getUuidCandidate(), competentRecruiters.get(0).getUuid(), this.date);
+        AvailableRecruiter availableRecruiter = new AvailableRecruiter(competentRecruiters);
+        RecruiterDto recruiterValidate = availableRecruiter.getAvailableRecruiter(this.date);
+        InterviewDto interviewDto = new InterviewDto(candidate.getUuidCandidate(), recruiterValidate.getUuid(), this.date);
         interviewRespository.save(interviewDto);
     }
 

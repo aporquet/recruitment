@@ -44,18 +44,19 @@ public class InterviewRepositoryImpl implements InterviewRespository {
         int dayAvailability = infraDateForm.getDay();
         int monthAvailability = infraDateForm.getMonth();
 
-        String getRecruiter = "SELECT idPerson FROM Person " +
-                "WHERE uuidPerson = " + "'"+interviewDto.getUuidRecruiter().toString()+"'";
+        String getRecruiter = "SELECT p.idPerson FROM Person p " +
+                "WHERE p.uuidPerson = " + "'"+interviewDto.getUuidRecruiter().toString()+"'";
         ResultSet rsRecruiter = null;
         try {
             rsRecruiter = statement.executeQuery(getRecruiter);
+            System.out.println(rsRecruiter.getRow());
             idRecruiter = rsRecruiter.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        String getCandidate = "SELECT idPerson FROM Person " +
-                "WHERE uuidPerson = " + "'"+interviewDto.getUuidCandidate().toString()+"'";
+        String getCandidate = "SELECT p.idPerson FROM Person p " +
+                "WHERE p.uuidPerson = " + "'"+interviewDto.getUuidCandidate().toString()+"'";
         ResultSet rsCandidate = null;
         try {
             rsCandidate = statement.executeQuery(getCandidate);

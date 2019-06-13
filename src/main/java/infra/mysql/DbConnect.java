@@ -34,7 +34,7 @@ public class DbConnect {
         return connection;
     }
 
-    public static void closeConnection(Connection connection){
+    public static void closeConnection(Connection connection) {
         try {
             connection.close();
         } catch (SQLException e) {

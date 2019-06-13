@@ -25,5 +25,4 @@ public class PlannerController {
         ScheduleInterview scheduler = new ScheduleInterview(candidateRepository, recruitersRepository, interviewRespository, dateTime, uuidCandidate);
         scheduler.schedule();
     }
-
 }

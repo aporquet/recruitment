@@ -32,10 +32,10 @@ public class AvailableRecruiterControllerShould {
         AvailableRecruiter availableRecruiter = new AvailableRecruiter(recruiters);
 
         //When
-        RecruiterDto firstAvailableRecruiter = availableRecruiter.getFirstAvailableRecruiter();
+        RecruiterDto recruiterAvailable = availableRecruiter.getAvailableRecruiter(availableDate);
 
         //Then
-        Assert.assertEquals(firstAvailableRecruiter, firstRecruiter);
+        Assert.assertEquals(recruiterAvailable, firstRecruiter);
 
     }
 
@@ -43,9 +43,10 @@ public class AvailableRecruiterControllerShould {
     public void throw_any_recruiter_available_exception_when_recruiters_list_is_empty(){
         //Given
         AvailableRecruiter availableRecruiter = new AvailableRecruiter(new ArrayList<>());
+        LocalDateTime date = LocalDateTime.of(2019, Month.JUNE, 2, 12, 30);
 
         //When
-        availableRecruiter.getFirstAvailableRecruiter();
+        availableRecruiter.getAvailableRecruiter(date);
 
     }
 
@@ -53,9 +54,10 @@ public class AvailableRecruiterControllerShould {
     public void throw_any_recruiter_available_exception_when_recruiter_is_null(){
         //Given
         AvailableRecruiter availableRecruiter = new AvailableRecruiter(null);
+        LocalDateTime date = LocalDateTime.of(2019, Month.JUNE, 2, 12, 30);
 
         //When
-        availableRecruiter.getFirstAvailableRecruiter();
+        availableRecruiter.getAvailableRecruiter(date);
 
     }
 
