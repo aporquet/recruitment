@@ -38,36 +38,13 @@ public class InterviewRepositoryImpl implements InterviewRespository {
         LocalDateTime dateTime = interviewDto.getDateTime();
         DateMapper dateMapper = new DateMapper();
         InfraDateForm infraDateForm = dateMapper.mapDateTimeToInfraDateForm(dateTime);
-        int idRecruiter = 0;
-        int idCandidate = 0;
         int hourAvailability = infraDateForm.getHour();
         int dayAvailability = infraDateForm.getDay();
         int monthAvailability = infraDateForm.getMonth();
 
-        String getRecruiter = "SELECT p.idPerson FROM Person p " +
-                "WHERE p.uuidPerson = " + "'"+interviewDto.getUuidRecruiter().toString()+"'";
-        ResultSet rsRecruiter = null;
-        try {
-            rsRecruiter = statement.executeQuery(getRecruiter);
-            System.out.println(rsRecruiter.getRow());
-            idRecruiter = rsRecruiter.getInt(1);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        String getCandidate = "SELECT p.idPerson FROM Person p " +
-                "WHERE p.uuidPerson = " + "'"+interviewDto.getUuidCandidate().toString()+"'";
-        ResultSet rsCandidate = null;
-        try {
-            rsCandidate = statement.executeQuery(getCandidate);
-            idCandidate = rsCandidate.getInt(1);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
         String postInterview = "INSERT INTO Interview " +
-                "(idCandidate, idRecruiter, idAvailabilityHour, idAvailabilityDay, idAvailabilityMonth )" +
-                "VALUES " + idCandidate + ", " + idRecruiter +
+                "(uuidCandidate, uuidRecruiter, idAvailabilityHour, idAvailabilityDay, idAvailabilityMonth )" +
+                "VALUES " + interviewDto.getUuidCandidate().toString() + ", " + interviewDto.getUuidRecruiter().toString() +
                 ", " + hourAvailability + ", " + dayAvailability + ", " + monthAvailability;
         try {
             statement.execute(postInterview);
@@ -76,7 +53,7 @@ public class InterviewRepositoryImpl implements InterviewRespository {
         }
         String deleteRecruiterAvailability = "Delete " +
                 "FROM PersonAvailabilityConf " +
-                "WHERE idPerson = " + idRecruiter;
+                "WHERE uuidPerson = " + interviewDto.getUuidRecruiter().toString();
         try {
             statement.execute(deleteRecruiterAvailability);
         } catch (SQLException e) {
@@ -88,7 +65,6 @@ public class InterviewRepositoryImpl implements InterviewRespository {
     @Override
     public void deleteInterview(InterviewFullDto interviewFullDto) {
         mysqlConnection();
-        int idRecruiter = 0;
         DateMapper dateMapper = new DateMapper();
         InfraDateForm infraDateForm = dateMapper.mapDateTimeToInfraDateForm(interviewFullDto.getLocalDateTime());
         int hourAvailability = infraDateForm.getHour();
@@ -103,37 +79,15 @@ public class InterviewRepositoryImpl implements InterviewRespository {
             e.printStackTrace();
         }
 
-        String getRecruiter = "SELECT idPerson FROM Person " +
-                "WHERE uuidPerson = " + "'"+ interviewFullDto.getRecruiterFullDto().getUuid().toString()+"'";
-        ResultSet rsRecruiter = null;
-        try {
-            rsRecruiter = statement.executeQuery(getRecruiter);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        while (true) {
-            try {
-                if (!rsRecruiter.next()) break;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                idRecruiter = rsRecruiter.getInt(1);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
         String reInsertRecruiterAvailability = "INSERT INTO PersonAvailabilityConf" +
-                "(idPerson, idAvailabilityMonth, idAvailabilityDay, idAvailabilityHour)" +
-                "VALUES " + idRecruiter + ", " + monthAvailability + ", " + dayAvailability + ", " + hourAvailability;
+                "(uuidPerson, idAvailabilityMonth, idAvailabilityDay, idAvailabilityHour)" +
+                "VALUES " + interviewFullDto.getRecruiterFullDto().getUuid().toString() + ", " + monthAvailability + ", " + dayAvailability + ", " + hourAvailability;
         ;
         try {
             statement.executeQuery(reInsertRecruiterAvailability);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         DbConnect.closeConnection(connection);
     }
 
@@ -150,7 +104,7 @@ public class InterviewRepositoryImpl implements InterviewRespository {
 
         DateMapper dateMapper = new DateMapper();
 
-        String getInterviews = "SELECT i.idInterview, i.idCandidate, i.idRecruiter," +
+        String getInterviews = "SELECT i.idInterview, i.uuidCandidate, i.uuidRecruiter," +
                 " i.idAvailabilityMonth, i.idAvailabilityDay, i.idAvailabilityHour " +
                 "FROM Interview i ";
         try {
@@ -181,10 +135,11 @@ public class InterviewRepositoryImpl implements InterviewRespository {
             String mailRecruiter = null;
             String enterpriseRecruiter = null;
 
-            String getRecruiter = "SELECT p.uuidPerson, p.firstName, p.lastName, p.experience, p.mail, e.name FROM Person p " +
+            String getRecruiter = "SELECT p.uuidPerson, p.firstName, p.lastName, p.experience, p.mail, e.name " +
+                    "FROM Person p " +
                     "INNER JOIN Enterprise e ON p.id_enterprise = e.id_enterprise " +
                     "INNER JOIN Profile pr ON p.idPerson = pr.idProfile " +
-                    "INNER JOIN Interview i ON i.idRecruiter = p.idPerson " +
+                    "INNER JOIN Interview i ON i.uuidRecruiter = p.uuidPerson " +
                     "WHERE pr.isRecruiter = " + 1 + " " +
                     "AND i.idInterview = " + interviewFullDto1.getIdInterview();
             try {
@@ -242,7 +197,7 @@ public class InterviewRepositoryImpl implements InterviewRespository {
             String getCandidate = "SELECT p.uuidPerson, p.firstName, p.lastName, p.experience, p.mail, e.name FROM Person p " +
                     "INNER JOIN Enterprise e ON p.id_enterprise = e.id_enterprise " +
                     "INNER JOIN Profile pr ON p.idPerson = pr.idProfile " +
-                    "INNER JOIN Interview i ON i.idCandidate = p.idPerson " +
+                    "INNER JOIN Interview i ON i.uuidCandidate = p.uuidPerson " +
                     "WHERE pr.isCandidate = " + 1 + " " +
                     "AND i.idInterview = " + interviewFullDto1.getIdInterview();
             try {

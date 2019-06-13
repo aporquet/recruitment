@@ -1,4 +1,4 @@
-package com.recruitment.exposition.manage;
+package com.recruitment.exposition.query;
 
 import common.dto.EnterpriseDto;
 import infra.mysql.EnterpriseRepositoryImpl;
@@ -14,8 +14,7 @@ public class EnterpriseController {
 
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody
-    List<EnterpriseDto> getEnterprises() {
+    public @ResponseBody List<EnterpriseDto> getEnterprises() {
         EnterpriseRepository enterpriseRepository = new EnterpriseRepositoryImpl();
         return enterpriseRepository.getEnterprises();
     }
