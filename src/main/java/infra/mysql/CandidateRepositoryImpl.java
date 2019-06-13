@@ -229,9 +229,14 @@ public class CandidateRepositoryImpl implements CandidateRepository {
         int experience = candidateFullDto.getExperience();
         String id_entreprise = candidateFullDto.getEnterprise();
         int newIdCandidate = 0;
-        String insertCandidate = "INSERT INTO Person " +
-                "(uuidPerson,firstName, lastName, mail, experience, id_enterprise)" +
-                "VALUES " + uuidCandidate + ", +" + firstNameCandidate + ", +" + lastName + ", +" + mail + ", +" + experience + ", +" + id_entreprise;
+        String insertCandidate = "INSERT INTO recruitment..Person " +
+                "(uuidPerson,firstName, lastName, mail, experience, 1)" +
+                "VALUES " + "'" + uuidCandidate + "', " +
+                "'" + firstNameCandidate + "', "+
+                "'" + lastName + "', "+
+                "'" + mail + "', "+
+                "'" + experience + "', "+
+                "'" + id_entreprise + "'";
         try {
             statement.execute(insertCandidate);
         } catch (SQLException e) {
@@ -270,7 +275,6 @@ public class CandidateRepositoryImpl implements CandidateRepository {
         String lastName = candidate.getLastName();
         String mail = candidate.getMail();
         int experience = candidate.getExperience();
-        System.out.println("before request");
         String updateCandidate = "UPDATE recruitment.Person " +
                 "SET firstName = " + "'" + firstNameCandidate + "', " +
                 "lastName = " + "'" + lastName + "', " +
