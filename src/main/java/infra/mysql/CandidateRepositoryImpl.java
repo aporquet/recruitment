@@ -229,8 +229,8 @@ public class CandidateRepositoryImpl implements CandidateRepository {
         int experience = candidateFullDto.getExperience();
         String id_entreprise = candidateFullDto.getEnterprise();
         int newIdCandidate = 0;
-        String insertCandidate = "INSERT INTO recruitment..Person " +
-                "(uuidPerson,firstName, lastName, mail, experience, 1)" +
+        String insertCandidate = "INSERT INTO recruitment.Person " +
+                "(uuidPerson,firstName, lastName, mail, experience, 1) " +
                 "VALUES " + "'" + uuidCandidate + "', " +
                 "'" + firstNameCandidate + "', "+
                 "'" + lastName + "', "+
@@ -253,8 +253,8 @@ public class CandidateRepositoryImpl implements CandidateRepository {
             e.printStackTrace();
         }
 
-        String insertProfil = "INSERT INTO Profil " +
-                "(idPerson, idCandidate, idRecruiter )" +
+        String insertProfil = "INSERT INTO recruitment.Profile " +
+                "(idPerson, isCandidate, isRecruiter) " +
                 "VALUES " + newIdCandidate + ", +" + 1 + ", +" + 0;
         try {
             statement.execute(insertProfil);
