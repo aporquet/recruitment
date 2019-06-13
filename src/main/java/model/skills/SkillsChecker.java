@@ -25,7 +25,7 @@ public class SkillsChecker {
         for (RecruiterDto recruiterDto: recruiters){
             Skills skills = new Skills(recruiterDto.getRecruiterSkills().getKeySkills(), recruiterDto.getRecruiterSkills().getOtherSkills());
             Recruiter recruiter = new Recruiter(skills, recruiterDto.getExperienceYears());
-            if(!recruiter.canTest(candidate)){
+            if(recruiter.canTest(candidate) == false){
                 competentRecruiter.remove(recruiterDto);
             }
         }

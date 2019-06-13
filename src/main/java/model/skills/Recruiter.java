@@ -13,7 +13,14 @@ class Recruiter {
     }
 
     boolean canTest(Candidate candidate) {
-        return recruiterSkills.getKeySkills().containsAll(candidate.getKeySkills()) && experienceYears > candidate.getExperienceYears();
+        if(candidate.getExperienceYears() > experienceYears){
+            return false;
+        }
+        if(recruiterSkills.getKeySkills().containsAll(candidate.getKeySkills())){
+            return false;
+        }
+        return true;
+        /*return recruiterSkills.getKeySkills().containsAll(candidate.getKeySkills()) && experienceYears > candidate.getExperienceYears();*/
     }
 
     List<String> getOtherSkills() {
