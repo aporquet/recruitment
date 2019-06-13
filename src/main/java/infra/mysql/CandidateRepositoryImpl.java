@@ -222,6 +222,7 @@ public class CandidateRepositoryImpl implements CandidateRepository {
     public boolean insertCandidate(CandidateFullDto candidateFullDto) {
         mysqlConnection();
         boolean work = false;
+        String uuidCandidate = candidateFullDto.getUuid().toString();
         String firstNameCandidate = candidateFullDto.getFirstName();
         String lastName = candidateFullDto.getLastName();
         String mail = candidateFullDto.getMail();
@@ -229,8 +230,8 @@ public class CandidateRepositoryImpl implements CandidateRepository {
         String id_entreprise = candidateFullDto.getEnterprise();
         int newIdCandidate = 0;
         String insertCandidate = "INSERT INTO Person " +
-                "(firstName, lastName, mail, experience, id_enterprise)" +
-                "VALUES " + firstNameCandidate + ", +" + lastName + ", +" + mail + ", +" + experience + ", +" + id_entreprise;
+                "(uuidPerson,firstName, lastName, mail, experience, id_enterprise)" +
+                "VALUES " + uuidCandidate + ", +" + firstNameCandidate + ", +" + lastName + ", +" + mail + ", +" + experience + ", +" + id_entreprise;
         try {
             statement.execute(insertCandidate);
         } catch (SQLException e) {
@@ -284,5 +285,20 @@ public class CandidateRepositoryImpl implements CandidateRepository {
         }
         DbConnect.closeConnection(connection);
         return work;
+    }
+
+    public CandidateFullDto generateUUID(CandidateFullDto candidate) {
+        boolean uuidExist = true;
+        UUID uuidCandidate = UUID.randomUUID();
+        while (uuidExist){
+            uuidCandidate = UUID.randomUUID();
+            List<CandidateFullDto> candidateFullDtos = this.getCandidates();
+            uuidExist = candidateFullDtos.stream()
+                    .map(CandidateFullDto::getUuid)
+                    .anyMatch(uuidCandidate::equals);
+        }
+        candidate.setUuid(uuidCandidate);
+        return candidate;
+
     }
 }

@@ -47,6 +47,7 @@ public class CandidateController {
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody boolean insertCandidate(@RequestBody CandidateFullDto candidate) {
         CandidateRepositoryImpl candidateRepository = new CandidateRepositoryImpl();
+        candidate = candidateRepository.generateUUID(candidate);
         return candidateRepository.insertCandidate(candidate);
     }
 

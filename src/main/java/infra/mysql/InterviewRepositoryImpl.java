@@ -49,41 +49,25 @@ public class InterviewRepositoryImpl implements InterviewRespository {
         ResultSet rsRecruiter = null;
         try {
             rsRecruiter = statement.executeQuery(getRecruiter);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
             idRecruiter = rsRecruiter.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
 
         String getCandidate = "SELECT idPerson FROM Person " +
                 "WHERE uuidPerson = " + "'"+interviewDto.getUuidCandidate().toString()+"'";
         ResultSet rsCandidate = null;
         try {
             rsCandidate = statement.executeQuery(getCandidate);
+            idCandidate = rsCandidate.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        while (true) {
-            try {
-                if (!rsCandidate.next()) break;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                idCandidate = rsCandidate.getInt(1);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
 
         String postInterview = "INSERT INTO Interview " +
                 "(idCandidate, idRecruiter, idAvailabilityHour, idAvailabilityDay, idAvailabilityMonth )" +
-                "VALUES " + idCandidate + ", +" + idRecruiter +
-                ", +" + hourAvailability + ", +" + dayAvailability + ", +" + monthAvailability;
+                "VALUES " + idCandidate + ", " + idRecruiter +
+                ", " + hourAvailability + ", " + dayAvailability + ", " + monthAvailability;
         try {
             statement.execute(postInterview);
         } catch (SQLException e) {
