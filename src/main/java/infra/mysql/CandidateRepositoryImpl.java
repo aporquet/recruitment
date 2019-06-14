@@ -272,7 +272,6 @@ public class CandidateRepositoryImpl implements CandidateRepository {
             throw new CannotUpdateNullCandidateException();
         }
         mysqlConnection();
-        System.out.println("connection");
         boolean work;
         String firstNameCandidate = candidate.getFirstName();
         String lastName = candidate.getLastName();
@@ -284,7 +283,6 @@ public class CandidateRepositoryImpl implements CandidateRepository {
                 "mail = " + "'" + mail + "', " +
                 "experience = " + "'" + experience + "' " +
                 "WHERE uuidPerson = " + "'" + candidate.getUuid().toString() + "'";
-        System.out.println(updateCandidate);
         try {
             statement.execute(updateCandidate);
             work = true;
@@ -308,6 +306,5 @@ public class CandidateRepositoryImpl implements CandidateRepository {
         }
         candidate.setUuid(uuidCandidate);
         return candidate;
-
     }
 }

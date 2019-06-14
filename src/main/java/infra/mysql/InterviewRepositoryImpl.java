@@ -53,7 +53,10 @@ public class InterviewRepositoryImpl implements InterviewRespository {
         }
         String deleteRecruiterAvailability = "Delete " +
                 "FROM PersonAvailabilityConf " +
-                "WHERE uuidPerson = " + interviewDto.getUuidRecruiter().toString();
+                "WHERE uuidPerson = " + interviewDto.getUuidRecruiter().toString() + " AND " +
+                "idAvailabilityMonth = "+ interviewDto.getDateTime().getMonthValue() +" AND " +
+                "idAvailabilityDay = "+ interviewDto.getDateTime().getDayOfMonth() +" AND " +
+                "idAvailabilityHour = "+ interviewDto.getDateTime().getHour();
         try {
             statement.execute(deleteRecruiterAvailability);
         } catch (SQLException e) {

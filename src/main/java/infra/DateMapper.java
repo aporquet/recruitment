@@ -34,7 +34,7 @@ public class DateMapper {
 
     public InfraDateForm mapDateTimeToInfraDateForm(LocalDateTime dateTime){
         int month = dateTime.getMonthValue();
-        int day = dateTime.getDayOfWeek().getValue();
+        int day = dateTime.getDayOfMonth();
         int hour = mapHour(0, dateTime.getHour());
         InfraDateForm infraDateForm = new InfraDateForm(month, day, hour);
         return infraDateForm;
