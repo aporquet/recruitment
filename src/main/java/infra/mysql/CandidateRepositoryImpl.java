@@ -268,6 +268,9 @@ public class CandidateRepositoryImpl implements CandidateRepository {
     }
 
     public boolean updateCandidate(CandidateFullDto candidate) {
+        if(candidate.getUuid() == null){
+            throw new CannotUpdateNullCandidateException();
+        }
         mysqlConnection();
         System.out.println("connection");
         boolean work;
