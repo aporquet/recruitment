@@ -8,7 +8,6 @@ public class ScheduleInterviewDto {
     private UUID uuidCandidate;
     private LocalDateTime dateInterview;
 
-
     public UUID getUuidCandidate() {
         return uuidCandidate;
     }

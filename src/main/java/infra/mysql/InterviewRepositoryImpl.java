@@ -1,10 +1,7 @@
 package infra.mysql;
 
 import common.*;
-import common.dto.CandidateFullDto;
-import common.dto.InterviewDto;
-import common.dto.InterviewFullDto;
-import common.dto.RecruiterFullDto;
+import common.dto.*;
 import infra.DateMapper;
 import infra.InfraDateForm;
 import use_case.InterviewRespository;
@@ -67,28 +64,28 @@ public class InterviewRepositoryImpl implements InterviewRespository {
     }
 
     @Override
-    public void deleteInterview(InterviewFullDto interviewFullDto) {
+    public void deleteInterview(InterviewDeleterDto interviewDeleterDto) {
         mysqlConnection();
         DateMapper dateMapper = new DateMapper();
-        InfraDateForm infraDateForm = dateMapper.mapDateTimeToInfraDateForm(interviewFullDto.getLocalDateTime());
+        InfraDateForm infraDateForm = dateMapper.mapDateTimeToInfraDateForm(interviewDeleterDto.getDateInterview());
         int hourAvailability = infraDateForm.getHour();
         int dayAvailability = infraDateForm.getDay();
         int monthAvailability = infraDateForm.getMonth();
         String deleteInterview = "DELETE " +
                 "FROM Interview " +
-                "WHERE idInterview = " + interviewFullDto.getIdInterview();
+                "WHERE idInterview = " + interviewDeleterDto.getIdInterview();
         try {
-            statement.executeQuery(deleteInterview);
+            statement.executeUpdate(deleteInterview);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         String reInsertRecruiterAvailability = "INSERT INTO PersonAvailabilityConf" +
                 "(uuidPerson, idAvailabilityMonth, idAvailabilityDay, idAvailabilityHour)" +
-                "VALUES " + interviewFullDto.getRecruiterFullDto().getUuid().toString() + ", " + monthAvailability + ", " + dayAvailability + ", " + hourAvailability;
+                "VALUES (" + "'" + interviewDeleterDto.getUuidRecruiter().toString() + "', " + monthAvailability + ", " + dayAvailability + ", " + hourAvailability + ")";
         ;
         try {
-            statement.executeQuery(reInsertRecruiterAvailability);
+            statement.executeUpdate(reInsertRecruiterAvailability);
         } catch (SQLException e) {
             e.printStackTrace();
         }
