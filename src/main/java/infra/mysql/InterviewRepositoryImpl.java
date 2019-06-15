@@ -42,10 +42,11 @@ public class InterviewRepositoryImpl implements InterviewRespository {
         int dayAvailability = infraDateForm.getDay();
         int monthAvailability = infraDateForm.getMonth();
 
-        String postInterview = "INSERT INTO Interview " +
-                "(uuidCandidate, uuidRecruiter, idAvailabilityHour, idAvailabilityDay, idAvailabilityMonth )" +
-                "VALUES " + interviewDto.getUuidCandidate().toString() + ", " + interviewDto.getUuidRecruiter().toString() +
-                ", " + hourAvailability + ", " + dayAvailability + ", " + monthAvailability;
+        String postInterview = "INSERT INTO recruitment.Interview " +
+                "(uuidCandidate, uuidRecruiter, idAvailabilityHour, idAvailabilityDay, idAvailabilityMonth)" +
+                " VALUES (" + "'" + interviewDto.getUuidCandidate().toString() + "', "
+                + "'" + interviewDto.getUuidRecruiter().toString() + "', "
+                + hourAvailability + ", " + dayAvailability + ", " + monthAvailability + ")";
         try {
             statement.execute(postInterview);
         } catch (SQLException e) {
@@ -53,10 +54,10 @@ public class InterviewRepositoryImpl implements InterviewRespository {
         }
         String deleteRecruiterAvailability = "Delete " +
                 "FROM PersonAvailabilityConf " +
-                "WHERE uuidPerson = " + interviewDto.getUuidRecruiter().toString() + " AND " +
-                "idAvailabilityMonth = "+ interviewDto.getDateTime().getMonthValue() +" AND " +
-                "idAvailabilityDay = "+ interviewDto.getDateTime().getDayOfMonth() +" AND " +
-                "idAvailabilityHour = "+ interviewDto.getDateTime().getHour();
+                "WHERE uuidPerson = " + "'" + interviewDto.getUuidRecruiter().toString() + "' AND " +
+                "idAvailabilityMonth = "+ monthAvailability +" AND " +
+                "idAvailabilityDay = "+ dayAvailability +" AND " +
+                "idAvailabilityHour = "+ hourAvailability;
         try {
             statement.execute(deleteRecruiterAvailability);
         } catch (SQLException e) {

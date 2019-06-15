@@ -29,6 +29,9 @@ public class SkillsChecker {
                 competentRecruiter.remove(recruiterDto);
             }
         }
+        if(competentRecruiter.size() == 0){
+            throw new AnyCompetentRecruiterFoundException();
+        }
         return sortByOtherSkillsInCommon(candidate, competentRecruiter);
     }
 
