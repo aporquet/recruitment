@@ -138,9 +138,9 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
             }
         }
         for(RecruiterDto recruiterDtoForSchedule : recruiters) {
-            String getAvailabilitiesRecruiters = "SELECT ac.idPerson, ac.idAvailabilityMonth, ac.idAvailabilityDay, ac.idAvailabilityHour " +
+            String getAvailabilitiesRecruiters = "SELECT ac.uuidPerson, ac.idAvailabilityMonth, ac.idAvailabilityDay, ac.idAvailabilityHour " +
                     "FROM Person p " +
-                    "INNER JOIN PersonAvailabilityConf ac ON ac.idPerson = p.idPerson " +
+                    "INNER JOIN PersonAvailabilityConf ac ON ac.uuidPerson = p.uuidPerson " +
                     "WHERE p.uuidPerson = " + "'"+recruiterDtoForSchedule.getUuid().toString()+"'";
             try {
                 ResultSet resultsetAvailabilities = statement.executeQuery(getAvailabilitiesRecruiters);
