@@ -1,6 +1,5 @@
 package use_case;
 
-import common.dto.InterviewDeleterDto;
 import common.dto.InterviewDto;
 import common.dto.InterviewFullDto;
 
@@ -12,6 +11,6 @@ public interface InterviewRespository {
 
     List<InterviewFullDto> getInterviews();
 
-    void deleteInterview(InterviewDeleterDto interviewDeleterDto);
+    boolean deleteInterview(int idInterview);
 }
 

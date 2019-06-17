@@ -1,9 +1,11 @@
 package infra.mysql;
 
-import common.*;
 import common.dto.CandidateDto;
 import common.dto.CandidateFullDto;
 import common.dto.SkillsDto;
+import common.exceptions.AnyCandidateFoundException;
+import common.exceptions.CandidateNotFoundException;
+import common.exceptions.CannotUpdateNullCandidateException;
 import use_case.CandidateRepository;
 
 import java.sql.*;
@@ -201,14 +203,25 @@ public class CandidateRepositoryImpl implements CandidateRepository {
     public boolean deleteCandidate(UUID uuid) {
         mysqlConnection();
         boolean work;
-        String deleteCandidate = "Delete p "+
+        String deleteCandidate = "Delete p " +
                 "FROM Person p " +
                 "INNER JOIN Profile pr ON p.idPerson = pr.idProfile " +
                 "WHERE p.uuidPerson = " + "'" + uuid.toString() + "' " +
                 "AND pr.isCandidate = " + 1;
-        System.out.println(deleteCandidate);
         try {
             statement.execute(deleteCandidate);
+            work = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            work = false;
+        }
+
+        String deleteCandidateInterview = "Delete i " +
+                "FROM Interview i " +
+                "WHERE i.uuidCandidate = " + "'" + uuid.toString() + "'";
+
+        try {
+            statement.execute(deleteCandidateInterview);
             work = true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -232,10 +245,10 @@ public class CandidateRepositoryImpl implements CandidateRepository {
         String insertCandidate = "INSERT INTO recruitment.Person " +
                 "(uuidPerson,firstName, lastName, mail, experience, 1) " +
                 "VALUES " + "'" + uuidCandidate + "', " +
-                "'" + firstNameCandidate + "', "+
-                "'" + lastName + "', "+
-                "'" + mail + "', "+
-                "'" + experience + "', "+
+                "'" + firstNameCandidate + "', " +
+                "'" + lastName + "', " +
+                "'" + mail + "', " +
+                "'" + experience + "', " +
                 "'" + id_entreprise + "'";
         try {
             statement.execute(insertCandidate);
@@ -268,7 +281,7 @@ public class CandidateRepositoryImpl implements CandidateRepository {
     }
 
     public boolean updateCandidate(CandidateFullDto candidate) {
-        if(candidate.getUuid() == null){
+        if (candidate.getUuid() == null) {
             throw new CannotUpdateNullCandidateException();
         }
         mysqlConnection();
@@ -297,7 +310,7 @@ public class CandidateRepositoryImpl implements CandidateRepository {
     public CandidateFullDto generateUUID(CandidateFullDto candidate) {
         boolean uuidExist = true;
         UUID uuidCandidate = UUID.randomUUID();
-        while (uuidExist){
+        while (uuidExist) {
             uuidCandidate = UUID.randomUUID();
             List<CandidateFullDto> candidateFullDtos = this.getCandidates();
             uuidExist = candidateFullDtos.stream()

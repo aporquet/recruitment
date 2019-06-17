@@ -1,6 +1,5 @@
 package com.recruitment.exposition.query;
 
-import common.dto.InterviewDeleterDto;
 import common.dto.InterviewFullDto;
 import infra.mysql.InterviewRepositoryImpl;
 import org.springframework.http.HttpStatus;
@@ -20,11 +19,12 @@ public class InterviewController {
         return interviewFullDtos;
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/{idInterview}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteInterview(@RequestBody InterviewDeleterDto interviewDeleterDto) {
+    public boolean deleteInterview(@PathVariable String idInterview) {
+        int idInterviewToDelete = Integer.parseInt(idInterview);
         InterviewRepositoryImpl interviewRepository = new InterviewRepositoryImpl();
-        interviewRepository.deleteInterview(interviewDeleterDto);
+        return interviewRepository.deleteInterview(idInterviewToDelete);
     }
 
 }

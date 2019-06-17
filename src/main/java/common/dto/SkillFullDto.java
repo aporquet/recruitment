@@ -18,4 +18,8 @@ public class SkillFullDto {
     public void setNameSkill(String nameSkill) {
         this.nameSkill = nameSkill;
     }
+
+    public int getIdSkill() {
+        return idSkill;
+    }
 }

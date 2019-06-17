@@ -1,9 +1,13 @@
 package infra.mysql;
 
-import common.*;
 import common.dto.*;
+import common.exceptions.AnyCandidateFoundException;
+import common.exceptions.AnyInterviewFoundException;
+import common.exceptions.AnyRecruiterFoundException;
 import infra.DateMapper;
 import infra.InfraDateForm;
+import infra.service.MailConfig;
+import org.springframework.mail.SimpleMailMessage;
 import use_case.InterviewRespository;
 
 import java.sql.Connection;
@@ -52,21 +56,99 @@ public class InterviewRepositoryImpl implements InterviewRespository {
         String deleteRecruiterAvailability = "Delete " +
                 "FROM PersonAvailabilityConf " +
                 "WHERE uuidPerson = " + "'" + interviewDto.getUuidRecruiter().toString() + "' AND " +
-                "idAvailabilityMonth = "+ monthAvailability +" AND " +
-                "idAvailabilityDay = "+ dayAvailability +" AND " +
-                "idAvailabilityHour = "+ hourAvailability;
+                "idAvailabilityMonth = " + monthAvailability + " AND " +
+                "idAvailabilityDay = " + dayAvailability + " AND " +
+                "idAvailabilityHour = " + hourAvailability;
         try {
             statement.execute(deleteRecruiterAvailability);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        //Get mail before notify interview actors
+        String mailRecruiter = "SELECT p.mail " +
+                "FROM Person p " +
+                "WHERE p.uuidPerson = " + "'" + interviewDto.getUuidRecruiter().toString() + "'";
+
+        ResultSet mailRecruiterResult = null;
+        try {
+            mailRecruiterResult = statement.executeQuery(mailRecruiter);
+            while (mailRecruiterResult.next()) {
+                mailRecruiter = mailRecruiterResult.getString("mail");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        String mailCandidate = "SELECT p.mail " +
+                "FROM Person p " +
+                "WHERE p.uuidPerson = " + "'" + interviewDto.getUuidCandidate().toString() + "'";
+
+        ResultSet mailCandidateResult = null;
+        try {
+            mailCandidateResult = statement.executeQuery(mailCandidate);
+            while (mailCandidateResult.next()) {
+                mailCandidate = mailCandidateResult.getString("mail");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom("recruitorapp@gmail.com");
+        mailMessage.setTo(mailRecruiter, mailCandidate);
+        mailMessage.setSubject("Interview schedule");
+        mailMessage.setText("Your interview is schedule for " + interviewDto.getDateTime().toString());
+        MailConfig.getMailConfig().send(mailMessage);
+
         DbConnect.closeConnection(connection);
     }
 
     @Override
-    public void deleteInterview(InterviewDeleterDto interviewDeleterDto) {
+    public boolean deleteInterview(int idInterview) {
         mysqlConnection();
+        String uuidStringCandidate = "";
+        UUID uuidCandidate = null;
+        String uuidStringRecruiter = "";
+        UUID uuidRecruiter = null;
+        int idAvailabilityMonth = 0;
+        int idAvailabilityDay = 0;
+        int idAvailabilityHour = 0;
+        boolean work = false;
+
+        String selectInterview = "SELECT i.idInterview, i.uuidRecruiter, i.uuidCandidate, " +
+                "i.idAvailabilityMonth, i.idAvailabilityDay, i.idAvailabilityHour " +
+                "FROM Interview i " +
+                "WHERE idInterview = " + idInterview;
+
+        ResultSet resultsetInterview = null;
+        try {
+            resultsetInterview = statement.executeQuery(selectInterview);
+            while (resultsetInterview.next()) {
+                idInterview = resultsetInterview.getInt("idInterview");
+                uuidStringCandidate = resultsetInterview.getString("uuidCandidate");
+                uuidStringRecruiter = resultsetInterview.getString("uuidRecruiter");
+                uuidCandidate = UUID.fromString(uuidStringCandidate);
+                uuidRecruiter = UUID.fromString(uuidStringRecruiter);
+                idAvailabilityMonth = resultsetInterview.getInt("idAvailabilityMonth");
+                idAvailabilityDay = resultsetInterview.getInt("idAvailabilityDay");
+                idAvailabilityHour = resultsetInterview.getInt("idAvailabilityHour");
+                work = true;
+            }
+            if (resultsetInterview == null) {
+                throw new AnyInterviewFoundException();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         DateMapper dateMapper = new DateMapper();
+        InfraDateForm infraDateFormToDelete = new InfraDateForm(idAvailabilityMonth, idAvailabilityDay, idAvailabilityHour);
+        LocalDateTime dateTime = dateMapper.mapInfraDateFormToDateTime(infraDateFormToDelete);
+        InterviewDeleterDto interviewDeleterDto = new InterviewDeleterDto(idInterview, dateTime, uuidRecruiter, uuidCandidate);
+
         InfraDateForm infraDateForm = dateMapper.mapDateTimeToInfraDateForm(interviewDeleterDto.getDateInterview());
         int hourAvailability = infraDateForm.getHour();
         int dayAvailability = infraDateForm.getDay();
@@ -76,6 +158,7 @@ public class InterviewRepositoryImpl implements InterviewRespository {
                 "WHERE idInterview = " + interviewDeleterDto.getIdInterview();
         try {
             statement.executeUpdate(deleteInterview);
+            work = true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -83,13 +166,54 @@ public class InterviewRepositoryImpl implements InterviewRespository {
         String reInsertRecruiterAvailability = "INSERT INTO PersonAvailabilityConf" +
                 "(uuidPerson, idAvailabilityMonth, idAvailabilityDay, idAvailabilityHour)" +
                 "VALUES (" + "'" + interviewDeleterDto.getUuidRecruiter().toString() + "', " + monthAvailability + ", " + dayAvailability + ", " + hourAvailability + ")";
-        ;
+
         try {
             statement.executeUpdate(reInsertRecruiterAvailability);
+            work = true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        //Get mail before notify interview actors
+        String mailRecruiter = "SELECT p.mail " +
+                "FROM Person p " +
+                "WHERE p.uuidPerson = " + "'" + interviewDeleterDto.getUuidRecruiter().toString() + "'";
+
+        ResultSet mailRecruiterResult = null;
+        try {
+            mailRecruiterResult = statement.executeQuery(mailRecruiter);
+            while (mailRecruiterResult.next()) {
+                mailRecruiter = mailRecruiterResult.getString("mail");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        String mailCandidate = "SELECT p.mail " +
+                "FROM Person p " +
+                "WHERE p.uuidPerson = " + "'" + interviewDeleterDto.getUuidCandidate().toString() + "'";
+
+        ResultSet mailCandidateResult = null;
+        try {
+            mailCandidateResult = statement.executeQuery(mailCandidate);
+            while (mailCandidateResult.next()) {
+                mailCandidate = mailCandidateResult.getString("mail");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom("recruitorapp@gmail.com");
+        mailMessage.setTo(mailRecruiter, mailCandidate);
+        mailMessage.setSubject("Interview schedule");
+        mailMessage.setText("Your interview is schedule for " + interviewDeleterDto.getDateInterview() + " has been canceled");
+        MailConfig.getMailConfig().send(mailMessage);
+
         DbConnect.closeConnection(connection);
+        return work;
     }
 
     @Override
@@ -161,7 +285,7 @@ public class InterviewRepositoryImpl implements InterviewRespository {
                 e.printStackTrace();
             }
 
-            recruiterFullDto = new RecruiterFullDto(uuidRecruiter, firstNameRecruiter, lastNameRecruiter, mailRecruiter, experienceRecruiter, enterpriseRecruiter, null, null);
+            recruiterFullDto = new RecruiterFullDto(uuidRecruiter, firstNameRecruiter, lastNameRecruiter, experienceRecruiter, mailRecruiter, enterpriseRecruiter, null, null);
 
             String getSkillsRecruiters = "SELECT s.nameSkill, spc.isKeySkill " +
                     "FROM Person p " +

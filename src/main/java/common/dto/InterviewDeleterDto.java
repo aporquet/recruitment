@@ -8,11 +8,13 @@ public class InterviewDeleterDto {
     private int idInterview;
     private LocalDateTime dateInterview;
     private final UUID uuidRecruiter;
+    private final UUID uuidCandidate;
 
-    public InterviewDeleterDto(int idInterview, LocalDateTime dateInterview, UUID uuidRecruiter){
+    public InterviewDeleterDto(int idInterview, LocalDateTime dateInterview, UUID uuidRecruiter, UUID uuidCandidate){
         this.idInterview = idInterview;
         this.dateInterview = dateInterview;
         this.uuidRecruiter = uuidRecruiter;
+        this.uuidCandidate = uuidCandidate;
     }
 
     public int getIdInterview() {
@@ -29,5 +31,9 @@ public class InterviewDeleterDto {
 
     public UUID getUuidRecruiter() {
         return uuidRecruiter;
+    }
+
+    public UUID getUuidCandidate() {
+        return uuidCandidate;
     }
 }

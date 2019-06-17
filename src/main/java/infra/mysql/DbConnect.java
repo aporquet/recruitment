@@ -1,36 +1,23 @@
 package infra.mysql;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
 
 public class DbConnect {
 
-    static Connection connection = null;
+    public static Connection connection = null;
 
     public static Connection getConnection() {
-        try (
-                InputStream inputStream = new FileInputStream("/Users/Soat-AP/IdeaProjects/recruitment/jdbc.properties")) {
-            Properties prop = new Properties();
-            prop.load(inputStream);
-            String url = prop.getProperty("db.url");
-            String username = prop.getProperty("db.user");
-            String password = prop.getProperty("db.password");
+            String url = System.getenv("DB_URL");
+            String username = System.getenv("DB_USERNAME");
+            String password = System.getenv("DB_PASSWORD");
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 connection = DriverManager.getConnection(url, username, password);
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
-        } catch (
-                IOException e) {
-            e.printStackTrace();
-        }
-
         return connection;
     }
 

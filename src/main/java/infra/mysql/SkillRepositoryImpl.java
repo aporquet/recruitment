@@ -1,9 +1,8 @@
 package infra.mysql;
 
-import common.AnyEnterpriseFoundException;
+import common.exceptions.AnyEnterpriseFoundException;
 import common.dto.SkillFullDto;
 import use_case.SkillRepository;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
