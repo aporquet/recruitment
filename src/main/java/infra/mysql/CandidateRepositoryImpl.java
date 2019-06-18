@@ -331,35 +331,32 @@ public class CandidateRepositoryImpl implements CandidateRepository {
         String lastName = candidateFullDto.getLastName();
         String mail = candidateFullDto.getMail();
         int experience = candidateFullDto.getExperience();
-        String id_entreprise = candidateFullDto.getEnterprise();
+        String id_enterprise = candidateFullDto.getEnterprise();
         int newIdCandidate = 0;
-        String insertCandidate = "INSERT INTO recruitment.Person " +
-                "(uuidPerson,firstName, lastName, mail, experience, 1) " +
-                "VALUES " + "'" + uuidCandidate + "', " +
+        ResultSet generatedKeys = null;
+        String insertCandidate = "INSERT INTO Person " +
+                "(uuidPerson,firstName, lastName, mail, experience, id_enterprise) " +
+                "VALUES (" + "'" + uuidCandidate + "', " +
                 "'" + firstNameCandidate + "', " +
                 "'" + lastName + "', " +
                 "'" + mail + "', " +
-                "'" + experience + "', " +
-                "'" + id_entreprise + "'";
+                experience + ", " +
+                "'" + id_enterprise + "')";
         try {
-            statement.execute(insertCandidate);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        ResultSet generatedKeys = null;
-        try {
+            statement.execute(insertCandidate, statement.RETURN_GENERATED_KEYS);
             generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
                 newIdCandidate = generatedKeys.getInt(1);
+                work = true;
             }
         } catch (SQLException e) {
+            work = false;
             e.printStackTrace();
         }
 
-        String insertProfil = "INSERT INTO recruitment.Profile " +
-                "(idPerson, isCandidate, isRecruiter) " +
-                "VALUES " + newIdCandidate + ", +" + 1 + ", +" + 0;
+        String insertProfil = "INSERT INTO Profile " +
+                "(idProfile, isCandidate, isRecruiter) " +
+                "VALUES (" + newIdCandidate + ", +" + 1 + ", +" + 0 +")";
         try {
             statement.execute(insertProfil);
             work = true;
