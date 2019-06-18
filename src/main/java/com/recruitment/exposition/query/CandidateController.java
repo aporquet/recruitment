@@ -1,4 +1,4 @@
-package com.recruitment.exposition.manage;
+package com.recruitment.exposition.query;
 
 import common.dto.CandidateDto;
 import common.dto.CandidateFullDto;
