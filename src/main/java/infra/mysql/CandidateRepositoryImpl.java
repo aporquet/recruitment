@@ -2,13 +2,20 @@ package infra.mysql;
 
 import common.dto.CandidateDto;
 import common.dto.CandidateFullDto;
+import common.dto.InterviewDeleterDto;
 import common.dto.SkillsDto;
 import common.exceptions.AnyCandidateFoundException;
+import common.exceptions.AnyInterviewFoundException;
 import common.exceptions.CandidateNotFoundException;
 import common.exceptions.CannotUpdateNullCandidateException;
+import infra.DateMapper;
+import infra.InfraDateForm;
+import infra.service.MailConfig;
+import org.springframework.mail.SimpleMailMessage;
 import use_case.CandidateRepository;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -203,6 +210,16 @@ public class CandidateRepositoryImpl implements CandidateRepository {
     public boolean deleteCandidate(UUID uuid) {
         mysqlConnection();
         boolean work;
+
+        int idInterview = 0;
+        String uuidStringCandidate = "";
+        UUID uuidCandidate = null;
+        String uuidStringRecruiter = "";
+        UUID uuidRecruiter = null;
+        int idAvailabilityMonth = 0;
+        int idAvailabilityDay = 0;
+        int idAvailabilityHour = 0;
+
         String deleteCandidate = "Delete p " +
                 "FROM Person p " +
                 "INNER JOIN Profile pr ON p.idPerson = pr.idProfile " +
@@ -216,6 +233,44 @@ public class CandidateRepositoryImpl implements CandidateRepository {
             work = false;
         }
 
+        // Get interview informations before reinsert recruiter availability
+        String selectInterview = "SELECT i.idInterview, i.uuidRecruiter, i.uuidCandidate, " +
+                "i.idAvailabilityMonth, i.idAvailabilityDay, i.idAvailabilityHour " +
+                "FROM Interview i " +
+                "WHERE i.uuidCandidate = " + "'" + uuid.toString() + "'";
+
+        ResultSet resultsetInterview = null;
+        try {
+            resultsetInterview = statement.executeQuery(selectInterview);
+            while (resultsetInterview.next()) {
+                idInterview = resultsetInterview.getInt("idInterview");
+                uuidStringCandidate = resultsetInterview.getString("uuidCandidate");
+                uuidStringRecruiter = resultsetInterview.getString("uuidRecruiter");
+                uuidCandidate = UUID.fromString(uuidStringCandidate);
+                uuidRecruiter = UUID.fromString(uuidStringRecruiter);
+                idAvailabilityMonth = resultsetInterview.getInt("idAvailabilityMonth");
+                idAvailabilityDay = resultsetInterview.getInt("idAvailabilityDay");
+                idAvailabilityHour = resultsetInterview.getInt("idAvailabilityHour");
+                work = true;
+            }
+            if (resultsetInterview == null) {
+                throw new AnyInterviewFoundException();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        DateMapper dateMapper = new DateMapper();
+        InfraDateForm infraDateFormToDelete = new InfraDateForm(idAvailabilityMonth, idAvailabilityDay, idAvailabilityHour);
+        LocalDateTime dateTime = dateMapper.mapInfraDateFormToDateTime(infraDateFormToDelete);
+        InterviewDeleterDto interviewDeleterDto = new InterviewDeleterDto(idInterview, dateTime, uuidRecruiter, uuidCandidate);
+
+        InfraDateForm infraDateForm = dateMapper.mapDateTimeToInfraDateForm(interviewDeleterDto.getDateInterview());
+        int hourAvailability = infraDateForm.getHour();
+        int dayAvailability = infraDateForm.getDay();
+        int monthAvailability = infraDateForm.getMonth();
+
+        // Delete interview
         String deleteCandidateInterview = "Delete i " +
                 "FROM Interview i " +
                 "WHERE i.uuidCandidate = " + "'" + uuid.toString() + "'";
@@ -227,6 +282,42 @@ public class CandidateRepositoryImpl implements CandidateRepository {
             e.printStackTrace();
             work = false;
         }
+
+        // Reinsert Recruiter availabilities
+        String reInsertRecruiterAvailability = "INSERT INTO PersonAvailabilityConf" +
+                "(uuidPerson, idAvailabilityMonth, idAvailabilityDay, idAvailabilityHour)" +
+                "VALUES (" + "'" + interviewDeleterDto.getUuidRecruiter().toString() + "', " + monthAvailability + ", " + dayAvailability + ", " + hourAvailability + ")";
+
+        try {
+            statement.executeUpdate(reInsertRecruiterAvailability);
+            work = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        //Get mail to notify recruiter's interview has benn canceled
+        String mailRecruiter = "SELECT p.mail " +
+                "FROM Person p " +
+                "WHERE p.uuidPerson = " + "'" + interviewDeleterDto.getUuidRecruiter().toString() + "'";
+
+        ResultSet mailRecruiterResult = null;
+        try {
+            mailRecruiterResult = statement.executeQuery(mailRecruiter);
+            while (mailRecruiterResult.next()) {
+                mailRecruiter = mailRecruiterResult.getString("mail");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom("recruitorapp@gmail.com");
+        mailMessage.setTo(mailRecruiter);
+        mailMessage.setSubject("Interview schedule");
+        mailMessage.setText("Your interview scheduled for " + interviewDeleterDto.getDateInterview() + " has been " +
+                "canceled because candidate is out of process");
+        MailConfig.getMailConfig().send(mailMessage);
 
         DbConnect.closeConnection(connection);
         return work;

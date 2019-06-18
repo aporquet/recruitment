@@ -209,7 +209,7 @@ public class InterviewRepositoryImpl implements InterviewRespository {
         mailMessage.setFrom("recruitorapp@gmail.com");
         mailMessage.setTo(mailRecruiter, mailCandidate);
         mailMessage.setSubject("Interview schedule");
-        mailMessage.setText("Your interview is schedule for " + interviewDeleterDto.getDateInterview() + " has been canceled");
+        mailMessage.setText("Your interview scheduled for " + interviewDeleterDto.getDateInterview() + " has been canceled");
         MailConfig.getMailConfig().send(mailMessage);
 
         DbConnect.closeConnection(connection);
