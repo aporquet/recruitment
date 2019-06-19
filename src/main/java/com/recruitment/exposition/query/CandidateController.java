@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(value = "/candidates", method = {RequestMethod.GET, RequestMethod.DELETE, RequestMethod.PUT})
+@RequestMapping(value = "/candidates", method = {RequestMethod.GET, RequestMethod.DELETE, RequestMethod.PUT, RequestMethod.POST})
 public class CandidateController {
 
     @GetMapping()

@@ -260,6 +260,8 @@ public class CandidateRepositoryImpl implements CandidateRepository {
             e.printStackTrace();
         }
 
+        if(idInterview == 0){ return work = true; }
+
         DateMapper dateMapper = new DateMapper();
         InfraDateForm infraDateFormToDelete = new InfraDateForm(idAvailabilityMonth, idAvailabilityDay, idAvailabilityHour);
         LocalDateTime dateTime = dateMapper.mapInfraDateFormToDateTime(infraDateFormToDelete);
