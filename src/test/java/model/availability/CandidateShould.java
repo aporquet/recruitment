@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class CandidateControllerShould {
+public class CandidateShould {
 
     @Test
     public void find_recruiters_for_its_availability_slots(){

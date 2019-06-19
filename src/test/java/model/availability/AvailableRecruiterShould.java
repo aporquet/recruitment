@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class AvailableRecruiterControllerShould {
+public class AvailableRecruiterShould {
 
     @Test
-    public void should_return_the_first_available_recruiter(){
+    public void return_the_first_available_recruiter(){
         //Given
         List<RecruiterDto> recruiters = new ArrayList<>();
         List< LocalDateTime > firstRecruiterAvailabilities = new ArrayList<>();
