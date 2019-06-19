@@ -3,6 +3,7 @@ package infra.mysql;
 import common.exceptions.AnyEnterpriseFoundException;
 import common.dto.SkillFullDto;
 import use_case.SkillRepository;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -49,5 +50,23 @@ public class SkillRepositoryImpl implements SkillRepository {
         }
         DbConnect.closeConnection(connection);
         return skillFullDtos;
+    }
+
+    public boolean insertSkill(String skill) {
+        mysqlConnection();
+        boolean work = false;
+        String insertSkill = "INSERT INTO Skill " +
+                "(nameSkill) " +
+                "VALUES (" + "'" + skill + "', ";
+        try {
+            statement.execute(insertSkill);
+            work = true;
+
+        } catch (
+                SQLException e) {
+            work = false;
+            e.printStackTrace();
+        }
+        return work;
     }
 }
