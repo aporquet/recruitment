@@ -1,9 +1,6 @@
 package infra.mysql;
 
-import common.dto.CandidateDto;
-import common.dto.CandidateFullDto;
-import common.dto.InterviewDeleterDto;
-import common.dto.SkillsDto;
+import common.dto.*;
 import common.exceptions.AnyCandidateFoundException;
 import common.exceptions.AnyInterviewFoundException;
 import common.exceptions.CandidateNotFoundException;
@@ -69,17 +66,19 @@ public class CandidateRepositoryImpl implements CandidateRepository {
         }
         CandidateFullDto candidateFullDto = new CandidateFullDto(uuid, firstName, lastName, mail, experience, enterprise, null, null);
 
-        String getSkillsCandidate = "SELECT s.nameSkill, spc.isKeySkill " +
+        String getSkillsCandidate = "SELECT s.idSkill, s.nameSkill, spc.isKeySkill " +
                 "FROM Person p " +
                 "INNER JOIN SkillPersonConf spc ON spc.idPerson = p.idPerson " +
                 "INNER JOIN Skill s ON s.idSkill = spc.idSkill " +
                 "WHERE p.uuidPerson = " + "'" + uuidCandidate.toString() + "' ";
         try {
             ResultSet resultsetSkills = statement.executeQuery(getSkillsCandidate);
-            List<String> keySkills = new ArrayList<>();
-            List<String> skills = new ArrayList<>();
+            List<SkillFullDto> keySkills = new ArrayList<>();
+            List<SkillFullDto> skills = new ArrayList<>();
             while (resultsetSkills.next()) {
-                String skill = resultsetSkills.getString("nameSkill");
+                int idSkill = resultsetSkills.getInt("idSkill");
+                String nameSkill = resultsetSkills.getString("nameSkill");
+                SkillFullDto skill = new SkillFullDto(idSkill, nameSkill);
                 if (resultsetSkills.getInt("isKeySkill") == 0) {
                     skills.add(skill);
                 } else {
@@ -126,17 +125,19 @@ public class CandidateRepositoryImpl implements CandidateRepository {
         for (CandidateFullDto candidateFullDto1 : candidateFullDtos) {
             System.out.println(candidateFullDto1.getUuid().toString().getClass().getName());
             System.out.println(candidateFullDto1.getUuid());
-            String getSkillsRecruiters = "SELECT s.nameSkill, spc.isKeySkill " +
+            String getSkillsRecruiters = "SELECT s.idSkill, s.nameSkill, spc.isKeySkill " +
                     "FROM Person p " +
                     "INNER JOIN SkillPersonConf spc ON spc.idPerson = p.idPerson " +
                     "INNER JOIN Skill s ON s.idSkill = spc.idSkill " +
                     "WHERE p.uuidPerson = " + "'" + candidateFullDto1.getUuid() + "'";
             try {
                 ResultSet resultsetSkills = statement.executeQuery(getSkillsRecruiters);
-                List<String> keySkills = new ArrayList<>();
-                List<String> skills = new ArrayList<>();
+                List<SkillFullDto> keySkills = new ArrayList<>();
+                List<SkillFullDto> skills = new ArrayList<>();
                 while (resultsetSkills.next()) {
-                    String skill = resultsetSkills.getString("nameSkill");
+                    int idSkill = resultsetSkills.getInt("idSkill");
+                    String nameSkill = resultsetSkills.getString("nameSkill");
+                    SkillFullDto skill = new SkillFullDto(idSkill, nameSkill);
                     if (resultsetSkills.getInt("isKeySkill") == 0) {
                         skills.add(skill);
                     } else {

@@ -344,17 +344,19 @@ public class InterviewRepositoryImpl implements InterviewRespository {
             }
             candidateFullDto = new CandidateFullDto(uuidCandidate, firstNameCandidate, lastNameCandidate, mailCandidate, experienceCandidate, enterpriseCandidate, null, null);
 
-            String getSkillsCandidate = "SELECT s.nameSkill, spc.isKeySkill " +
+            String getSkillsCandidate = "SELECT s.idSkill, s.nameSkill, spc.isKeySkill " +
                     "FROM Person p " +
                     "INNER JOIN SkillPersonConf spc ON spc.idPerson = p.idPerson " +
                     "INNER JOIN Skill s ON s.idSkill = spc.idSkill " +
                     "WHERE p.uuidPerson = " + "'" + candidateFullDto.getUuid().toString() + "' ";
             try {
                 ResultSet resultsetSkills = statement.executeQuery(getSkillsCandidate);
-                List<String> keySkills = new ArrayList<>();
-                List<String> skills = new ArrayList<>();
+                List<SkillFullDto> keySkills = new ArrayList<>();
+                List<SkillFullDto> skills = new ArrayList<>();
                 while (resultsetSkills.next()) {
-                    String skill = resultsetSkills.getString("nameSkill");
+                    int idSkill = resultsetSkills.getInt("idSkill");
+                    String nameSkill = resultsetSkills.getString("nameSkill");
+                    SkillFullDto skill = new SkillFullDto(idSkill, nameSkill);
                     if (resultsetSkills.getInt("isKeySkill") == 0) {
                         skills.add(skill);
                     } else {

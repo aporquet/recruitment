@@ -11,10 +11,10 @@ public class CandidateFullDto {
     private String mail;
     private int experience;
     private String enterprise;
-    private List<String> skills;
-    private List<String> keySkills;
+    private List<SkillFullDto> skills;
+    private List<SkillFullDto> keySkills;
 
-    public CandidateFullDto(UUID uuid, String firstName, String lastName, String mail, int experience, String enterprise, List<String> skills, List<String> keySkills){
+    public CandidateFullDto(UUID uuid, String firstName, String lastName, String mail, int experience, String enterprise, List<SkillFullDto> skills, List<SkillFullDto> keySkills){
         this.uuid = uuid;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -25,15 +25,15 @@ public class CandidateFullDto {
         this.keySkills = keySkills;
     }
 
-    public List<String> getSkills() {
+    public List<SkillFullDto> getSkills() {
         return skills;
     }
 
-    public void setSkills(List<String> skills) {
+    public void setSkills(List<SkillFullDto> skills) {
         this.skills = skills;
     }
 
-    public void setKeySkills(List<String> keySkills) {
+    public void setKeySkills(List<SkillFullDto> keySkills) {
         this.keySkills = keySkills;
     }
 
@@ -63,7 +63,7 @@ public class CandidateFullDto {
         return enterprise;
     }
 
-    public List<String> getKeySkills() {
+    public List<SkillFullDto> getKeySkills() {
         return keySkills;
     }
 }
