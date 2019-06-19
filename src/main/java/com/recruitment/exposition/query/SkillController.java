@@ -1,8 +1,6 @@
 package com.recruitment.exposition.query;
 
-import common.dto.CandidateFullDto;
 import common.dto.SkillFullDto;
-import infra.mysql.CandidateRepositoryImpl;
 import infra.mysql.SkillRepositoryImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/skills")
+@RequestMapping(value = "/skills", method = {RequestMethod.GET, RequestMethod.POST})
 public class SkillController {
 
     @GetMapping()

@@ -21,6 +21,14 @@ public class CandidateController {
         return candidateRepository.getCandidates();
     }
 
+    @GetMapping("/lessInterview")
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody
+    List<CandidateFullDto> getCandidatesLessInterview() {
+        CandidateRepositoryImpl candidateRepository = new CandidateRepositoryImpl();
+        return candidateRepository.getCandidatesLessInterview();
+    }
+
     @GetMapping("/{uuid}")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody CandidateFullDto getCandidate(@PathVariable UUID uuid) {
@@ -57,4 +65,5 @@ public class CandidateController {
         CandidateRepositoryImpl candidateRepository = new CandidateRepositoryImpl();
         return candidateRepository.updateCandidate(candidate);
     }
+
 }

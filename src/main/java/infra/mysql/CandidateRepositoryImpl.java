@@ -411,4 +411,63 @@ public class CandidateRepositoryImpl implements CandidateRepository {
         candidate.setUuid(uuidCandidate);
         return candidate;
     }
+
+    public List<CandidateFullDto> getCandidatesLessInterview() {
+        mysqlConnection();
+        List<CandidateFullDto> candidateFullDtos = new ArrayList<>();
+        CandidateFullDto candidateFullDto;
+        String getCandidates = "SELECT p.uuidPerson, p.firstName, p.lastName, p.experience, p.mail, e.name FROM Person p " +
+                "INNER JOIN Enterprise e ON p.id_enterprise = e.id_enterprise " +
+                "INNER JOIN Profile pr ON p.idPerson = pr.idProfile " +
+                "WHERE pr.isCandidate = " + 1 +" AND " +
+                "p.uuidPerson NOT IN (SELECT uuidCandidate FROM Interview)";
+        try {
+            ResultSet resultset = statement.executeQuery(getCandidates);
+            while (resultset.next()) {
+                UUID uuid = UUID.fromString(resultset.getString("uuidPerson"));
+                String firstName = resultset.getString("firstName");
+                String lastName = resultset.getString("lastName");
+                int experience = Integer.parseInt(resultset.getString("experience"));
+                String mail = resultset.getString("mail");
+                String enterprise = resultset.getString("name");
+                candidateFullDto = new CandidateFullDto(uuid, firstName, lastName, mail, experience, enterprise, null, null);
+                candidateFullDtos.add(candidateFullDto);
+                if (resultset == null) {
+                    throw new AnyCandidateFoundException();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        for (CandidateFullDto candidateFullDto1 : candidateFullDtos) {
+            System.out.println(candidateFullDto1.getUuid().toString().getClass().getName());
+            System.out.println(candidateFullDto1.getUuid());
+            String getSkillsRecruiters = "SELECT s.idSkill, s.nameSkill, spc.isKeySkill " +
+                    "FROM Person p " +
+                    "INNER JOIN SkillPersonConf spc ON spc.idPerson = p.idPerson " +
+                    "INNER JOIN Skill s ON s.idSkill = spc.idSkill " +
+                    "WHERE p.uuidPerson = " + "'" + candidateFullDto1.getUuid() + "'";
+            try {
+                ResultSet resultsetSkills = statement.executeQuery(getSkillsRecruiters);
+                List<SkillFullDto> keySkills = new ArrayList<>();
+                List<SkillFullDto> skills = new ArrayList<>();
+                while (resultsetSkills.next()) {
+                    int idSkill = resultsetSkills.getInt("idSkill");
+                    String nameSkill = resultsetSkills.getString("nameSkill");
+                    SkillFullDto skill = new SkillFullDto(idSkill, nameSkill);
+                    if (resultsetSkills.getInt("isKeySkill") == 0) {
+                        skills.add(skill);
+                    } else {
+                        keySkills.add(skill);
+                    }
+                }
+                candidateFullDto1.setKeySkills(keySkills);
+                candidateFullDto1.setSkills(skills);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        DbConnect.closeConnection(connection);
+        return candidateFullDtos;
+    }
 }

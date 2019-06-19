@@ -7,9 +7,12 @@ import java.util.List;
 import java.util.UUID;
 
 public interface CandidateRepository {
+
     CandidateFullDto getCandidate(UUID uuid);
 
     List<CandidateFullDto> getCandidates();
+
+    List<CandidateFullDto> getCandidatesLessInterview();
 
     CandidateDto getCandidateForSchedule(UUID uuidCandidate);
 
