@@ -261,7 +261,9 @@ public class CandidateRepositoryImpl implements CandidateRepository {
             e.printStackTrace();
         }
 
-        if(idInterview == 0){ return work = true; }
+        if (idInterview == 0) {
+            return work = true;
+        }
 
         DateMapper dateMapper = new DateMapper();
         InfraDateForm infraDateFormToDelete = new InfraDateForm(idAvailabilityMonth, idAvailabilityDay, idAvailabilityHour);
@@ -359,7 +361,7 @@ public class CandidateRepositoryImpl implements CandidateRepository {
 
         String insertProfil = "INSERT INTO Profile " +
                 "(idProfile, isCandidate, isRecruiter) " +
-                "VALUES (" + newIdCandidate + ", +" + 1 + ", +" + 0 +")";
+                "VALUES (" + newIdCandidate + ", +" + 1 + ", +" + 0 + ")";
         try {
             statement.execute(insertProfil);
             work = true;
@@ -367,6 +369,34 @@ public class CandidateRepositoryImpl implements CandidateRepository {
             work = false;
             e.printStackTrace();
         }
+
+        for (SkillFullDto skill : candidateFullDto.getSkills()) {
+            String insertSkills = "INSERT INTO SkillPersonConf " +
+                    "(idPerson, idSkill, isKeySkill) " +
+                    "VALUES (" + newIdCandidate + ", +" + skill.getIdSkill() + ", +" + 0 + ")";
+            try {
+                statement.execute(insertSkills);
+                work = true;
+            } catch (SQLException e) {
+                work = false;
+                e.printStackTrace();
+            }
+        }
+
+        for (SkillFullDto keySkill : candidateFullDto.getKeySkills()) {
+            String insertKeySkills = "INSERT INTO SkillPersonConf " +
+                    "(idPerson, idSkill, isKeySkill) " +
+                    "VALUES (" + newIdCandidate + ", +" + keySkill.getIdSkill() + ", +" + 1 + ")";
+            try {
+                statement.execute(insertKeySkills);
+                work = true;
+            } catch (SQLException e) {
+                work = false;
+                e.printStackTrace();
+            }
+        }
+
+
         DbConnect.closeConnection(connection);
         return work;
     }
@@ -419,7 +449,7 @@ public class CandidateRepositoryImpl implements CandidateRepository {
         String getCandidates = "SELECT p.uuidPerson, p.firstName, p.lastName, p.experience, p.mail, e.name FROM Person p " +
                 "INNER JOIN Enterprise e ON p.id_enterprise = e.id_enterprise " +
                 "INNER JOIN Profile pr ON p.idPerson = pr.idProfile " +
-                "WHERE pr.isCandidate = " + 1 +" AND " +
+                "WHERE pr.isCandidate = " + 1 + " AND " +
                 "p.uuidPerson NOT IN (SELECT uuidCandidate FROM Interview)";
         try {
             ResultSet resultset = statement.executeQuery(getCandidates);
