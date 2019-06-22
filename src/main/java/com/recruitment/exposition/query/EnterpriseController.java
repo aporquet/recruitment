@@ -8,6 +8,7 @@ import use_case.EnterpriseRepository;
 
 import java.util.List;
 
+@CrossOrigin()
 @RestController
 @RequestMapping(value = "/enterprises")
 public class EnterpriseController {

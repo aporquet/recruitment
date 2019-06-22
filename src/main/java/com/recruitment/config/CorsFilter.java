@@ -1,3 +1,4 @@
+/*
 package com.recruitment.config;
 
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -18,10 +19,11 @@ public class CorsFilter extends OncePerRequestFilter {
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         response.setHeader("Access-Control-Allow-Headers", "authorization, content-type, xsrf-token, Cache-Control");
         response.addHeader("Access-Control-Expose-Headers", "xsrf-token");
-        if ("OPTIONS".equals(request.getMethod())) {
-            response.setStatus(HttpServletResponse.SC_OK);
-        } else {
+                if ("OPTIONS".equals(request.getMethod())) {
+                response.setStatus(HttpServletResponse.SC_OK);
+            } else {
             filterChain.doFilter(request, response);
         }
     }
 }
+*/

@@ -1,5 +1,6 @@
 package com.recruitment.exposition.query;
 
+import com.recruitment.config.User;
 import common.dto.RecruiterDto;
 import common.dto.RecruiterFullDto;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import infra.mysql.RecruitersRepositoryImpl;
 
 import java.util.*;
 
+@CrossOrigin()
 @RestController
 @RequestMapping(value = "/recruiters")
 public class RecruiterController {
@@ -24,6 +26,11 @@ public class RecruiterController {
     public @ResponseBody List<RecruiterFullDto> getRecruiters() {
         RecruitersRepositoryImpl recruitersRepository = new RecruitersRepositoryImpl();
         return recruitersRepository.getRecruiters();
+    }
+
+    @GetMapping({ "/validateLogin" })
+    public User validateLogin() {
+        return new User("User successfully authenticated");
     }
 
     @GetMapping("/sch")
