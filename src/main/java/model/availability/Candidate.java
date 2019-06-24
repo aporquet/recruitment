@@ -1,8 +1,6 @@
 package model.availability;
 
 import common.dto.RecruiterDto;
-
-import javax.persistence.NoResultException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

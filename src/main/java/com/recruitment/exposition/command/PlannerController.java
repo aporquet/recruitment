@@ -12,6 +12,7 @@ import use_case.ScheduleInterview;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@CrossOrigin()
 @RestController
 @RequestMapping(method = {RequestMethod.POST})
 public class PlannerController {

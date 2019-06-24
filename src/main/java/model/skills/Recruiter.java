@@ -16,10 +16,14 @@ class Recruiter {
         if(candidate.getExperienceYears() > experienceYears){
             return false;
         }
-        if(recruiterSkills.getKeySkills().contains(candidate.getKeySkills())){
-            return false;
+        for(String recruiterKeySkill : recruiterSkills.getKeySkills()){
+            for(String candidateKeySkill : candidate.getKeySkills()){
+                if (recruiterKeySkill.equals(candidateKeySkill)){
+                    return true;
+                }
+            }
         }
-        return true;
+        return false;
     }
 
     List<String> getOtherSkills() {
