@@ -12,31 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-/*    @Bean
-    @SuppressWarnings("deprecation") // For demo purpose
-    public InMemoryUserDetailsManager inMemoryUserDetailsManager() throws Exception {
-        return new InMemoryUserDetailsManager(
-                User.withDefaultPasswordEncoder()
-                        .username("test-user")
-                        .password(System.getenv("SPRING_SECURITY_USER_PASSWORD"))
-                        .roles("ADMIN", "USER")
-                        .build());
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class);
-        http
-                .authorizeRequests()
-                .antMatchers("/login")
-                .permitAll()
-                .anyRequest()
-                .fullyAuthenticated()
-                .and()
-                .httpBasic()
-                .and().csrf().disable();
-    }*/
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().
@@ -47,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("javainuse").password("{noop}password").roles("USER");
+        auth.inMemoryAuthentication().withUser("test-user").password("{noop}"+System.getenv("SPRING_SECURITY_USER_PASSWORD")).roles("USER");
     }
 
 }
