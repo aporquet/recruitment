@@ -21,7 +21,7 @@ public class PlannerController {
     @ResponseStatus(HttpStatus.OK)
     public void scheduleInterview(@RequestBody ScheduleInterviewDto scheduleInterviewDto){
         UUID uuidCandidate = scheduleInterviewDto.getUuidCandidate();
-        LocalDateTime dateInterview = scheduleInterviewDto.getDateInterview();
+        LocalDateTime dateInterview = scheduleInterviewDto.getDateInterview().plusHours(2);
         if ((dateInterview.compareTo(LocalDateTime.now()) <= 0) ||
                 (dateInterview.isAfter(LocalDateTime.now().plusMonths(1)))){
             throw new InvalidDateToScheduleInterviewException();
