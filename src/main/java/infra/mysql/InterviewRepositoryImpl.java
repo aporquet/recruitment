@@ -43,7 +43,7 @@ public class InterviewRepositoryImpl implements InterviewRespository {
         int dayAvailability = infraDateForm.getDay();
         int monthAvailability = infraDateForm.getMonth();
 
-        String postInterview = "INSERT INTO recruitment.Interview " +
+        String postInterview = "INSERT INTO Interview " +
                 "(uuidCandidate, uuidRecruiter, idAvailabilityHour, idAvailabilityDay, idAvailabilityMonth)" +
                 " VALUES (" + "'" + interviewDto.getUuidCandidate().toString() + "', "
                 + "'" + interviewDto.getUuidRecruiter().toString() + "', "

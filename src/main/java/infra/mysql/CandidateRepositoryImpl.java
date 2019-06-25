@@ -411,7 +411,7 @@ public class CandidateRepositoryImpl implements CandidateRepository {
         String lastName = candidate.getLastName();
         String mail = candidate.getMail();
         int experience = candidate.getExperience();
-        String updateCandidate = "UPDATE recruitment.Person " +
+        String updateCandidate = "UPDATE Person " +
                 "SET firstName = " + "'" + firstNameCandidate + "', " +
                 "lastName = " + "'" + lastName + "', " +
                 "mail = " + "'" + mail + "', " +

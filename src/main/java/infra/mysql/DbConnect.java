@@ -9,9 +9,9 @@ public class DbConnect {
     public static Connection connection = null;
 
     public static Connection getConnection() {
-            String url = System.getenv("DB_URL");
-            String username = System.getenv("DB_USERNAME");
-            String password = System.getenv("DB_PASSWORD");
+            String url = System.getenv("DB_RDS");
+            String username = System.getenv("DB_USERNAME_RDS");
+            String password = System.getenv("DB_PASSWORD_RDS");
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 connection = DriverManager.getConnection(url, username, password);
