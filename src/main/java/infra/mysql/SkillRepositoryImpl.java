@@ -57,7 +57,7 @@ public class SkillRepositoryImpl implements SkillRepository {
         boolean work = false;
         String insertSkill = "INSERT INTO Skill " +
                 "(nameSkill) " +
-                "VALUES (" + "'" + skill + "', ";
+                "VALUES (" + "'" + skill + "')";
         try {
             statement.execute(insertSkill);
             work = true;
