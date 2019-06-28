@@ -25,6 +25,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication().withUser("test-user").password("{noop}"+System.getenv("SPRING_SECURITY_USER_PASSWORD")).roles("USER");
     }
 
+
+
+
 }
 
 

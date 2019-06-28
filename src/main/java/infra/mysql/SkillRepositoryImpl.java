@@ -67,6 +67,7 @@ public class SkillRepositoryImpl implements SkillRepository {
             work = false;
             e.printStackTrace();
         }
+        DbConnect.closeConnection(connection);
         return work;
     }
 }

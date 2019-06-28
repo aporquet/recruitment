@@ -22,7 +22,7 @@ public class PlannerController {
     public void scheduleInterview(@RequestBody ScheduleInterviewDto scheduleInterviewDto){
         UUID uuidCandidate = scheduleInterviewDto.getUuidCandidate();
         LocalDateTime dateInterview = scheduleInterviewDto.getDateInterview().plusHours(2);
-        if ((dateInterview.compareTo(LocalDateTime.now()) <= 0) ||
+        if ((dateInterview.compareTo(LocalDateTime.now().plusDays(1)) <= 0) ||
                 (dateInterview.isAfter(LocalDateTime.now().plusMonths(1)))){
             throw new InvalidDateToScheduleInterviewException();
         }
