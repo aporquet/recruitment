@@ -123,8 +123,6 @@ public class CandidateRepositoryImpl implements CandidateRepository {
             e.printStackTrace();
         }
         for (CandidateFullDto candidateFullDto1 : candidateFullDtos) {
-            System.out.println(candidateFullDto1.getUuid().toString().getClass().getName());
-            System.out.println(candidateFullDto1.getUuid());
             String getSkillsRecruiters = "SELECT s.idSkill, s.nameSkill, spc.isKeySkill " +
                     "FROM Person p " +
                     "INNER JOIN SkillPersonConf spc ON spc.idPerson = p.idPerson " +
@@ -470,8 +468,6 @@ public class CandidateRepositoryImpl implements CandidateRepository {
             e.printStackTrace();
         }
         for (CandidateFullDto candidateFullDto1 : candidateFullDtos) {
-            System.out.println(candidateFullDto1.getUuid().toString().getClass().getName());
-            System.out.println(candidateFullDto1.getUuid());
             String getSkillsRecruiters = "SELECT s.idSkill, s.nameSkill, spc.isKeySkill " +
                     "FROM Person p " +
                     "INNER JOIN SkillPersonConf spc ON spc.idPerson = p.idPerson " +
