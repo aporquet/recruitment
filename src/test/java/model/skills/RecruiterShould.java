@@ -48,10 +48,9 @@ public class RecruiterShould {
     }
 
     @Test
-    public void not_be_able_to_test_candidate_if_recruiter_has_not_all_key_skills_in_common() {
+    public void not_be_able_to_test_candidate_if_recruiter_has_not_key_skills_in_common() {
         //Given
         recruiterKeySkills.add("React");
-        recruiterKeySkills.add("Java");
         recruiterKeySkills.add("HTML5");
 
         candidateKeySkills.add("Java");
@@ -66,6 +65,14 @@ public class RecruiterShould {
 
     @Test
     public void be_more_experienced_than_the_candidate(){
+        //Given
+        recruiterKeySkills.add("React");
+        recruiterKeySkills.add("Java");
+        recruiterKeySkills.add("HTML5");
+
+        candidateKeySkills.add("Java");
+        candidateKeySkills.add("DevOps");
+
         //When
         boolean recruiterCanTestCandidate = recruiter.canTest(candidate);
 
@@ -75,8 +82,18 @@ public class RecruiterShould {
 
     @Test
     public void not_be_able_to_test_the_candidate_if_he_has_less_experienced_years_than_the_candidate(){
+
         //Given
-        Recruiter recruiter = new Recruiter(recruiterSkills, 1);
+        recruiterKeySkills = new ArrayList<>();
+        List<String> recruiterOtherSkills = new ArrayList<>();
+        recruiterKeySkills.add("React");
+        recruiterKeySkills.add("Java");
+        recruiterKeySkills.add("HTML5");
+        this.recruiterSkills = new Skills(recruiterKeySkills, recruiterOtherSkills);
+        recruiter = new Recruiter(recruiterSkills, 1);
+
+        candidateKeySkills.add("Java");
+        candidateKeySkills.add("DevOps");
 
         //When
         boolean recruiterCanTestCandidate = recruiter.canTest(candidate);

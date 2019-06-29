@@ -1,4 +1,3 @@
-/*
 package use_case;
 
 import common.dto.InterviewDto;
@@ -18,7 +17,7 @@ public class ScheduleInterviewShould {
     private CandidateRepositoryImpl candidateRepository;
     private RecruitersRepositoryImpl recruitersRepository;
     private InterviewRepositoryImpl interviewRespository;
-    private UUID idCandidate;
+    private UUID uuidCandidate;
     private ScheduleInterview interview;
     private LocalDateTime date;
 
@@ -27,26 +26,26 @@ public class ScheduleInterviewShould {
         candidateRepository = mock(CandidateRepositoryImpl.class);
         recruitersRepository = mock(RecruitersRepositoryImpl.class);
         interviewRespository = mock(InterviewRepositoryImpl.class);
-        idCandidate = UUID.randomUUID();
+        uuidCandidate = UUID.randomUUID();
         date = LocalDateTime.now();
-        interview = new ScheduleInterview(candidateRepository, recruitersRepository, interviewRespository, date, idCandidate);
-        interview.schedule();
+        interview = new ScheduleInterview(candidateRepository, recruitersRepository, interviewRespository, date, uuidCandidate);
     }
 
-    @Test
+/*    @Test
     public void call_candiadte_repository (){
-        verify(candidateRepository).getCandidateById(idCandidate);
+        interview.schedule();
+        verify(candidateRepository).getCandidateForSchedule(uuidCandidate);
     }
 
     @Test
     public void call_recruiters_repository (){
+        interview.schedule();
         verify(recruitersRepository).getRecruitersForSchedule();
-    }
+    }*/
 
-    @Test
+/*    @Test
     public void save_new_interview(){
         verify(interviewRespository).save(Mockito.any(InterviewDto.class));
-    }
+    }*/
 
 }
-*/

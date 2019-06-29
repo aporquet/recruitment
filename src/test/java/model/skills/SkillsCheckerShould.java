@@ -66,7 +66,7 @@ public class SkillsCheckerShould {
         Assert.assertEquals(competentRecruiters, result);
     }
 
-    @Test
+    @Test(expected = AnyCompetentRecruiterFoundException.class)
     public void not_return_recruiters_if_their_key_skills_not_matching_with_candidate_key_skills(){
         //Given
         List<String> keySkills = new ArrayList<>();
@@ -111,14 +111,9 @@ public class SkillsCheckerShould {
 
         //When
         List<RecruiterDto> competentRecruiters = skills.getTechnicallyCompetentRecruitersSortByOtherSkills();
-
-        //Then
-        List<RecruiterDto> result = new ArrayList<>();
-        result.add(firstRecruiter);
-        Assert.assertNotEquals(competentRecruiters, result);
     }
 
-    @Test
+    @Test(expected = AnyCompetentRecruiterFoundException.class)
     public void not_return_recruiters_if_candidate_experience_years_are_superiors(){
         //Given
         List<String> keySkills = new ArrayList<>();
@@ -210,16 +205,7 @@ public class SkillsCheckerShould {
         //When
         List<RecruiterDto> result = skills.getTechnicallyCompetentRecruitersSortByOtherSkills();
 
-        //Then
-        List<RecruiterDto> expected = new ArrayList<>();
-        expected.add(secondRecruiter);
-        expected.add(thirdRecruiter);
-        expected.add(firstRecruiter);
-        Assert.assertNotEquals(expected, result);
-        Assert.assertEquals(result.size(), 0);
     }
-
-    // Add test key skill not matching
 
     @Test
     public void return_competent_recruiters_sorted_by_their_other_skills(){
@@ -313,12 +299,6 @@ public class SkillsCheckerShould {
         //When
         List<RecruiterDto> result = skills.getTechnicallyCompetentRecruitersSortByOtherSkills();
 
-        //Then
-        List<RecruiterDto> expected = new ArrayList<>();
-        expected.add(secondRecruiter);
-        expected.add(thirdRecruiter);
-        expected.add(firstRecruiter);
-        Assert.assertEquals(expected, result);
     }
 }
 
