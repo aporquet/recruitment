@@ -334,7 +334,6 @@ public class CandidateRepositoryImpl implements CandidateRepository {
         String lastName = candidateFullDto.getLastName();
         String mail = candidateFullDto.getMail();
         int experience = candidateFullDto.getExperience();
-        String id_enterprise = candidateFullDto.getEnterprise();
         int newIdCandidate = 0;
         ResultSet generatedKeys = null;
         String insertCandidate = "INSERT INTO Person " +
@@ -344,7 +343,7 @@ public class CandidateRepositoryImpl implements CandidateRepository {
                 "'" + lastName + "', " +
                 "'" + mail + "', " +
                 experience + ", " +
-                "'" + id_enterprise + "')";
+                1 + "')";
         try {
             statement.execute(insertCandidate, statement.RETURN_GENERATED_KEYS);
             generatedKeys = statement.getGeneratedKeys();

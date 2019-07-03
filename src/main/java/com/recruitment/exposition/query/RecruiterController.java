@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import infra.mysql.RecruitersRepositoryImpl;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @CrossOrigin()
@@ -38,5 +39,12 @@ public class RecruiterController {
     public @ResponseBody List<RecruiterDto> getRecruitersForSchedule() {
         RecruitersRepositoryImpl recruitersRepository = new RecruitersRepositoryImpl();
         return recruitersRepository.getRecruitersForSchedule();
+    }
+
+    @GetMapping("/availabilities")
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody List<LocalDateTime> getRecruitersAvailabilities() {
+        RecruitersRepositoryImpl recruitersRepository = new RecruitersRepositoryImpl();
+        return recruitersRepository.getRecruitersAvailabilities();
     }
 }

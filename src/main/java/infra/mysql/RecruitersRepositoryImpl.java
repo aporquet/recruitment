@@ -224,4 +224,28 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
         return recruiter;
     }
 
+    public List<LocalDateTime> getRecruitersAvailabilities() {
+        mysqlConnection();
+        List<LocalDateTime> dates = new ArrayList<>();
+
+        String getRecruitersAvailabilities = "SELECT ac.idAvailabilityMonth, ac.idAvailabilityDay, ac.idAvailabilityHour " +
+                "FROM PersonAvailabilityConf";
+
+        try {
+            ResultSet resultsetAvailabilities = statement.executeQuery(getRecruitersAvailabilities);
+            DateMapper dateMapper = new DateMapper();
+            while (resultsetAvailabilities.next()) {
+                int month = Integer.parseInt(resultsetAvailabilities.getString("idAvailabilityMonth"));
+                int day = Integer.parseInt(resultsetAvailabilities.getString("idAvailabilityDay"));
+                int hour = Integer.parseInt(resultsetAvailabilities.getString("idAvailabilityHour"));
+                InfraDateForm infraDateForm = new InfraDateForm(month, day, hour);
+                LocalDateTime dateTime = dateMapper.mapInfraDateFormToDateTime(infraDateForm);
+                dates.add(dateTime);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        DbConnect.closeConnection(connection);
+        return dates;
+    }
 }
