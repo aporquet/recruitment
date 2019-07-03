@@ -229,7 +229,7 @@ public class RecruitersRepositoryImpl implements RecruitersRepository {
         List<LocalDateTime> dates = new ArrayList<>();
 
         String getRecruitersAvailabilities = "SELECT ac.idAvailabilityMonth, ac.idAvailabilityDay, ac.idAvailabilityHour " +
-                "FROM PersonAvailabilityConf";
+                "FROM PersonAvailabilityConf ac";
 
         try {
             ResultSet resultsetAvailabilities = statement.executeQuery(getRecruitersAvailabilities);
