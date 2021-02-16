@@ -1,9 +1,22 @@
 package use_case;
 
-import common.CandidateDto;
+import common.dto.CandidateDto;
+import common.dto.CandidateFullDto;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface CandidateRepository {
-    CandidateDto getCandidateById(UUID idCandidate);
+
+    CandidateFullDto getCandidate(UUID uuid);
+
+    List<CandidateFullDto> getCandidates();
+
+    List<CandidateFullDto> getCandidatesLessInterview();
+
+    CandidateDto getCandidateForSchedule(UUID uuidCandidate);
+
+    boolean deleteCandidate(UUID uuidCandidate);
+
+    boolean insertCandidate(CandidateFullDto candidateFullDto);
 }

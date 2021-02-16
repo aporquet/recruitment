@@ -1,7 +1,9 @@
 package model.availability;
 
-import common.RecruiterDto;
+import common.dto.RecruiterDto;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AvailableRecruiter {
@@ -15,7 +17,15 @@ public class AvailableRecruiter {
         this.recruiters = recruiters;
     }
 
-    public RecruiterDto getFirstAvailableRecruiter() {
-        return recruiters.get(0);
+    public RecruiterDto getAvailableRecruiter(LocalDateTime dateAvailability) {
+        if(dateAvailability == null){
+            throw new AnyAvailabilityDateException();
+        }
+        Candidate candidate = new Candidate(dateAvailability);
+        List<RecruiterDto> availableRecruiters;
+        availableRecruiters = candidate.findAvailableRecruiters(recruiters);
+        RecruiterDto availableRecruiter = candidate.getFirstAvailableRecruiter(availableRecruiters);
+        return availableRecruiter;
     }
+
 }

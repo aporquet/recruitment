@@ -1,7 +1,6 @@
 package model.availability;
 
-import common.RecruiterDto;
-
+import common.dto.RecruiterDto;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +22,23 @@ class Candidate {
                 }
             }
         }
+        if (result.size() == 0){
+            throw new AnyRecruiterAvailableInSameTimeAsTheCandidateException();
+        }
         return result;
+    }
+
+    public RecruiterDto getFirstAvailableRecruiter(List<RecruiterDto> recruiters) {
+        return recruiters.get(0);
     }
 
     boolean availabilityIsInCurrentMonth(Candidate candidate) {
         LocalDateTime currentDate =  LocalDateTime.now();
         int currentMonth = currentDate.getMonthValue();
         int monthAvailable = candidate.availability.getMonthValue();
+        if(currentMonth != monthAvailable){
+            throw new CandidateAvailabilityIsNotInCurrentMonthException();
+        }
         return currentMonth == monthAvailable;
     }
 }

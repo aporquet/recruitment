@@ -1,8 +1,8 @@
 package model.skills;
 
-import common.CandidateDto;
-import common.RecruiterDto;
-import common.SkillsDto;
+import common.dto.CandidateDto;
+import common.dto.RecruiterDto;
+import common.dto.SkillsDto;
 
 import java.util.*;
 import static java.util.stream.Collectors.toList;
@@ -25,9 +25,12 @@ public class SkillsChecker {
         for (RecruiterDto recruiterDto: recruiters){
             Skills skills = new Skills(recruiterDto.getRecruiterSkills().getKeySkills(), recruiterDto.getRecruiterSkills().getOtherSkills());
             Recruiter recruiter = new Recruiter(skills, recruiterDto.getExperienceYears());
-            if(!recruiter.canTest(candidate)){
+            if(recruiter.canTest(candidate) == false){
                 competentRecruiter.remove(recruiterDto);
             }
+        }
+        if(competentRecruiter.size() == 0){
+            throw new AnyCompetentRecruiterFoundException();
         }
         return sortByOtherSkillsInCommon(candidate, competentRecruiter);
     }

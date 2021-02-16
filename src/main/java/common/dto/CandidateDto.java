@@ -1,8 +1,18 @@
-package common;
+package common.dto;
+
+import java.util.UUID;
 
 public class CandidateDto {
+
+    private UUID uuidCandidate;
     private SkillsDto candidateSkills;
     private int experienceYears;
+
+    public CandidateDto(UUID uuidCandidate, SkillsDto candidateSkills, int experienceYears){
+        this.uuidCandidate = uuidCandidate;
+        this.candidateSkills = candidateSkills;
+        this.experienceYears = experienceYears;
+    }
 
     public void setSkills(SkillsDto candidateSkills) {
         this.candidateSkills = candidateSkills;
@@ -18,5 +28,9 @@ public class CandidateDto {
 
     public void setExperienceYears(int experienceYears) {
         this.experienceYears = experienceYears;
+    }
+
+    public UUID getUuidCandidate() {
+        return uuidCandidate;
     }
 }
